@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:44:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 11:03:01 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:28:35 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*my_strdup(const char *s1, int size)
 	return (tab);
 }
 
-Datatoken	*ft_my_lstnew(void *content)
+Datatoken	*ft_my_lstnew(void *content, char type, char state)
 {
 	Datatoken	*my_node;
 
@@ -86,8 +86,8 @@ Datatoken	*ft_my_lstnew(void *content)
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = content;
-	my_node->type = 's';
-	my_node->state = WITHOUT;
+	my_node->type = type;
+	my_node->state = state;
 	my_node->prev = NULL;
 	my_node->next = NULL;
 	return (my_node);

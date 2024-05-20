@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 11:05:41 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:48:14 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ typedef struct s_data
         HERE_DOC = 'h',
         VARIABLE = '$',
         OPEN_PAREN = '(',
-        CLOSE_PAREN = ')'
+        CLOSE_PAREN = ')',
+        WHITE_SPACE = 'w'
     }           type;
     enum {
-        IN_COTE,
+        IN_COTE ,
         IN_DOUBLE_COTE,
-        WITHOUT
+        GENERAL 
     }           state;
     char        *cmd;
     struct s_data *next;
@@ -48,6 +49,7 @@ typedef struct s_data
 
 typedef struct s_vars
 {
+    char        data_type;
     Datatoken   *ndata;
 } t_vars;
 
@@ -57,7 +59,7 @@ int    in_delimiters(char a, char *delimiters);
 void	check_quotes(char *str);
 int     end_of_cmd(char *str, char *delimiter);
 char	*my_strdup(const char *s1, int size);
-Datatoken	*ft_my_lstnew(void *content);
+Datatoken	*ft_my_lstnew(void *content, char type, char state);
 void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new);
 
 #endif
