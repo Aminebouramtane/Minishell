@@ -1,16 +1,18 @@
 # gcc main.c lexer/main_lexer.c lexer/check_slpit.c - libft/libft.a
 NAME = minishell
 
-CC = CC
+CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft/libft.a
 
-SRC = lexer/main_lexer.c lexer/check_slpit.c
+CFLAGS = 
 
-OBJ = $(SRC=.c:.o)
+SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c
+
+OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -lreadline $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 all : $(NAME)
 

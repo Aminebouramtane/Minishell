@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 03:30:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/18 11:26:57 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:19:23 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,16 +147,16 @@ char	**split_lexer(char const *s, char *c)
 	return (str);
 }
 
-int main(int ac, char **av)
-{
-	int i;
+// int main(int ac, char **av)
+// {
+// 	int i;
 
-	i = 0;
-	(void)ac;
-	char **str = split_lexer( av[1], " \t\n\r\f\v");
-	while (str[i])
-	{
-		printf("%s\n", str[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	(void)ac;
+// 	char **str = split_lexer( av[1], " \t\n\r\f\v");
+// 	while (str[i])
+// 	{
+// 		printf("%s\n", str[i]);
+// 		i++;
+// 	}
+// }
