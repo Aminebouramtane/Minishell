@@ -5,7 +5,7 @@ CC = cc
 
 LIBFT = libft/libft.a
 
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c
 

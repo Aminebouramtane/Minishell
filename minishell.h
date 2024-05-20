@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 14:48:14 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:24:15 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int     end_of_cmd(char *str, char *delimiter);
 char	*my_strdup(const char *s1, int size);
 Datatoken	*ft_my_lstnew(void *content, char type, char state);
 void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new);
-
+void	ft_my_lstclear(Datatoken **lst, void (*del)(void *));
+void    del(void *str);
 #endif
