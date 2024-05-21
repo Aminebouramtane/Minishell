@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:44:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 18:45:27 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:26:19 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,18 @@ void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 	last->next = new;
 }
 
-void	ft_my_lstclear(Datatoken **lst, void (*del)(void *))
+void	ft_my_lstclear(Datatoken **lst)
 {
 	Datatoken	*c;
 	Datatoken	*n;
 
-	if (lst && *lst && del)
+	if (lst && *lst)
 	{
 		c = *lst;
 		while (c)
 		{
 			n = c->next;
-			del(c->cmd);
+			free(c->cmd);
 			free(c);
 			c = n;
 		}
