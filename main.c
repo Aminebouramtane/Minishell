@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:42 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 16:32:32 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:45:39 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int ac, char **av)
 		// 	exit(0);
         lexer(input, data);
         free(input);
-        ft_my_lstclear(&(data->ndata), del);
+        // ft_my_lstclear(&(data->ndata), del);
     }
     return 0;
 }

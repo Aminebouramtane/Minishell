@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 17:13:33 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:47:16 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	fill_string_in_node(char *str, int *i, t_vars *data, char *delimiters)
 	tmp = my_strdup(str + start, end - start);
 	node = ft_my_lstnew(tmp, 's', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	free(tmp);
-	tmp = NULL;
-	ft_my_lstclear(&node, del);
+	// free(tmp);
+	// tmp = NULL;
+	// ft_my_lstclear(&node, del);
 }
 
 void	fill_qoute_in_node(char *str, int *i, t_vars *data)
@@ -58,9 +58,9 @@ void	fill_qoute_in_node(char *str, int *i, t_vars *data)
 	ft_my_lstadd_back(&(data->ndata), node);
 	node = ft_my_lstnew("'", '\'', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	free(tmp);
-	tmp = NULL;
-	ft_my_lstclear(&node, del);
+	// free(tmp);
+	// tmp = NULL;
+	// ft_my_lstclear(&node, del);
 	*i = end + 1;
 }
 
@@ -70,7 +70,7 @@ void	fill_input_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew("<", '<', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -80,7 +80,7 @@ void	fill_env_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew("$", '$', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -90,7 +90,7 @@ void	fill_output_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew(">", '>', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -100,7 +100,7 @@ void	fill_pipe_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew("|", '|', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -110,7 +110,7 @@ void	fill_open_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew("(", '(', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -120,7 +120,7 @@ void	fill_close_in_node(int *i, t_vars *data)
 
 	node = ft_my_lstnew(")", ')', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	ft_my_lstclear(&node, del);
+	// ft_my_lstclear(&node, del);
 	*i = *i + 1;
 }
 
@@ -146,9 +146,9 @@ void	fill_dqoute_in_node(char *str, int *i, t_vars *data)
 	ft_my_lstadd_back(&(data->ndata), node);
 	node = ft_my_lstnew("\"", '\"', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	free(tmp);
-	tmp = NULL;
-	ft_my_lstclear(&node, del);
+	// free(tmp);
+	// tmp = NULL;
+	// ft_my_lstclear(&node, del);
 	*i = end + 1;
 }
 
@@ -171,9 +171,9 @@ void	fill_white_spaces_in_node(char *str, int *i, t_vars *data, char *delimiters
 	tmp = my_strdup(str + start, end - start);
 	node = ft_my_lstnew(tmp, 'w', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
-	free(tmp);
-	tmp = NULL;
-	ft_my_lstclear(&node, del);
+	// free(tmp);
+	// tmp = NULL;
+	// ft_my_lstclear(&node, del);
 }
 
 void	del(void *str)
@@ -209,13 +209,13 @@ int		lexer(char *str, t_vars *data)
 		else if (in_delimiters(str[i], " \t\v\n\r\f"))
 			fill_white_spaces_in_node(str, &i, data, " \t\v\n\r\f");
 	}
-	// while (data->ndata)
-	// {
-	// 	printf("cmd >>>%s\n", data->ndata->cmd);
-	// 	printf("state >>>%d\n", data->ndata->state);
-	// 	printf("type >>>%c\n", data->ndata->type);
-	// 	printf("========================\n");
-	// 	data->ndata = data->ndata->next;	
-	// }
+	while (data->ndata)
+	{
+		printf("cmd >>>%s\n", data->ndata->cmd);
+		printf("state >>>%d\n", data->ndata->state);
+		printf("type >>>%c\n", data->ndata->type);
+		printf("========================\n");
+		data->ndata = data->ndata->next;	
+	}
 	return(1);
 }

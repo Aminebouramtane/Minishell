@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/20 16:24:15 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:12:44 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_data
     enum {
         IN_COTE ,
         IN_DOUBLE_COTE,
-        GENERAL 
+        GENERAL
     }           state;
     char        *cmd;
     struct s_data *next;
@@ -52,6 +52,13 @@ typedef struct s_vars
     char        data_type;
     Datatoken   *ndata;
 } t_vars;
+
+typedef struct s_leaks
+{
+    void    *add;
+    struct s_leaks *next;
+}   t_leaks;
+
 
 int		lexer(char *str, t_vars *data);
 char	**split_lexer(char const *s, char *c);
