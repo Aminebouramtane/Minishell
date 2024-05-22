@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:39:22 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 16:08:29 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:37:12 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		inside_dqoutes(char *str, t_vars *data)
 	Datatoken	*node;
 
 	i = 0;
-	while ((size_t)i < ft_strlen(str))
+	while (i < ft_strlen(str))
 	{
 		if (!in_delimiters(str[i], "|<>$ \t\'\""))
 			fill_string_in_node(str, &i, data, "|<>$ \t\'\"");

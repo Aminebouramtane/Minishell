@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 15:03:30 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:47:09 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	    ft_malloc_lstclear(t_leaks **lst);
 void	    ft_malloc_lstadd_back(t_leaks **lst, t_leaks *new);
 t_leaks	    *malloc_lstnew(void *content);
 void        *ft_malloc(int size, int flag);
+char	*my_strdup_two(const char *s1);
+void    	ft_expand(Datatoken *lst);
 
 
 #endif

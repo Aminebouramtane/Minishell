@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 10:28:21 by abouramt          #+#    #+#             */
-/*   Updated: 2023/11/25 16:09:33 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:46:29 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 char	*ft_strchr(const char *s, int c);
-size_t	ft_strlen(const char *c);
+int	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_toupper(int c);

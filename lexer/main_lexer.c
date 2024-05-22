@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 15:54:29 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:53:13 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int		lexer(char *str, t_vars *data)
 	int			i;
 
 	i = 0;
-	while ((size_t)i < ft_strlen(str))
+	while (i < ft_strlen(str))
 	{
-		if (!in_delimiters(str[i], "|<>$ \t\'\""))
-			fill_string_in_node(str, &i, data, "|<>$ \t\'\"");
+		if (!in_delimiters(str[i], "|<>$() \t\'\""))
+			fill_string_in_node(str, &i, data, "|<>$() \t\'\"");
 		if (str[i] == '\'')
 			fill_qoute_in_node(str, &i, data);
 		if (str[i] == '\"')
@@ -47,6 +47,7 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == ' ' || str[i] == '\t')
 			fill_white_spaces_in_node(str, &i, data);
 	}
+	ft_expand(data->ndata);
 	while (data->ndata)
 	{
 		printf("cmd >>>%s\n", data->ndata->cmd);
