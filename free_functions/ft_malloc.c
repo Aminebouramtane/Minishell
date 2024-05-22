@@ -6,11 +6,11 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:06:41 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/21 10:20:04 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:05:35 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_malloc_lstclear(t_leaks **lst)
 {
@@ -24,6 +24,7 @@ void	ft_malloc_lstclear(t_leaks **lst)
 		{
 			n = c->next;
             free(c->add);
+			c->add = NULL;
 			free(c);
 			c = n;
 		}
@@ -73,4 +74,5 @@ void    *ft_malloc(int size, int flag)
             return (NULL);
         ft_malloc_lstadd_back(&add, malloc_lstnew(tmp));
     }
+	return (tmp);
 }

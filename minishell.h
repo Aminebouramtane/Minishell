@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/21 11:37:01 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:47:09 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_vars
 {
     char        data_type;
     int         flag;
+    int         f_qoute;
     Datatoken   *ndata;
 } t_vars;
 
@@ -74,16 +75,18 @@ void	    fill_dqoute_in_node(char *str, int *i, t_vars *data);
 void	    fill_qoute_in_node(char *str, int *i, t_vars *data);
 void	    fill_open_in_node(int *i, t_vars *data);
 void	    fill_close_in_node(int *i, t_vars *data);
-void	    fill_input_in_node(int *i, t_vars *data);
+void	    fill_input_in_node(char *str, int *i, t_vars *data);
 void	    fill_output_in_node(int *i, t_vars *data);
 void	    fill_string_in_node(char *str, int *i, t_vars *data, char *delimiters);
 void	    fill_pipe_in_node(int *i, t_vars *data);
 void	    fill_env_in_node(char *str, int *i, t_vars *data, char *delimiters);
-void	    fill_white_spaces_in_node(char *str, int *i, t_vars *data, char *delimiters);
+void	    fill_white_spaces_in_node(char *str, int *i, t_vars *data);
 void	    ft_malloc_lstclear(t_leaks **lst);
 void	    ft_malloc_lstadd_back(t_leaks **lst, t_leaks *new);
 t_leaks	    *malloc_lstnew(void *content);
 void        *ft_malloc(int size, int flag);
+char	*my_strdup_two(const char *s1);
+void    	ft_expand(Datatoken *lst);
 
 
 #endif

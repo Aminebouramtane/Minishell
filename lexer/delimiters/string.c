@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:46:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/21 11:19:52 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:50:18 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	fill_string_in_node(char *str, int *i, t_vars *data, char *delimiters)
 	}
 	*i = end;
 	tmp = my_strdup(str + start, end - start);
-	node = ft_my_lstnew(tmp, 's', GENERAL);
+	if (data->flag)
+		node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
+	else
+		node = ft_my_lstnew(tmp, 's', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
 }

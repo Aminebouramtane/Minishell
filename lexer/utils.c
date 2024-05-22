@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:44:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/21 11:26:19 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:46:05 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,30 @@ char	*my_strdup(const char *s1, int size)
 	int		j;
 	char	*tab;
 
-	tab = (char *)malloc(sizeof(char) * (size));
+	if (!s1 || !*s1 || size == 0)
+		return (NULL);
+	tab = (char *)ft_malloc(sizeof(char) * (size), 0);
+	if (tab == NULL)
+		return (NULL);
+	j = 0;
+	while (j < size)
+	{
+		tab[j] = s1[j];
+		j++;
+	}
+	tab[j] = '\0';
+	return (tab);
+}
+
+char	*my_strdup_two(const char *s1)
+{
+	int		j;
+	char	*tab;
+	int		size;
+	if (!s1 || !*s1)
+		return (NULL);
+	size = ft_strlen(s1);
+	tab = (char *)ft_malloc(sizeof(char) * ft_strlen(s1), 0);
 	if (tab == NULL)
 		return (NULL);
 	j = 0;
@@ -82,7 +105,7 @@ Datatoken	*ft_my_lstnew(void *content, char type, char state)
 {
 	Datatoken	*my_node;
 
-	my_node = (Datatoken *)malloc(sizeof(Datatoken));
+	my_node = (Datatoken *)ft_malloc(sizeof(Datatoken), 0);
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = content;
@@ -93,19 +116,35 @@ Datatoken	*ft_my_lstnew(void *content, char type, char state)
 	return (my_node);
 }
 
+Datatoken	*ft_my_lstlast(Datatoken *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+	{
+		lst = lst->next;
+	}
+	return (lst);
+}
+
 void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 {
 	Datatoken	*last;
+	Datatoken	*prev;
+	Datatoken	*tmp;
 
 	if (!*lst)
 	{
 		*lst = new;
 		return ;
 	}
+	tmp = *lst;
+	prev = ft_my_lstlast(tmp);
 	last = *lst;
 	while (last->next)
 		last = last->next;
 	last->next = new;
+	last->prev = prev;
 }
 
 void	ft_my_lstclear(Datatoken **lst)
