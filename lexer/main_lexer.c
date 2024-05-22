@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/21 11:40:02 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:18:31 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		lexer(char *str, t_vars *data)
 	i = 0;
 	while ((size_t)i < ft_strlen(str))
 	{
-		printf("dfdsfsdfsdfsd\n");
 		if (!in_delimiters(str[i], "|<>$ \t\'\""))
 			fill_string_in_node(str, &i, data, "|<>$ \t\'\"");
 		if (str[i] == '\'')
