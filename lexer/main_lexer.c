@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 15:18:31 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:54:29 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == '\"')
 			fill_dqoute_in_node(str, &i, data);
 		if (str[i] == '<')
-			fill_input_in_node(&i, data);
+			fill_input_in_node(str, &i, data);
 		if (str[i] == '>')
 			fill_output_in_node(&i, data);
 		if (str[i] == '$')
@@ -44,18 +44,17 @@ int		lexer(char *str, t_vars *data)
 			fill_open_in_node(&i, data);
 		if (str[i] == ')')
 			fill_close_in_node(&i, data);
-		if (in_delimiters(str[i], " \t"))
-			fill_white_spaces_in_node(str, &i, data, " \t");
-		if (data->flag == 1)
-			break;
+		if (str[i] == ' ' || str[i] == '\t')
+			fill_white_spaces_in_node(str, &i, data);
 	}
-	while (data->ndata->next)
+	while (data->ndata)
 	{
 		printf("cmd >>>%s\n", data->ndata->cmd);
 		printf("state >>>%d\n", data->ndata->state);
 		printf("type >>>%c\n", data->ndata->type);
 		printf("========================\n");
 		data->ndata = data->ndata->next;	
+		// <Makefile catt | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	}
 	return(1);
 }
