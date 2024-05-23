@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:37:16 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/23 09:38:47 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:51:28 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_leaks
 int		    lexer(char *str, t_vars *data);
 char	    **split_lexer(char const *s, char *c);
 int         in_delimiters(char a, char *delimiters);
-void	    check_quotes(char *str);
 int         end_of_cmd(char *str, char *delimiter);
 char	    *my_strdup(const char *s1, int size);
 Datatoken	*ft_my_lstnew(void *content, char type, char state);
@@ -88,5 +87,7 @@ void        *ft_malloc(int size, int flag);
 char	*my_strdup_two(const char *s1);
 void    	ft_expand_dolar(Datatoken *lst);
 void	ft_expand_home(Datatoken *lst);
+
+int     check_quotes(char *str);
 
 #endif
