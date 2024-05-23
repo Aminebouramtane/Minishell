@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:46:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 18:53:13 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:00:39 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == ' ' || str[i] == '\t')
 			fill_white_spaces_in_node(str, &i, data);
 	}
-	ft_expand(data->ndata);
+	ft_expand_dolar(data->ndata);
+	ft_expand_home(data->ndata);
 	while (data->ndata)
 	{
-		printf("cmd >>>%s\n", data->ndata->cmd);
-		printf("state >>>%d\n", data->ndata->state);
-		printf("type >>>%c\n", data->ndata->type);
+		printf("cmd ## %s\n", data->ndata->cmd);
+		printf("state ## %d\n", data->ndata->state);
+		printf("type ## %c\n", data->ndata->type);
 		printf("========================\n");
 		data->ndata = data->ndata->next;	
-		// <Makefile catt | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+		// <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	}
 	return(1);
 }
