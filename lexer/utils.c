@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 11:44:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/22 18:46:05 by abouramt         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -127,25 +116,43 @@ Datatoken	*ft_my_lstlast(Datatoken *lst)
 	return (lst);
 }
 
+// void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
+// {
+// 	Datatoken	*last;
+// 	Datatoken	*prev;
+// 	Datatoken	*tmp;
+
+// 	if (!*lst)
+// 	{
+// 		*lst = new;
+// 		return ;
+// 	}
+// 	tmp = *lst;
+// 	prev = ft_my_lstlast(tmp);
+// 	last = *lst;
+// 	while (last->next)
+// 		last = last->next;
+// 	last->next = new;
+// 	last->prev = prev;
+// }
+
 void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 {
 	Datatoken	*last;
-	Datatoken	*prev;
-	Datatoken	*tmp;
 
 	if (!*lst)
 	{
 		*lst = new;
 		return ;
 	}
-	tmp = *lst;
-	prev = ft_my_lstlast(tmp);
 	last = *lst;
 	while (last->next)
 		last = last->next;
 	last->next = new;
-	last->prev = prev;
+	new->prev = last;
+	new->next = NULL;
 }
+
 
 void	ft_my_lstclear(Datatoken **lst)
 {
@@ -163,5 +170,16 @@ void	ft_my_lstclear(Datatoken **lst)
 			c = n;
 		}
 		*lst = NULL;
+	}
+}
+
+void	ft_my_lstdelone(Datatoken *lst)
+{
+	if (!lst)
+		return ;
+	if (lst)
+	{
+		free(lst->cmd);
+		free(lst);
 	}
 }
