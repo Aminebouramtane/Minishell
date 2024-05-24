@@ -29,8 +29,8 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == ' ' || str[i] == '\t')
 			fill_white_spaces_in_node(str, &i, data);
 	}
-	ft_expand_dolar(data->ndata);
-	ft_expand_home(data->ndata);
+
+	ft_expand(data->ndata);
 	while (data->ndata)
 	{
 		printf("cmd ## %s\n", data->ndata->cmd);

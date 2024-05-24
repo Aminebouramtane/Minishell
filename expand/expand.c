@@ -37,7 +37,7 @@ void	ft_expand_home(Datatoken *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->cmd[0] == '~')
+		if (node->cmd[0] == '~' && node->state == 2)
 		{
 			node->cmd++;
 
@@ -51,4 +51,48 @@ void	ft_expand_home(Datatoken *lst)
 		}
 		node = node->next;
 	}
+}
+
+void	ft_remove_dqoutes(Datatoken *lst)
+{
+	Datatoken	*node;
+
+	node = lst;
+	while (node)
+	{
+		if (node->cmd[0] == '\"')
+			node->prev->next = node->next;
+		node = node->next;
+	}
+}
+
+void	ft_remove_qoutes(Datatoken *lst)
+{
+	Datatoken	*node;
+	char		*str;
+	int			i;
+
+	node = lst;
+	i = 0;
+	str = NULL;
+	while (node)
+	{
+		if (node->cmd[0] == '\'' && node->state == 0)
+		{
+			node->cmd++;
+			while (node->cmd[i] != '\'')
+				i++;
+			str = my_strdup(node->cmd, i);
+			node->cmd = str;
+		}
+		node = node->next;
+	}
+}
+
+void	ft_expand(Datatoken *lst)
+{
+	ft_expand_dolar(lst);
+	ft_expand_home(lst);
+	ft_remove_dqoutes(lst);
+	ft_remove_qoutes(lst);
 }

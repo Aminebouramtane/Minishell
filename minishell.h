@@ -50,6 +50,24 @@ typedef struct s_leaks
     struct s_leaks *next;
 }   t_leaks;
 
+//START PARCING>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// typedef struct s_parce_node
+// {
+//     enum
+//     {
+//         CMD,
+//         PIPE
+//     }   type;
+//     char    *content;
+// }   t_parce_node;
+
+// typedef struct s_ast_aprce
+// {
+//     t_parce_node    *root;
+// }   t_ast_parce;
+
+
 
 int		    lexer(char *str, t_vars *data);
 char	    **split_lexer(char const *s, char *c);
@@ -73,10 +91,14 @@ void	    ft_malloc_lstclear(t_leaks **lst);
 void	    ft_malloc_lstadd_back(t_leaks **lst, t_leaks *new);
 t_leaks	    *malloc_lstnew(void *content);
 void        *ft_malloc(int size, int flag);
-char	*my_strdup_two(const char *s1);
-void    	ft_expand_dolar(Datatoken *lst);
-void	ft_expand_home(Datatoken *lst);
+char	    *my_strdup_two(const char *s1);
 
-int     check_quotes(char *str);
-
+int         check_quotes(char *str);
+void	    ft_my_lstdelone(Datatoken *lst);
+// void    ft_expand_dolar(Datatoken *lst);
+// void	ft_expand_home(Datatoken *lst);
+// void	ft_remove_dqoutes(Datatoken *lst);
+// void	ft_remove_qoutes(Datatoken *lst);
+void	    ft_expand(Datatoken *lst);
+Datatoken	*ft_my_lstlast(Datatoken *lst);
 #endif
