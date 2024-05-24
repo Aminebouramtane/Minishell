@@ -99,6 +99,6 @@ void	    ft_my_lstdelone(Datatoken *lst);
 // void	ft_expand_home(Datatoken *lst);
 // void	ft_remove_dqoutes(Datatoken *lst);
 // void	ft_remove_qoutes(Datatoken *lst);
-void	    ft_expand(Datatoken *lst);
+void        ft_expand(Datatoken *lst);
 Datatoken	*ft_my_lstlast(Datatoken *lst);
 #endif

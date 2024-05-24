@@ -29,7 +29,8 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == ' ' || str[i] == '\t')
 			fill_white_spaces_in_node(str, &i, data);
 	}
-
+	if (data->ndata->cmd[0] == '\"')
+		data->ndata = data->ndata->next;
 	ft_expand(data->ndata);
 	while (data->ndata)
 	{
