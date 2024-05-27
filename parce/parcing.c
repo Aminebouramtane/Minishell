@@ -63,7 +63,6 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
         (*node) = (*node)->next;
     }
 	(*parce)->cmd = str;
-    printf("===================================>%s\n", (*parce)->cmd);
 }
 
 void    ft_parce(t_parce_node **parce, t_vars *data)
@@ -74,9 +73,6 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
 
     node = data->ndata;
     file = NULL;
-    // file = ft_malloc(sizeof(t_file), 0);
-    // if (!file)
-    //     return (NULL);
     *parce = ft_parce_lstnew(NULL, NULL, NULL, file);
     parce_node = *parce;
     while (node)
