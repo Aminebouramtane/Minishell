@@ -32,7 +32,7 @@ void		inside_dqoutes(char *str, t_vars *data)
 		if (str[i] == '<')
 			fill_input_in_node(str, &i, data);
 		if (str[i] == '>')
-			fill_output_in_node(&i, data);
+			fill_output_in_node(str, &i, data);
 		if (str[i] == '$')
 			fill_env_in_node(str, &i, data, "|<>$ \t\'\"");
 		if (str[i] == '|')

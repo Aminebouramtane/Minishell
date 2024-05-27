@@ -17,9 +17,9 @@ int		lexer(char *str, t_vars *data)
 		if (str[i] == '<')
 			fill_input_in_node(str, &i, data);
 		if (str[i] == '>')
-			fill_output_in_node(&i, data);
+			fill_output_in_node(str, &i, data);
 		if (str[i] == '$')
-			fill_env_in_node(str, &i, data, "|<>$ \t\'\"");
+			fill_env_in_node(str, &i, data, "|<>$+-/%%#@!* \t\'\"");
 		if (str[i] == '|')
 			fill_pipe_in_node(&i, data);
 		if (str[i] == '(')
@@ -31,15 +31,5 @@ int		lexer(char *str, t_vars *data)
 	}
 	if (data->ndata->cmd[0] == '\"')
 		data->ndata = data->ndata->next;
-	ft_expand(data->ndata);
-	while (data->ndata)
-	{
-		printf("cmd ## %s\n", data->ndata->cmd);
-		printf("state ## %d\n", data->ndata->state);
-		printf("type ## %c\n", data->ndata->type);
-		printf("========================\n");
-		data->ndata = data->ndata->next;	
-		// <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
-	}
 	return(1);
 }

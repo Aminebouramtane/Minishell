@@ -9,7 +9,8 @@ CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimiters/qoutes.c lexer/delimiters/parentheses.c lexer/delimiters/input_output.c \
 	lexer/delimiters/string.c lexer/delimiters/pipe.c lexer/delimiters/env.c\
-	 lexer/delimiters/white_spaces.c free_functions/ft_malloc.c expand/expand.c parce/check_quotes.c
+	lexer/delimiters/white_spaces.c free_functions/ft_malloc.c expand/expand.c parce/check_quotes.c parce/parcing.c \
+	parce/utils.c parce/utils2.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -25,3 +26,6 @@ fclean :
 	rm -f $(OBJ) $(NAME)
 
 re : fclean all
+
+run : re
+	./minishell

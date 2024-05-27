@@ -52,20 +52,26 @@ typedef struct s_leaks
 
 //START PARCING>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-// typedef struct s_parce_node
-// {
-//     enum
-//     {
-//         CMD,
-//         PIPE
-//     }   type;
-//     char    *content;
-// }   t_parce_node;
+typedef struct s_file
+{
+    char    *file;
+    int     redir_in;
+    int     redir_out;
+    struct s_file  *next;
+    struct s_file  *prev;
+}   t_file;
 
-// typedef struct s_ast_aprce
-// {
-//     t_parce_node    *root;
-// }   t_ast_parce;
+
+typedef struct s_parce_node
+{
+    char    *cmd;
+    char    **args;
+    char    *in_file;
+    char    *out_file;
+    t_file  *file;
+    struct  s_parce_node    *next;
+    struct  s_parce_node    *prev;
+}   t_parce_node;
 
 
 
@@ -82,7 +88,7 @@ void	    fill_qoute_in_node(char *str, int *i, t_vars *data);
 void	    fill_open_in_node(int *i, t_vars *data);
 void	    fill_close_in_node(int *i, t_vars *data);
 void	    fill_input_in_node(char *str, int *i, t_vars *data);
-void	    fill_output_in_node(int *i, t_vars *data);
+void	    fill_output_in_node(char *str, int *i, t_vars *data);
 void	    fill_string_in_node(char *str, int *i, t_vars *data, char *delimiters);
 void	    fill_pipe_in_node(int *i, t_vars *data);
 void	    fill_env_in_node(char *str, int *i, t_vars *data, char *delimiters);
@@ -95,10 +101,23 @@ char	    *my_strdup_two(const char *s1);
 
 int         check_quotes(char *str);
 void	    ft_my_lstdelone(Datatoken *lst);
+int     	ft_parce_lstsize(Datatoken *lst);
 // void    ft_expand_dolar(Datatoken *lst);
 // void	ft_expand_home(Datatoken *lst);
 // void	ft_remove_dqoutes(Datatoken *lst);
 // void	ft_remove_qoutes(Datatoken *lst);
 void        ft_expand(Datatoken *lst);
 Datatoken	*ft_my_lstlast(Datatoken *lst);
+
+void            ft_parce(t_parce_node **parce, t_vars *data);
+t_parce_node	*ft_parce_lstnew(void *cmd, char *infile, char *outfile, t_file *file);
+t_parce_node	*ft_parce_lstlast(t_parce_node *lst);
+void	        ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new);
+
+t_file	*ft_file_lstnew(char *file, int redir_in, int redir_out);
+t_file	*ft_file_lstlast(t_file *lst);
+void	ft_file_lstadd_back(t_file **lst, t_file *new);
+
+
+
 #endif

@@ -53,25 +53,9 @@ void	ft_expand_home(Datatoken *lst)
 	}
 }
 
-// void	ft_remove_dqoutes(Datatoken *lst)
-// {
-// 	Datatoken	*node;
-
-// 	node = lst;
-// 	while (node)
-// 	{
-// 		if (node->cmd[0] == '\"')
-// 			node->prev->next = node->next;
-// 		node = node->next;
-// 	}
-// }
-
-
 void	ft_remove_dqoutes(Datatoken **lst)
 {
 	Datatoken	*node;
-	Datatoken	*temp;
-
 
 	node = *lst;
 	while (node)
@@ -85,15 +69,12 @@ void	ft_remove_dqoutes(Datatoken **lst)
 				node->next->prev = node->prev;
 			if (node == *lst)
 				*lst = node->next;
-			temp = node;
 			node = node->next;
 		}
 		else
 			node = node->next;
 	}
 }
-
-
 
 void	ft_remove_qoutes(Datatoken *lst)
 {
@@ -123,6 +104,5 @@ void	ft_expand(Datatoken *lst)
 	ft_expand_dolar(lst);
 	ft_expand_home(lst);
 	ft_remove_qoutes(lst);
-	// exit(1);
 	ft_remove_dqoutes(&lst);
 }
