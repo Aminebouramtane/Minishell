@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:34:02 by abouramt          #+#    #+#             */
-/*   Updated: 2023/11/24 17:08:32 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:30:06 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*ptr;
 	int		len;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
 	i = 0;
 	j = 0;

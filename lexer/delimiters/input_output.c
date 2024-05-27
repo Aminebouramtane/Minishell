@@ -4,34 +4,48 @@
 void	fill_input_in_node(char *str, int *i, t_vars *data)
 {
 	Datatoken	*node;
+	int			a;
 
-	if (str[*i + 1] == '<')
+	a = *i;
+	if (str[a + 1] == '<')
 	{
 		if (data->flag)
 			node = ft_my_lstnew("<<", 'h', IN_DOUBLE_COTE);
 		else
 			node = ft_my_lstnew("<<", 'h', GENERAL);
-		*i = *i + 1;
+		a = a + 2;
+		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+			a++;
+		*i = a;
 	}
 	else
-	{		
+	{
 		if (data->flag)
 			node = ft_my_lstnew("<", '<', IN_DOUBLE_COTE);
 		else
 			node = ft_my_lstnew("<", '<', GENERAL);
+		a++;
+		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+			a++;
+		*i = a;
 	}
 	ft_my_lstadd_back(&(data->ndata), node);
-	*i = *i + 1;
 }
 
-void	fill_output_in_node(int *i, t_vars *data)
+void	fill_output_in_node(char *str, int *i, t_vars *data)
 {
 	Datatoken	*node;
+	int			a;
 
+	(void)str;
+	a = *i;
 	if (data->flag)
 		node = ft_my_lstnew(">", '>', IN_DOUBLE_COTE);
 	else
 		node = ft_my_lstnew(">", '>', GENERAL);
+	a++;
+	while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+		a++;
+	*i = a;
 	ft_my_lstadd_back(&(data->ndata), node);
-	*i = *i + 1;
 }
