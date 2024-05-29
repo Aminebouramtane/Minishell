@@ -42,17 +42,18 @@ int main(int ac, char **av)
             data->ndata = data->ndata->next;
             // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	    }
-        printf("#############################################\n");
+        printf("####################PARSING#########################\n");
         while (parce)
 	    {
             printf("cmd ## %s\n", parce->cmd);
-            printf("in_file ## %s\n", parce->in_file);
-            printf("out_file ## %s\n", parce->out_file);
             while (parce->file)
             {
                 printf("-----------FILE : %s\n", parce->file->file);
                 printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
                 printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
+                printf("-----------HEREDOC : %d\n", parce->file->heredoc);
+                printf("-----------EOF : %s\n", parce->file->eof);
+                printf("-----------INDEX : %d\n", parce->file->index);
                 printf("======================================\n");
                 parce->file = parce->file->next;
             }
