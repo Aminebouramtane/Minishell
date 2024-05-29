@@ -12,11 +12,12 @@ void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
     (*node) = (*node)->next;
     while (*node)
     {
-        if ((*node)->type == 'w' && (*node)->state == GENERAL)
-        {
-            (*node) = (*node)->next;
+        if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+        || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
+        || (*node)->type == '|' || !*node)
             break;
-        }
         else
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
@@ -33,11 +34,12 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
     (*node) = (*node)->next;
     while ((*node))
     {
-        if ((*node)->type == 'w' && (*node)->state == GENERAL)
-        {
-            (*node) = (*node)->next;
+        if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+        || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
+        || (*node)->type == '|' || !*node)
             break;
-        }
         else
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
@@ -48,9 +50,6 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
 
 void    ft_cmd(Datatoken **node, t_parce_node **parce)
 {
-    // char    *str;
-
-	// str = NULL;
     while (*node)
     {
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
@@ -62,7 +61,6 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
             (*parce)->cmd = ft_my_strjoin((*parce)->cmd, (*node)->cmd);
         (*node) = (*node)->next;
     }
-	// (*parce)->cmd = str;
 }
 
 void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag)
@@ -73,18 +71,17 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
     (*node) = (*node)->next;
     while ((*node))
     {
-        if ((*node)->type == 'w' && (*node)->state == GENERAL)
-        {
-            (*node) = (*node)->next;
+        if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+        || (*node)->cmd[0] == '|' || !*node)
             break;
-        }
         else
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
     ft_file_lstadd_back(file, ft_file_heredoc_lstnew(1, str, *flag));
     (*parce)->file = *file;
-    printf("--------------------------------%d\n", (*parce)->file->index);
 }
 
 void    ft_parce(t_parce_node **parce, t_vars *data)
