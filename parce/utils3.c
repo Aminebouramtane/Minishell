@@ -1,0 +1,48 @@
+
+
+#include "../minishell.h"
+
+t_file	*ft_file_heredoc_lstnew(int heredoc, char *eof, int index)
+{
+	t_file	*my_node;
+
+	my_node = (t_file *)ft_malloc(sizeof(t_file), 0);
+	if (my_node == NULL)
+		return (NULL);
+	my_node->file = NULL;
+	my_node->redir_in = 0;
+	my_node->redir_out = 0;
+	my_node->heredoc = heredoc;
+	my_node->eof = eof;
+	my_node->index = index;
+	my_node->next = NULL;
+	my_node->prev = NULL;
+	return (my_node);
+}
+
+t_file	*ft_file_heredoc_lstlast(t_file *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_file_heredoc_lstadd_back(t_file **lst, t_file *new)
+{
+	t_file	*last;
+
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next)
+		last = last->next;
+	last->next = new;
+	new->prev = last;
+	new->next = NULL;
+}
+

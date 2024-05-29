@@ -2,7 +2,7 @@
 
 #include "../minishell.h"
 
-t_parce_node	*ft_parce_lstnew(void *cmd, char *infile, char *outfile, t_file *file)
+t_parce_node	*ft_parce_lstnew(void *cmd, t_file *file)
 {
 	t_parce_node	*my_node;
 
@@ -10,8 +10,6 @@ t_parce_node	*ft_parce_lstnew(void *cmd, char *infile, char *outfile, t_file *fi
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = cmd;
-	my_node->in_file = infile;
-	my_node->out_file = outfile;
 	my_node->file = file;
 	my_node->prev = NULL;
 	my_node->next = NULL;

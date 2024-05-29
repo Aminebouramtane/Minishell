@@ -57,6 +57,9 @@ typedef struct s_file
     char    *file;
     int     redir_in;
     int     redir_out;
+    int     heredoc;
+    char    *eof;
+    int     index;
     struct s_file  *next;
     struct s_file  *prev;
 }   t_file;
@@ -66,8 +69,6 @@ typedef struct s_parce_node
 {
     char    *cmd;
     char    **args;
-    char    *in_file;
-    char    *out_file;
     t_file  *file;
     struct  s_parce_node    *next;
     struct  s_parce_node    *prev;
@@ -102,21 +103,20 @@ char	    *my_strdup_two(const char *s1);
 int         check_quotes(char *str);
 void	    ft_my_lstdelone(Datatoken *lst);
 int     	ft_parce_lstsize(Datatoken *lst);
-// void    ft_expand_dolar(Datatoken *lst);
-// void	ft_expand_home(Datatoken *lst);
-// void	ft_remove_dqoutes(Datatoken *lst);
-// void	ft_remove_qoutes(Datatoken *lst);
 void        ft_expand(Datatoken *lst);
 Datatoken	*ft_my_lstlast(Datatoken *lst);
 
 void            ft_parce(t_parce_node **parce, t_vars *data);
-t_parce_node	*ft_parce_lstnew(void *cmd, char *infile, char *outfile, t_file *file);
+t_parce_node	*ft_parce_lstnew(void *cmd, t_file *file);
 t_parce_node	*ft_parce_lstlast(t_parce_node *lst);
 void	        ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new);
 
 t_file	*ft_file_lstnew(char *file, int redir_in, int redir_out);
 t_file	*ft_file_lstlast(t_file *lst);
 void	ft_file_lstadd_back(t_file **lst, t_file *new);
+t_file	*ft_file_heredoc_lstnew(int heredoc, char *eof, int index);
+t_file	*ft_file_heredoc_lstlast(t_file *lst);
+void	ft_file_heredoc_lstadd_back(t_file **lst, t_file *new);
 
 
 

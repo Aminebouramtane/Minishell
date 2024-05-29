@@ -12,6 +12,9 @@ t_file	*ft_file_lstnew(char *file, int redir_in, int redir_out)
 	my_node->file = file;
 	my_node->redir_in = redir_in;
 	my_node->redir_out = redir_out;
+	my_node->heredoc = 0;
+	my_node->eof = NULL;
+	my_node->index = 0;
 	my_node->next = NULL;
 	my_node->prev = NULL;
 	return (my_node);

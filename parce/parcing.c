@@ -1,6 +1,7 @@
 
 
 #include "../minishell.h"
+
 char	*ft_my_strjoin(char const *s1, char const *s2);
 
 void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
@@ -21,7 +22,6 @@ void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
         (*node) = (*node)->next;
     }
     ft_file_lstadd_back(file, ft_file_lstnew(str, 1, 0));
-    (*parce)->in_file = str;
     (*parce)->file = *file;
 }
 
@@ -43,27 +43,48 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
         (*node) = (*node)->next;
     }
     ft_file_lstadd_back(file, ft_file_lstnew(str, 0, 1));
-    (*parce)->out_file = str;
     (*parce)->file = *file;
 }
 
 void    ft_cmd(Datatoken **node, t_parce_node **parce)
 {
-    char    *str;
+    // char    *str;
 
-	str = NULL;
+	// str = NULL;
     while (*node)
     {
-        if (((*node)->cmd[0] == '<' && (*node)->type == '<')
-        || ((*node)->cmd[0] == '>' && (*node)->type == '>')
+        if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || (*node)->type == '|' || !*node)
             break ;
+        else
+            (*parce)->cmd = ft_my_strjoin((*parce)->cmd, (*node)->cmd);
+        (*node) = (*node)->next;
+    }
+	// (*parce)->cmd = str;
+}
+
+void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag)
+{
+    char	*str;
+
+	str = NULL;
+    (*node) = (*node)->next;
+    while ((*node))
+    {
+        if ((*node)->type == 'w' && (*node)->state == GENERAL)
+        {
+            (*node) = (*node)->next;
+            break;
+        }
         else
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
-	(*parce)->cmd = str;
-    printf("===================================>%s\n", (*parce)->cmd);
+    ft_file_lstadd_back(file, ft_file_heredoc_lstnew(1, str, *flag));
+    (*parce)->file = *file;
+    printf("--------------------------------%d\n", (*parce)->file->index);
 }
 
 void    ft_parce(t_parce_node **parce, t_vars *data)
@@ -71,24 +92,29 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
     Datatoken       *node;
 	t_parce_node	*parce_node;
     t_file          *file;
+    int             flag;
 
     node = data->ndata;
     file = NULL;
-    // file = ft_malloc(sizeof(t_file), 0);
-    // if (!file)
-    //     return (NULL);
-    *parce = ft_parce_lstnew(NULL, NULL, NULL, file);
+    *parce = ft_parce_lstnew(NULL, file);
     parce_node = *parce;
+    flag = -1;
     while (node)
     {
-        if (node->cmd[0] == '<' && node->type == '<')
+        if (node->cmd[0] == '<' && node->type == '<' && node->state == 2)
             ft_input(&node, &parce_node, &file);
-        else if (node->cmd[0] == '>' && node->type == '>')
+        else if (node->cmd[0] == '>' && node->type == '>' && node->state == 2)
             ft_output(&node, &parce_node, &file);
+        else if (node->cmd[0] == '<' && node->type == 'h' && node->state == 2)
+        {
+            flag++;
+            ft_heredoc(&node, &parce_node, &file, &flag);
+        }
         else if ((node->cmd[0] == '|' && node->type == '|'))
         {
-			ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL, NULL, NULL));
+			ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
             file = NULL;
+            flag = -1;
             parce_node = parce_node->next;
             node = node->next;
 		}
@@ -140,5 +166,4 @@ char	*ft_my_strjoin(char const *s1, char const *s2)
         return (ptr);  
     }
     return (NULL);
-    
 }
