@@ -28,7 +28,7 @@ static	int	count_word(char const *s, char *c)
 	i = 0;
 	while (s[i])
 	{
-        if (s[i] == '\"' || s[i] == '\'')
+        if (s[i] == '\"')
         {
             if (is_quotes)
                 is_quotes = 0;
@@ -49,7 +49,7 @@ static	int	count_word(char const *s, char *c)
 
 void    check_quote(char c, int *index)
 {
-    if (c == '\"' || c == '\'')
+    if (c == '\"')
     {
         if (!*index)
             *index = 1;
@@ -142,7 +142,7 @@ char	**split_lexer(char const *s, char *c)
 
 // 	i = 0;
 // 	(void)ac;
-// 	char **str = split_lexer( av[1], "\' \t\n\r\f\v");
+// 	char **str = split_lexer( av[1], " \t\n\r\f\v");
 // 	while (str[i])
 // 	{
 // 		printf("%s\n", str[i]);
