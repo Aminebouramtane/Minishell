@@ -142,7 +142,7 @@ char	**split_lexer(char const *s, char *c)
 
 // 	i = 0;
 // 	(void)ac;
-// 	char **str = split_lexer( av[1], " \t\n\r\f\v");
+// 	char **str = split_lexer( av[1], "\' \t\n\r\f\v");
 // 	while (str[i])
 // 	{
 // 		printf("%s\n", str[i]);
