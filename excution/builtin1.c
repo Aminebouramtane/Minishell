@@ -55,23 +55,25 @@ void	ft_echo(t_parce_node *parce)
 	j = 0;
 	if (parce->args[i] == NULL)
 		ft_putstr_fd("\n", 1);
-	if (parce->args[1][j] == '-')
+	else if (parce->args[1][j] == '-')
 	{
+		j++;
 		while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
 			j++;
 		if (parce->args[i][j] == '\0')
 		{
 			i = 2;
 			echo_print(parce, i);
+			printf("hehe");
 		}
 		else
 		{
-			i = 2;
+			i = 1;
 			echo_print(parce, i);
+			ft_putstr_fd("\n", 1);
 		}	
 	}
 	else
 		echo_without_flag(parce);
 	
 }
-
