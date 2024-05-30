@@ -125,4 +125,13 @@ void	ft_file_append_lstadd_back(t_file **lst, t_file *new);
 char	**split_lexer(char const *s, char *c);
 
 
+//-=----------------------------------execution_prototypes--------------------------------------//
+
+
+int     check_builtins(char *cmd);
+void	ft_echo(t_parce_node *parce);
+void    ft_execute(t_parce_node *parce);
+void	run_builtin(t_parce_node *parce);
+
+
 #endif
