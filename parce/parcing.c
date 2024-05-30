@@ -16,7 +16,7 @@ void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
-        || (*node)->type == '|' || !*node)
+        || (*node)->type == '|')
             break;
         else
             str = ft_my_strjoin(str, (*node)->cmd);
@@ -24,6 +24,32 @@ void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
     }
     ft_file_lstadd_back(file, ft_file_lstnew(str, 1, 0));
     (*parce)->file = *file;
+    if (!*node)
+        (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
+}
+
+void    ft_append(Datatoken **node, t_parce_node **parce, t_file **file)
+{
+    char    *str;
+
+    str = NULL;
+    (*node) = (*node)->next;
+    while (*node)
+    {
+        if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+        || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
+        || (*node)->type == '|')
+            break;
+        else
+            str = ft_my_strjoin(str, (*node)->cmd);
+        (*node) = (*node)->next;
+    }
+    ft_file_lstadd_back(file, ft_file_append_lstnew(str, 1));
+    (*parce)->file = *file;
+    if (!*node)
+        (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
 }
 
 void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
@@ -38,7 +64,7 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
-        || (*node)->type == '|' || !*node)
+        || (*node)->type == '|')
             break;
         else
             str = ft_my_strjoin(str, (*node)->cmd);
@@ -46,6 +72,8 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
     }
     ft_file_lstadd_back(file, ft_file_lstnew(str, 0, 1));
     (*parce)->file = *file;
+    if (!*node)
+        (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
 }
 
 void    ft_cmd(Datatoken **node, t_parce_node **parce)
@@ -55,12 +83,14 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
-        || (*node)->type == '|' || !*node)
+        || (*node)->type == '|')
             break ;
         else
             (*parce)->cmd = ft_my_strjoin((*parce)->cmd, (*node)->cmd);
         (*node) = (*node)->next;
     }
+    if (!*node)
+        (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
 }
 
 void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag)
@@ -74,7 +104,7 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
-        || (*node)->cmd[0] == '|' || !*node)
+        || (*node)->cmd[0] == '|')
             break;
         else
             str = ft_my_strjoin(str, (*node)->cmd);
@@ -82,6 +112,8 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
     }
     ft_file_lstadd_back(file, ft_file_heredoc_lstnew(1, str, *flag));
     (*parce)->file = *file;
+    if (!*node)
+        (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
 }
 
 void    ft_parce(t_parce_node **parce, t_vars *data)
@@ -100,6 +132,8 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
     {
         if (node->cmd[0] == '<' && node->type == '<' && node->state == 2)
             ft_input(&node, &parce_node, &file);
+        else if (node->cmd[0] == '>' && node->type == 'a' && node->state == 2)
+            ft_append(&node, &parce_node, &file);
         else if (node->cmd[0] == '>' && node->type == '>' && node->state == 2)
             ft_output(&node, &parce_node, &file);
         else if (node->cmd[0] == '<' && node->type == 'h' && node->state == 2)
@@ -160,7 +194,7 @@ char	*ft_my_strjoin(char const *s1, char const *s2)
             j++;
         }
         ptr[i + j] = '\0';
-        return (ptr);  
+        return (ptr);
     }
     return (NULL);
 }

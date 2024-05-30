@@ -20,6 +20,7 @@ typedef struct s_data
         DOUBLE_COTE = '\"',
         REDIRECTION_IN = '<',
         REDIRECTION_OUT = '>',
+        APPEND = 'a',
         HERE_DOC = 'h',
         VARIABLE = '$',
         OPEN_PAREN = '(',
@@ -57,6 +58,7 @@ typedef struct s_file
     char    *file;
     int     redir_in;
     int     redir_out;
+    int     append;
     int     heredoc;
     char    *eof;
     int     index;
@@ -117,7 +119,10 @@ void	ft_file_lstadd_back(t_file **lst, t_file *new);
 t_file	*ft_file_heredoc_lstnew(int heredoc, char *eof, int index);
 t_file	*ft_file_heredoc_lstlast(t_file *lst);
 void	ft_file_heredoc_lstadd_back(t_file **lst, t_file *new);
-
+t_file	*ft_file_append_lstnew(char *file, int append);
+t_file	*ft_file_append_lstlast(t_file *lst);
+void	ft_file_append_lstadd_back(t_file **lst, t_file *new);
+char	**split_lexer(char const *s, char *c);
 
 
 #endif
