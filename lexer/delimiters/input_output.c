@@ -37,15 +37,28 @@ void	fill_output_in_node(char *str, int *i, t_vars *data)
 	Datatoken	*node;
 	int			a;
 
-	(void)str;
 	a = *i;
-	if (data->flag)
-		node = ft_my_lstnew(">", '>', IN_DOUBLE_COTE);
+	if (str[a + 1] == '>')
+	{
+		if (data->flag)
+			node = ft_my_lstnew(">>", 'a', IN_DOUBLE_COTE);
+		else
+			node = ft_my_lstnew(">>", 'a', GENERAL);
+		a = a + 2;
+		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+			a++;
+		*i = a;
+	}
 	else
-		node = ft_my_lstnew(">", '>', GENERAL);
-	a++;
-	while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+	{
+		if (data->flag)
+			node = ft_my_lstnew(">", '>', IN_DOUBLE_COTE);
+		else
+			node = ft_my_lstnew(">", '>', GENERAL);
 		a++;
-	*i = a;
+		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
+			a++;
+		*i = a;
+	}
 	ft_my_lstadd_back(&(data->ndata), node);
 }

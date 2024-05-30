@@ -8,6 +8,7 @@ int main(int ac, char **av)
 {
     char	*input;
     t_parce_node *parce;
+    int     i;
 
     (void)av;
     if (ac != 1)
@@ -46,6 +47,15 @@ int main(int ac, char **av)
         while (parce)
 	    {
             printf("cmd ## %s\n", parce->cmd);
+            if (parce->args)
+            {
+                i = 0;
+                while (parce->args[i])
+                {
+                    printf("args ## %s\n", parce->args[i]);
+                    i++;
+                }
+            }
             while (parce->file)
             {
                 printf("-----------FILE : %s\n", parce->file->file);
@@ -63,5 +73,6 @@ int main(int ac, char **av)
         free(input);
     }
     ft_malloc(sizeof(t_vars), 1);
+    ft_malloc(sizeof(t_parce_node), 1);
     return 0;
 }
