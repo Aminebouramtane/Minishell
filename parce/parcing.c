@@ -104,6 +104,7 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+        || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
         || (*node)->cmd[0] == '|')
             break;
         else
@@ -143,6 +144,7 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
         }
         else if ((node->cmd[0] == '|' && node->type == '|'))
         {
+            (*parce)->args = split_lexer((*parce)->cmd, "\"\'\t ");
 			ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
             file = NULL;
             flag = -1;
