@@ -37,6 +37,8 @@ int main(int ac, char **av)
         lexer(input, data);
         ft_expand(data->ndata);
         ft_parce(&parce, data);
+        if (syntax_err(data->ndata))
+            continue;
         while (data->ndata)
 	    {
             printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
