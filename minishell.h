@@ -123,6 +123,8 @@ t_file	*ft_file_append_lstnew(char *file, int append);
 t_file	*ft_file_append_lstlast(t_file *lst);
 void	ft_file_append_lstadd_back(t_file **lst, t_file *new);
 char	**split_lexer(char const *s, char *c);
+int     syntax_err(Datatoken *parce);
+int	ft_syntax_lstsize(Datatoken *lst);
 
 
 //-=----------------------------------execution_prototypes--------------------------------------//
