@@ -39,34 +39,35 @@ int main(int ac, char **av)
         ft_parce(&parce, data);
         if (syntax_err(data->ndata))
             continue;
+        ft_execute(parce);
         while (data->ndata)
 	    {
-            printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
+           // printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
             data->ndata = data->ndata->next;
             // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	    }
-        printf("####################PARSING#########################\n");
+        //printf("####################PARSING#########################\n");
         while (parce)
 	    {
-            printf("cmd ## %s\n", parce->cmd);
+            //printf("cmd ## %s\n", parce->cmd);
             if (parce->args)
             {
                 i = 0;
                 while (parce->args[i])
                 {
-                    printf("args ## %s\n", parce->args[i]);
+                   // printf("args ## %s\n", parce->args[i]);
                     i++;
                 }
             }
             while (parce->file)
             {
-                printf("-----------FILE : %s\n", parce->file->file);
-                printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
-                printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
-                printf("-----------HEREDOC : %d\n", parce->file->heredoc);
-                printf("-----------EOF : %s\n", parce->file->eof);
-                printf("-----------INDEX : %d\n", parce->file->index);
-                printf("======================================\n");
+                //printf("-----------FILE : %s\n", parce->file->file);
+                //printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
+                //printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
+                //printf("-----------HEREDOC : %d\n", parce->file->heredoc);
+                //printf("-----------EOF : %s\n", parce->file->eof);
+                //printf("-----------INDEX : %d\n", parce->file->index);
+                //printf("======================================\n");
                 parce->file = parce->file->next;
             }
             parce = parce->next;

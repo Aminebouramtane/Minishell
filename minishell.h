@@ -127,4 +127,13 @@ int     syntax_err(Datatoken *parce);
 int	ft_syntax_lstsize(Datatoken *lst);
 
 
+//-=----------------------------------execution_prototypes--------------------------------------//
+
+
+int     check_builtins(char *cmd);
+void	ft_echo(t_parce_node *parce);
+void    ft_execute(t_parce_node *parce);
+void	run_builtin(t_parce_node *parce);
+
+
 #endif
