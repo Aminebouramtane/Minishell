@@ -125,6 +125,7 @@ void	ft_file_append_lstadd_back(t_file **lst, t_file *new);
 char	**split_lexer(char const *s, char *c);
 int     syntax_err(Datatoken *parce);
 int	ft_syntax_lstsize(Datatoken *lst);
+void	rem_double_quotes(t_parce_node **node);
 
 
 //-=----------------------------------execution_prototypes--------------------------------------//
