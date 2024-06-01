@@ -4,7 +4,7 @@
 
 t_vars	*data;
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
     char	*input;
     t_parce_node *parce;
@@ -37,7 +37,7 @@ int main(int ac, char **av)
         lexer(input, data);
         ft_expand(data->ndata);
         ft_parce(&parce, data);
-        ft_execute(parce);
+        ft_execute(parce, env);
         while (data->ndata)
 	    {
            // printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);

@@ -76,6 +76,12 @@ typedef struct s_parce_node
     struct  s_parce_node    *prev;
 }   t_parce_node;
 
+typedef struct s_env
+{
+    char **my_env;
+    char *path;
+
+}   t_env;
 
 
 int		    lexer(char *str, t_vars *data);
@@ -130,8 +136,10 @@ char	**split_lexer(char const *s, char *c);
 
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce);
-void	run_builtin(t_parce_node *parce);
+void    ft_execute(t_parce_node *parce, char **env);
+void	run_builtin(t_parce_node *parce, t_env envi);
+void    ft_cd(t_parce_node *parce, t_env envi);
+void    ft_env(t_env envi);
 
 
 #endif
