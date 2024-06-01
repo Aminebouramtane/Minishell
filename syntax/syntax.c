@@ -69,7 +69,7 @@ int     syntax_err(Datatoken *data)
                 node = node->next;
             if ((node->cmd[0] == '|' && node->state == 2)
             ||(node->cmd[0] == '>' && node->state == 2)
-            || (node->cmd[0] == '<' && node->state == 2)) //<-----IM HERE
+            || (node->cmd[0] == '<' && node->state == 2))
             {
                 ft_putstr_fd("syntax error near unexpected token `|'\n", 1);
                 return (1);
