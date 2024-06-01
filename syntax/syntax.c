@@ -21,8 +21,11 @@ int     syntax_err(Datatoken *data)
             || (node->cmd[0] == '<' && node->type == 'h')
             || (node->cmd[0] == '>' && node->type == 'a'))
             {
-                ft_putstr_fd("syntax error near unexpected token `newline'\n", 1);
-                return (1);
+                if (!node->next)
+                {
+                    ft_putstr_fd("syntax error near unexpected token `newline'\n", 1);
+                    return (1);
+                }
             }
         }
 //--------------------------------------pipe after pipe----------------------------------------
