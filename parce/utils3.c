@@ -2,14 +2,14 @@
 
 #include "../minishell.h"
 
-t_file	*ft_file_heredoc_lstnew(int heredoc, char *eof, int index)
+t_file	*ft_file_heredoc_lstnew(char *name, int heredoc, char *eof, int index)
 {
 	t_file	*my_node;
 
 	my_node = (t_file *)ft_malloc(sizeof(t_file), 0);
 	if (my_node == NULL)
 		return (NULL);
-	my_node->file = NULL;
+	my_node->file = name;
 	my_node->redir_in = 0;
 	my_node->redir_out = 0;
 	my_node->heredoc = heredoc;

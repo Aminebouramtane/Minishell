@@ -117,7 +117,7 @@ void			ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new);
 t_file			*ft_file_lstnew(char *file, int redir_in, int redir_out);
 t_file			*ft_file_lstlast(t_file *lst);
 void			ft_file_lstadd_back(t_file **lst, t_file *new);
-t_file			*ft_file_heredoc_lstnew(int heredoc, char *eof, int index);
+t_file			*ft_file_heredoc_lstnew(char *name, int heredoc, char *eof, int index);
 t_file			*ft_file_heredoc_lstlast(t_file *lst);
 void			ft_file_heredoc_lstadd_back(t_file **lst, t_file *new);
 t_file			*ft_file_append_lstnew(char *file, int append);

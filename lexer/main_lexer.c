@@ -6,10 +6,12 @@ int		lexer(char *str, t_vars *data)
 	size_t			i;
 
 	i = 0;
-	while (i < ft_strlen(str))
+	while (str[i])
 	{
 		if (!in_delimiters(str[i], "|<>$() \t\'\""))
+		{
 			fill_string_in_node(str, &i, data, "|<>$() \t\'\"");
+		}
 		if (str[i] == '\'')
 			fill_qoute_in_node(str, &i, data);
 		if (str[i] == '\"')

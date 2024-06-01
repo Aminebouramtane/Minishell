@@ -37,8 +37,8 @@ int main(int ac, char **av)
         lexer(input, data);
         ft_expand(data->ndata);
         ft_parce(&parce, data);
-        if (syntax_err(data->ndata))
-            continue;
+        // if (syntax_err(data->ndata))
+        //     continue;
         rem_double_quotes(&parce);
         ft_execute(parce);
         // while (data->ndata)
@@ -60,17 +60,17 @@ int main(int ac, char **av)
                     i++;
                 }
             }
-        //     while (parce->file)
-        //     {
-                //printf("-----------FILE : %s\n", parce->file->file);
-                //printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
-                //printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
-                //printf("-----------HEREDOC : %d\n", parce->file->heredoc);
-                //printf("-----------EOF : %s\n", parce->file->eof);
-                //printf("-----------INDEX : %d\n", parce->file->index);
-                //printf("======================================\n");
-            //     parce->file = parce->file->next;
-            // }
+            while (parce->file)
+            {
+                printf("-----------FILE : %s\n", parce->file->file);
+                printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
+                printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
+                printf("-----------HEREDOC : %d\n", parce->file->heredoc);
+                printf("-----------EOF : %s\n", parce->file->eof);
+                printf("-----------INDEX : %d\n", parce->file->index);
+                printf("======================================\n");
+                parce->file = parce->file->next;
+            }
             parce = parce->next;
             // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	    }

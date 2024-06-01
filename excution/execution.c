@@ -17,7 +17,7 @@ int	check_builtins(char *command)
 
 void ft_execute(t_parce_node *parce)
 {	
-	if (check_builtins(parce->args[0]) == 1)
+	if (parce->args && check_builtins(parce->args[0]) == 1)
 		run_builtin(parce);
 	// else
 	// 	run_commands();

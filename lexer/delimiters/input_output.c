@@ -23,7 +23,9 @@ void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 		if (data->flag)
 			node = ft_my_lstnew("<", '<', IN_DOUBLE_COTE);
 		else
+		{
 			node = ft_my_lstnew("<", '<', GENERAL);
+		}
 		a++;
 		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
 			a++;
