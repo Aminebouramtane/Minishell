@@ -43,7 +43,7 @@ void ft_execute(t_parce_node *parce, char **env)
 	(void)env;
 	envi.my_env = env;
 
-	if (check_builtins(parce->args[0]) == 1)
+	if (parce->args && check_builtins(parce->args[0]) == 1)
 		run_builtin(parce, envi);
 	// else
 	// 	run_commands();

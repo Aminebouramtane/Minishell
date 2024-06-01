@@ -7,7 +7,6 @@ void util_dq(char *str);
 
 void fn_rm_dq(char *str)
 {
-	exit(1);
     int i;
 	int j;
 	int f;

@@ -31,3 +31,5 @@ re : fclean all
 
 run : re
 	./minishell
+
+a : all clean
