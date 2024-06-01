@@ -5,11 +5,11 @@ void	run_builtin(t_parce_node *parce, t_env envi)
 	if (ft_strncmp(parce->args[0], "echo", 4) == 0)
 		ft_echo(parce);
 	else if (ft_strncmp(parce->args[0], "cd", 2) == 0)
-		ft_cd(envi.my_env);
+		ft_cd(parce);
 	 else if (ft_strncmp(parce->args[0], "env", 3) == 0)
 	 	ft_env(envi);
-	// else if (ft_strncmp(args[0], "pwd", 3) == 0)
-	// 	ft_pwd(parce);
+	else if (ft_strncmp(parce->args[0], "pwd", 3) == 0)
+		ft_pwd(envi.my_env);
 	// else if (ft_strncmp(args[0], "unset", 5) == 0)
 	// 	ft_unset(parce);
 	// else if (ft_strncmp(args[0], "export", 6) == 0)

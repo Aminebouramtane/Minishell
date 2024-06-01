@@ -14,11 +14,11 @@ void fn_rm_dq(char *str)
 	i = 0;
 	j = 0;
 	f = 0;
-    if (!str)
-        return;
+    // if (!str)
+    //     return ;
 	f++;
-		while (str[f] != '\"')
-        	f++;
+	while (str[f] != '\"')
+    	f++;
 	f--;
     while (str[i])
 	{
@@ -40,8 +40,8 @@ void fn_rm_sq(char *str)
 	i = 0;
 	j = 0;
 	f = 0;
-    if (!str)
-        return;
+    // if (!str)
+    //     return;
 	f++;
 		while (str[f] != '\'')
         	f++;
