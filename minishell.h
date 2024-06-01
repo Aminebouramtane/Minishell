@@ -143,8 +143,9 @@ int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
 void    ft_execute(t_parce_node *parce, char **env);
 void	run_builtin(t_parce_node *parce, t_env envi);
-void    ft_cd(t_parce_node *parce, t_env envi);
+void    ft_cd(t_parce_node *parce);
 void    ft_env(t_env envi);
+void    ft_pwd(char **env);
 
 
 #endif

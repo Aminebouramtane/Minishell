@@ -40,7 +40,7 @@ int main(int ac, char **av, char **env)
         // if (syntax_err(data->ndata))
         //     continue;
         rem_double_quotes(&parce);
-        ft_execute(parce);
+        ft_execute(parce, env);
         // while (data->ndata)
 	    // {
         //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
