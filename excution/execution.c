@@ -1,5 +1,25 @@
 #include "../minishell.h"
 
+void	run_builtin(t_parce_node *parce, t_env envi)
+{
+	if (ft_strncmp(parce->args[0], "echo", 4) == 0)
+		ft_echo(parce);
+	else if (ft_strncmp(parce->args[0], "cd", 2) == 0)
+		ft_cd(envi.my_env);
+	 else if (ft_strncmp(parce->args[0], "env", 3) == 0)
+	 	ft_env(envi);
+	// else if (ft_strncmp(args[0], "pwd", 3) == 0)
+	// 	ft_pwd(parce);
+	// else if (ft_strncmp(args[0], "unset", 5) == 0)
+	// 	ft_unset(parce);
+	// else if (ft_strncmp(args[0], "export", 6) == 0)
+	// 	ft_export(parce);
+	// else if (ft_strncmp(args[0], "exit", 4) == 0)
+	// 	ft_exit(parce);
+	
+}
+
+
 int	check_builtins(char *command)
 {
 	if (ft_strncmp(command, "echo", 4) == 0
@@ -15,10 +35,16 @@ int	check_builtins(char *command)
 }
 
 
-void ft_execute(t_parce_node *parce)
+void ft_execute(t_parce_node *parce, char **env)
 {	
-	if (parce->args && check_builtins(parce->args[0]) == 1)
-		run_builtin(parce);
+	
+	t_env envi;
+
+	(void)env;
+	envi.my_env = env;
+
+	if (check_builtins(parce->args[0]) == 1)
+		run_builtin(parce, envi);
 	// else
 	// 	run_commands();
 }

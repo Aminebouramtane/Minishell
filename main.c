@@ -4,7 +4,7 @@
 
 t_vars	*data;
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
     char	*input;
     t_parce_node *parce;

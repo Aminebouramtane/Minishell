@@ -10,8 +10,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimiters/qoutes.c lexer/delimiters/parentheses.c lexer/delimiters/input_output.c \
 	lexer/delimiters/string.c lexer/delimiters/pipe.c lexer/delimiters/env.c\
 	lexer/delimiters/white_spaces.c free_functions/ft_malloc.c expand/expand.c parce/check_quotes.c parce/parcing.c \
-	parce/utils.c parce/utils2.c parce/utils3.c parce/utils4.c syntax/syntax.c syntax/utils.c excution/builtin1.c excution/execution.c \
-	quotes/d_quotes.c
+	parce/utils.c parce/utils2.c parce/utils3.c parce/utils4.c  excution/execution.c excution/builtin1_echo.c excution/builtin2_cd.c syntax/syntax.c syntax/utils.c quotes/d_quotes.c
 
 OBJ = $(SRC:.c=.o)
 
