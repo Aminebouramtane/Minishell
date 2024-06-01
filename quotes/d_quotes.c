@@ -7,6 +7,7 @@ void util_dq(char *str);
 
 void fn_rm_dq(char *str)
 {
+	exit(1);
     int i;
 	int j;
 	int f;
@@ -101,13 +102,12 @@ void	rem_double_quotes(t_parce_node **node)
 	while ((*node))
 	{
 		i = 0;
-		while ((*node)->args[i])
+		while ((*node)->args && (*node)->args[i])
 		{
 			if ((*node)->args[i][0] == '\"')
 				fn_rm_dq((*node)->args[i]);
 			else if ((*node)->args[i][0] == '\'')
 				fn_rm_sq((*node)->args[i]);
-			printf("----****************-------%s\n", (*node)->args[i]);
 			i++;
 		}
 		if (!(*node)->next)

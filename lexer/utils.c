@@ -56,11 +56,11 @@ char	*my_strdup(const char *s1, int size)
 
 	if (!s1 || !*s1 || size == 0)
 		return (NULL);
-	tab = (char *)ft_malloc(sizeof(char) * (size), 0);
+	tab = (char *)ft_malloc(sizeof(char) * (size + 1), 0);
 	if (tab == NULL)
 		return (NULL);
 	j = 0;
-	while (j < size)
+	while (s1 && j < size)
 	{
 		tab[j] = s1[j];
 		j++;

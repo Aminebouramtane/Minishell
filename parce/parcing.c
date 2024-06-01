@@ -96,6 +96,7 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
 void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag)
 {
     char	*str;
+    char    *name;
 
 	str = NULL;
     (*node) = (*node)->next;
@@ -103,6 +104,7 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
     {
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == 'a' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
         || ((*node)->type == '|' && (*node)->state == 2))
@@ -114,7 +116,8 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
-    ft_file_lstadd_back(file, ft_file_heredoc_lstnew(1, str, *flag));
+    name = ft_my_strjoin("Heredoc_", ft_itoa(*flag));
+    ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 1, str, *flag));
     (*parce)->file = *file;
     if (!*node)
         (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
