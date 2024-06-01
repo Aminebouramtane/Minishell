@@ -103,6 +103,6 @@ void	ft_expand(Datatoken *lst)
 {
 	ft_expand_dolar(lst);
 	ft_expand_home(lst);
-	ft_remove_qoutes(lst);
+	// ft_remove_qoutes(lst);
 	// ft_remove_dqoutes(&lst);
 }

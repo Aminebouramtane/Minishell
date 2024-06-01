@@ -1,10 +1,10 @@
 
 #include "../../minishell.h"
 
-void	fill_input_in_node(char *str, int *i, t_vars *data)
+void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
-	int			a;
+	size_t			a;
 
 	a = *i;
 	if (str[a + 1] == '<')
@@ -32,10 +32,10 @@ void	fill_input_in_node(char *str, int *i, t_vars *data)
 	ft_my_lstadd_back(&(data->ndata), node);
 }
 
-void	fill_output_in_node(char *str, int *i, t_vars *data)
+void	fill_output_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
-	int			a;
+	size_t			a;
 
 	a = *i;
 	if (str[a + 1] == '>')
