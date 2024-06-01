@@ -153,6 +153,7 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
             parce_node->args = split_lexer(parce_node->cmd, " \t\n\r\f\v");
 			ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
             file = NULL;
+            // parce_node->file = parce_node->file->next;
             flag = -1;
             parce_node = parce_node->next;
             node = node->next;

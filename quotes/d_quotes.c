@@ -97,21 +97,23 @@ void util_dq(char *str)
 void	rem_double_quotes(t_parce_node **node)
 {
 	int		i;
+	t_parce_node	*data;
 
-	while ((*node))
+	data = (*node);
+	while (data)
 	{
 		i = 0;
-		while ((*node)->args && (*node)->args[i])
+		while (data->args && data->args[i])
 		{
-			if ((*node)->args[i][0] == '\"')
-				fn_rm_dq((*node)->args[i]);
-			else if ((*node)->args[i][0] == '\'')
-				fn_rm_sq((*node)->args[i]);
+			if (data->args[i][0] == '\"')
+				fn_rm_dq(data->args[i]);
+			else if (data->args[i][0] == '\'')
+				fn_rm_sq(data->args[i]);
 			i++;
 		}
-		if (!(*node)->next)
+		if (!data->next)
 			break;
-		(*node) = (*node)->next;
+		data = data->next;
 	}
 }
 
