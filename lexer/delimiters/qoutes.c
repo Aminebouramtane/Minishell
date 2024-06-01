@@ -1,10 +1,10 @@
 
 #include "../../minishell.h"
 
-void		inside_dqoutes(char *str, t_vars *data)
+void	inside_dqoutes(char *str, t_vars *data)
 {
-	int			i;
-	Datatoken	*node;
+	size_t			i;
+	Datatoken		*node;
 
 	i = 0;
 	while (i < ft_strlen(str))
@@ -25,7 +25,7 @@ void		inside_dqoutes(char *str, t_vars *data)
 			else
 			{
 				data->flag = 0;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -45,11 +45,12 @@ void		inside_dqoutes(char *str, t_vars *data)
 			fill_white_spaces_in_node(str, &i, data);
 	}
 }
-void	fill_dqoute_in_node(char *str, int *i, t_vars *data)
+
+void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 {
-	char		*tmp;
-	int			start;
-	int			end;
+	char			*tmp;
+	size_t			start;
+	size_t			end;
 
 	start = *i;
 	end = *i + 1;
@@ -59,8 +60,8 @@ void	fill_dqoute_in_node(char *str, int *i, t_vars *data)
 	{
 		if (str[end] == '\"')
 		{
-			end++;	
-			break;
+			end++;
+			break ;
 		}
 		end++;
 	}
@@ -69,12 +70,12 @@ void	fill_dqoute_in_node(char *str, int *i, t_vars *data)
 	inside_dqoutes(tmp, data);
 }
 
-void	fill_qoute_in_node(char *str, int *i, t_vars *data)
+void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 	char		*tmp;
-	int			start;
-	int			end;
+	size_t			start;
+	size_t			end;
 
 	start = *i;
 	end = *i + 1;
@@ -83,11 +84,12 @@ void	fill_qoute_in_node(char *str, int *i, t_vars *data)
 		if (str[end] == '\'')
 		{
 			end++;
-			break;
+			break ;
 		}
 		end++;
 	}
 	tmp = my_strdup(str + start, end - start);
+	printf("-------------------------%s\n", tmp);
 	if (data->flag)
 		node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
 	else

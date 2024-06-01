@@ -3,7 +3,7 @@
 
 int		lexer(char *str, t_vars *data)
 {
-	int			i;
+	size_t			i;
 
 	i = 0;
 	while (i < ft_strlen(str))

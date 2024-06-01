@@ -3,9 +3,9 @@ NAME = minishell
 
 CC = cc
 
-LIBFT = libft/libft.a
+LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./libft#-fsanitize=address
 
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimiters/qoutes.c lexer/delimiters/parentheses.c lexer/delimiters/input_output.c \
 	lexer/delimiters/string.c lexer/delimiters/pipe.c lexer/delimiters/env.c\
@@ -16,7 +16,7 @@ SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimite
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
 
 all : $(NAME)
 

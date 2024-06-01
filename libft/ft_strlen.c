@@ -6,13 +6,13 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:39:47 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/25 16:32:28 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/06/01 06:22:57 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *c)
+size_t	ft_strlen(const char *c)
 {
 	int	i;
 

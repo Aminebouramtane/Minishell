@@ -1,7 +1,7 @@
 
 #include "../../minishell.h"
 
-void	fill_open_in_node(int *i, t_vars *data)
+void	fill_open_in_node(size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 
@@ -13,7 +13,7 @@ void	fill_open_in_node(int *i, t_vars *data)
 	*i = *i + 1;
 }
 
-void	fill_close_in_node(int *i, t_vars *data)
+void	fill_close_in_node(size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 

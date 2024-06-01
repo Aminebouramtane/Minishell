@@ -1,7 +1,7 @@
 
 #include "../../minishell.h"
 
-void	fill_pipe_in_node(int *i, t_vars *data)
+void	fill_pipe_in_node(size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 

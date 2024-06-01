@@ -1,7 +1,7 @@
 
 #include "../../minishell.h"
 
-void	fill_white_spaces_in_node(char *str, int *i, t_vars *data)
+void	fill_white_spaces_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 	char		*tmp;
