@@ -5,11 +5,20 @@
 # include "./libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <limits.h>
 # include <string.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+
+typedef struct s_env
+{
+    char *env_var;
+	
+	struct s_env *next;
+}   t_env;
 
 typedef struct s_data
 {
@@ -34,6 +43,7 @@ typedef struct s_data
 		IN_DOUBLE_COTE,
 		GENERAL
 	}		state;
+	t_env	*envi;
 	char			*cmd;
 	struct s_data	*next;
 	struct s_data	*prev;
@@ -78,12 +88,6 @@ typedef struct s_parce_node
     struct  s_parce_node    *prev;
 }   t_parce_node;
 
-typedef struct s_env
-{
-    char **my_env;
-    char *path;
-
-}   t_env;
 
 
 int				lexer(char *str, t_vars *data);
@@ -141,11 +145,14 @@ void			skip_quotes(char *target, char delimiter, int *index);
 
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce, char **env);
-void	run_builtin(t_parce_node *parce, t_env envi);
-void    ft_cd(t_parce_node *parce);
-void    ft_env(t_env envi);
-void    ft_pwd(char **env);
+void    ft_execute(t_parce_node *parce, t_env *envi);
+void	run_builtin(t_parce_node *parce, t_env *envi);
+void    ft_cd(t_parce_node *parce, t_env *envi);
+void    ft_env(t_env *envi);
+void    ft_pwd(t_env *envi);
+t_env	*get_env_vars(char **env_vars);
 
+t_env	*ft_env_lstnew(void *content);
+void	ft_env_lstadd_back(t_env **lst, t_env *new);
 
 #endif
