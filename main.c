@@ -8,6 +8,9 @@ int main(int ac, char **av, char **env)
 {
     char	*input;
     t_parce_node *parce;
+    t_env *envi;
+
+	envi = get_env_vars(env);
     int     i;
 
     (void)av;
@@ -41,7 +44,7 @@ int main(int ac, char **av, char **env)
         if (syntax_err(data->ndata))
             continue;
         rem_double_quotes(&parce);
-        ft_execute(parce, env);
+        ft_execute(parce, envi);
         // while (data->ndata)
 	    // {
         //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
