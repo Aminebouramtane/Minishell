@@ -1,18 +1,20 @@
 #include "../minishell.h"
 
 
-void	ft_pwd(char **env)
+void	ft_pwd(t_env *envi)
 {
+	t_env *temp;
 	int	i;
 	char *path;
 
+	temp = envi;
 	i = 0;
-	while (env[i])
+	while (temp)
 	{
-		path = ft_strstr(env[i], "PWD=");
+		path = ft_strstr(temp->env_var, "PWD=");
 		if (path != NULL)
 			break ;
-		i++;
+		temp = temp->next;
 	}
 	path += 4;
 	ft_putstr_fd(path, 1);
