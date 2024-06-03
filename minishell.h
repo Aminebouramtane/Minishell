@@ -62,6 +62,7 @@ typedef struct s_file
     int     redir_out;
     int     append;
     int     heredoc;
+	int		is_quoted;
     char    *eof;
     int     index;
     struct s_file  *next;
@@ -123,7 +124,7 @@ void			ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new);
 t_file			*ft_file_lstnew(char *file, int redir_in, int redir_out);
 t_file			*ft_file_lstlast(t_file *lst);
 void			ft_file_lstadd_back(t_file **lst, t_file *new);
-t_file			*ft_file_heredoc_lstnew(char *name, int heredoc, char *eof, int index);
+t_file			*ft_file_heredoc_lstnew(char *name, int is_quoted, char *eof, int index);
 t_file			*ft_file_heredoc_lstlast(t_file *lst);
 void			ft_file_heredoc_lstadd_back(t_file **lst, t_file *new);
 t_file			*ft_file_append_lstnew(char *file, int append);
@@ -135,7 +136,15 @@ int				ft_syntax_lstsize(Datatoken *lst);
 void			rem_double_quotes(t_parce_node **node);
 int				in_delimiters(char a, char *delimiters);
 void			skip_quotes(char *target, char delimiter, int *index);
-
+char			*ft_my_strjoin(char const *s1, char const *s2);
+void    		handel_heredoc(t_parce_node *parce);
+char			*expand_env_vars(const char *input);
+int				ft_here_isalnum(int c);
+size_t			ft_here_strlen(const char *s);
+char			*ft_here_strncat(char *dest, const char *src, size_t n);
+char			*ft_here_strncpy(char *dest, const char *src, size_t n);
+char			*ft_here_strchr(const char *s, int c);
+char			*ft_here_strcat(char *dest, const char *src);
 //-=----------------------------------execution_prototypes--------------------------------------//
 
 

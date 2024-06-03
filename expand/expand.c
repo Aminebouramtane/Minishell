@@ -9,14 +9,27 @@ void	ft_expand_dolar(Datatoken *lst)
 	char		*tmp;
 	char		*env;
 
+	if (!lst)
+		return ;
 	node = lst;
 	while (node)
 	{
-		if (node->cmd[0] == '$')
+		if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
 		{
 			node->cmd++;
 			str = node->cmd;
 			env = getenv(str);
+			tmp = my_strdup_two(env);
+			if (tmp)
+				node->cmd = tmp;
+			else
+				node->cmd--;
+		}
+		else if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 2)
+		{
+			node->cmd++;
+			str = node->cmd;
+			env = getenv("_");
 			tmp = my_strdup_two(env);
 			if (tmp)
 				node->cmd = tmp;

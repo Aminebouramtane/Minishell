@@ -22,13 +22,13 @@ void	run_builtin(t_parce_node *parce, t_env envi)
 
 int	check_builtins(char *command)
 {
-	if (ft_strncmp(command, "echo", 4) == 0
+	if (command && (ft_strncmp(command, "echo", 4) == 0
 		|| ft_strncmp(command, "cd", 2) == 0
 		|| ft_strncmp(command, "pwd", 3) == 0
 		|| ft_strncmp(command, "exit", 4) == 0
 		|| ft_strncmp(command, "unset", 5) == 0
 		|| ft_strncmp(command, "env", 3) == 0
-		|| ft_strncmp(command, "export", 6) == 0)
+		|| ft_strncmp(command, "export", 6) == 0))
 		return (1);
 	else
 		return (0);
@@ -43,6 +43,8 @@ void ft_execute(t_parce_node *parce, char **env)
 	(void)env;
 	envi.my_env = env;
 
+	if (parce)
+		handel_heredoc(parce);
 	if (parce->args && check_builtins(parce->args[0]) == 1)
 		run_builtin(parce, envi);
 	// else

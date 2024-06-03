@@ -26,9 +26,10 @@ int main(int ac, char **av, char **env)
     while (1) {
         // ft_my_lstclear(&data->ndata);
         data->ndata = NULL;
-        input = readline("minishell>");
+        input = readline("minishell$ ");
+        add_history(input);
         if (!input[0] || !input)
-            break;
+            continue ;
 		if (!check_quotes(input))
 		{
 			ft_putstr_fd("Error in quotes !!\n", 1);
@@ -37,17 +38,17 @@ int main(int ac, char **av, char **env)
         lexer(input, data);
         ft_expand(data->ndata);
         ft_parce(&parce, data);
-        // if (syntax_err(data->ndata))
-        //     continue;
+        if (syntax_err(data->ndata))
+            continue;
         rem_double_quotes(&parce);
         ft_execute(parce, env);
         // while (data->ndata)
 	    // {
         //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
-            // data->ndata = data->ndata->next;
-            // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+        //     data->ndata = data->ndata->next;
+        //     <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	    // }
-        //printf("####################PARSING#########################\n");
+        printf("####################PARSING#########################\n");
         while (parce)
 	    {
             printf("cmd ## %s\n", parce->cmd);
@@ -66,6 +67,7 @@ int main(int ac, char **av, char **env)
                 printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
                 printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
                 printf("-----------HEREDOC : %d\n", parce->file->heredoc);
+                printf("-----------IS_QUOTED : %d\n", parce->file->is_quoted);
                 printf("-----------EOF : %s\n", parce->file->eof);
                 printf("-----------INDEX : %d\n", parce->file->index);
                 printf("======================================\n");
