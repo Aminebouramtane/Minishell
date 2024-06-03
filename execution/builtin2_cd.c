@@ -15,10 +15,6 @@ t_env	*get_env_vars(char **env_vars)
 	return (envi);
 }
 
-// void	change_pwd()
-// {
-
-// }
 
 void	error_cd(char *str, int a_counter)
 {
@@ -34,12 +30,34 @@ void	error_cd(char *str, int a_counter)
 	}
 }
 
+void	change_pwd(t_env *temp)
+{
+	t_env	*temp2;
+	t_env	*temp3;
+	char	*str;
+
+	temp2 = temp;
+	temp3 = temp;
+	str = NULL;
+	while (temp3 && ft_strncmp(temp3->env_var, "PWD=", 4) != 0)
+		temp3 = temp3->next;
+	str = ft_my_strjoin(str, temp3->env_var + 4);
+	while (temp && ft_strncmp(temp->env_var, "OLDPWD=", 7) != 0)
+		temp = temp->next;
+	temp->env_var = ft_strjoin("OLDPWD=", str);
+	while (temp2 && ft_strncmp(temp2->env_var, "PWD=", 4) != 0)
+		temp2 = temp2->next;
+	if (!temp2)
+		return ;
+	temp2->env_var = ft_strjoin("PWD=", getcwd(NULL, 0));
+
+}
+
 void	ft_cd(t_parce_node *parce, t_env *envi)
 {
 	t_env	*temp;
 	int		i;
 	int		arg_counter;
-	char	path[4026];
 
 	i = 0;
 	arg_counter = 0;
@@ -51,26 +69,13 @@ void	ft_cd(t_parce_node *parce, t_env *envi)
 		if (chdir(parce->args[1]) != 0)
 			error_cd(parce->args[1], arg_counter);
 		else
-		{
-			while (temp && ft_strncmp(temp->env_var, "PWD=", 4) != 0)
-				temp = temp->next;
-			if (!temp)
-				return ;
-			printf("========================%s\n", temp->env_var);
-			printf("hna\n");
-			temp->env_var = ft_strjoin("PWD=", getcwd(path, sizeof(path)));
-			// temp->env_var = getcwd(path, sizeof(path));
-			printf("========================%s\n", temp->env_var);
-			// exit(1);
-			printf("%s hehe\n", temp->env_var);
-		}	
+			change_pwd(temp);
 	}
 	else
 	{
 		while (temp && ft_strncmp(temp->env_var, "HOME", 4) != 0)
 			temp = temp->next;
-		printf("%s\n", temp->env_var);
 		chdir(temp->env_var + 5);
-
+		change_pwd(temp);
 	}
 }
