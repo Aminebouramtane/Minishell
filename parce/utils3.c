@@ -2,7 +2,7 @@
 
 #include "../minishell.h"
 
-t_file	*ft_file_heredoc_lstnew(char *name, int heredoc, char *eof, int index)
+t_file	*ft_file_heredoc_lstnew(char *name, int is_quoted, char *eof, int index)
 {
 	t_file	*my_node;
 
@@ -12,7 +12,8 @@ t_file	*ft_file_heredoc_lstnew(char *name, int heredoc, char *eof, int index)
 	my_node->file = name;
 	my_node->redir_in = 0;
 	my_node->redir_out = 0;
-	my_node->heredoc = heredoc;
+	my_node->heredoc = 1;
+	my_node->is_quoted = is_quoted;
 	my_node->eof = eof;
 	my_node->index = index;
 	my_node->next = NULL;

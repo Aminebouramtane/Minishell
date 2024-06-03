@@ -2,7 +2,49 @@
 
 #include "../minishell.h"
 
-char	*ft_my_strjoin(char const *s1, char const *s2);
+
+static  char *ft_remove_qoutes(char *lst)
+{
+	char		*str;
+	int			i;
+
+	i = 0;
+	str = NULL;
+    if (lst[0] == '\'')
+    {
+        lst++;
+        while (lst[i] != '\'')
+            i++;
+        str = my_strdup(lst, i);
+    }
+    return (str);
+}
+
+static void	ft_remove_dqoutes(Datatoken **lst)
+{
+	Datatoken	*node;
+    int         flag;
+
+	node = *lst;
+    flag = 0;
+	while (node)
+	{
+		if (node->cmd[0] == '\"' && !flag)
+        {
+			node = node->next;
+            flag = 1;
+        }
+        else if (node->cmd[0] == '\"' && flag)
+        {
+            node = node->next;
+            break ;
+        }
+        while (node && node->cmd[0] != '\"')
+            node = node->next;
+	}
+}
+
+
 
 void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
 {
@@ -97,8 +139,10 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
 {
     char	*str;
     char    *name;
+    size_t  a;
 
 	str = NULL;
+    a = 0;
     (*node) = (*node)->next;
     while ((*node))
     {
@@ -108,16 +152,28 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->cmd[0] == ' ' && (*node)->type == 'w' && (*node)->state == 2)
         || ((*node)->type == '|' && (*node)->state == 2))
-        {
-            printf("breaked-------------------------------\n");
             break;
-        }
         else
-            str = ft_my_strjoin(str, (*node)->cmd);
+        {
+            if (*node && ((*node)->state == 0 || (*node)->state == 1))
+                a = 1;
+            printf("$$$$$$$$$$$$$$$$$$$ %c\n", (*node)->cmd[0]);
+            if ((*node)->cmd[0] == '\'' && (*node)->state == 0)
+                str = ft_my_strjoin(str, ft_remove_qoutes((*node)->cmd));
+            else if ((*node)->cmd[0] == '\"' && (*node)->state == 1)
+            {
+                ft_remove_dqoutes(node);
+            }
+            else
+                str = ft_my_strjoin(str, (*node)->cmd);
+        }
         (*node) = (*node)->next;
     }
-    name = ft_my_strjoin("Heredoc_", ft_itoa(*flag));
-    ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 1, str, *flag));
+    name = "./tmp/heredoc";
+    if (a)
+        ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 1, str, *flag));
+    else
+        ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 0, str, *flag));
     (*parce)->file = *file;
     if (!*node)
         (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
@@ -153,7 +209,6 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
             parce_node->args = split_lexer(parce_node->cmd, " \t\n\r\f\v");
 			ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
             file = NULL;
-            flag = -1;
             parce_node = parce_node->next;
             node = node->next;
 		}
