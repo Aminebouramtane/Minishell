@@ -38,7 +38,14 @@ int	check_builtins(char *command)
 
 
 void ft_execute(t_parce_node *parce, t_env *envi)
-{	
+{		
+	t_env envi;
+
+	(void)env;
+	envi.my_env = env;
+
+	if (parce)
+		handel_heredoc(parce);
 	if (parce->args && check_builtins(parce->args[0]) == 1)
 		run_builtin(parce, envi);
 	// else

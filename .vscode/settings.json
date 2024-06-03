@@ -2,6 +2,8 @@
     "files.associations": {
         "minishell.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "libft.h": "c",
+        "ctype.h": "c"
     }
 }
