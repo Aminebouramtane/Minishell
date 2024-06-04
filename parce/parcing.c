@@ -132,7 +132,7 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
         (*node) = (*node)->next;
     }
     if (!*node)
-        (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
+        (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v"); 
 }
 
 void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag)
@@ -161,9 +161,7 @@ void    ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *f
             if ((*node)->cmd[0] == '\'' && (*node)->state == 0)
                 str = ft_my_strjoin(str, ft_remove_qoutes((*node)->cmd));
             else if ((*node)->cmd[0] == '\"' && (*node)->state == 1)
-            {
                 ft_remove_dqoutes(node);
-            }
             else
                 str = ft_my_strjoin(str, (*node)->cmd);
         }

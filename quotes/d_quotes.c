@@ -1,119 +1,51 @@
-
-
 #include "../minishell.h"
 
-void util_q(char *str);
-void util_dq(char *str);
+void process_quotes(char *str);
 
-void fn_rm_dq(char *str)
+void process_quotes(char *str)
+{
+    int i = 0;
+    int j = 0;
+    int inside_single_quotes = 0;
+    int inside_double_quotes = 0;
+
+    while (str[i])
+    {
+        if (str[i] == '\'')
+        {
+            if (inside_double_quotes)
+                str[j++] = str[i];
+            else
+                inside_single_quotes = 1;
+        }
+        else if (str[i] == '\"')
+        {
+            if (inside_single_quotes)
+                str[j++] = str[i];
+            else
+                inside_double_quotes = 1;
+        }
+        else
+            str[j++] = str[i];
+        i++;
+    }
+    str[j] = '\0';
+}
+
+void rem_double_quotes(t_parce_node **node)
 {
     int i;
-	int j;
-	int f;
+    t_parce_node *data;
 
-	i = 0;
-	j = 0;
-	f = 0;
-    // if (!str)
-    //     return ;
-	f++;
-	while (str[f] != '\"')
-    	f++;
-	f--;
-    while (str[i])
-	{
-        if (str[i] != '"')
-            str[j++] = str[i];
-        i++;
+    data = (*node);
+    while (data)
+    {
+        i = 0;
+        while (data->args && data->args[i])
+        {
+            process_quotes(data->args[i]);
+            i++;
+        }
+        data = data->next;
     }
-	if (str[f] == '\'')
-		util_q(str + f);
-    str[j] = '\0';
 }
-
-void fn_rm_sq(char *str)
-{
-    int i; 
-	int j;
-	int f;
-
-	i = 0;
-	j = 0;
-	f = 0;
-    // if (!str)
-    //     return;
-	f++;
-		while (str[f] != '\'')
-        	f++;
-	f--;
-    while (str[i])
-	{
-        if (str[i] != '\'')
-            str[j++] = str[i];
-        i++;
-    }
-	if (str[f] == '\"')
-		util_dq(str + f);
-    str[j] = '\0';
-}
-
-void util_q(char *str)
-{
-    int i; 
-	int j;
-
-	i = 0;
-	j = 0;
-    if (!str)
-        return;
-    while (str[i])
-	{
-        if (str[i] != '\'')
-            str[j++] = str[i];
-        i++;
-    }
-    str[j] = '\0';
-}
-
-void util_dq(char *str)
-{
-    int i; 
-	int j;
-
-	i = 0;
-	j = 0;
-    if (!str)
-        return;
-    while (str[i])
-	{
-        if (str[i] != '\"')
-            str[j++] = str[i];
-        i++;
-    }
-    str[j] = '\0';
-}
-
-
-void	rem_double_quotes(t_parce_node **node)
-{
-	int		i;
-	t_parce_node	*data;
-
-	data = (*node);
-	while (data)
-	{
-		i = 0;
-		while (data->args && data->args[i])
-		{
-			if (data->args[i][0] == '\"')
-				fn_rm_dq(data->args[i]);
-			else if (data->args[i][0] == '\'')
-				fn_rm_sq(data->args[i]);
-			i++;
-		}
-		if (!data->next)
-			break;
-		data = data->next;
-	}
-}
-

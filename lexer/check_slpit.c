@@ -183,5 +183,5 @@ char **split_lexer(char *s, char *delimiters)
 // 		i++;
 // 	}
 // 	return 0;
-// gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
+// // gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
 // }
