@@ -15,11 +15,13 @@ int     syntax_err(Datatoken *data)
         if (node->next && (ft_strncmp(node->cmd, "echo", ft_strlen(node->cmd)) == 0))
         {
             node = node->next;
-            while (node->cmd[0] == ' ' && node->state == 2)
+            while (node && node->cmd[0] == ' ' && node->state == 2)
                 node = node->next;
-            if (node->cmd[0] == '>' || node->cmd[0] == '<'
+            if (!node)
+                break;
+            if ((node->cmd[0] == '>' || node->cmd[0] == '<'
             || (node->cmd[0] == '<' && node->type == 'h')
-            || (node->cmd[0] == '>' && node->type == 'a'))
+            || (node->cmd[0] == '>' && node->type == 'a')))
             {
                 if (!node->next)
                 {
@@ -70,6 +72,9 @@ int     syntax_err(Datatoken *data)
             node = node->next;
             while (node->cmd[0] == ' ' && node->state == 2)
                 node = node->next;
+            if (!node)
+                break ;
+                
             if ((node->cmd[0] == '|' && node->state == 2)
             ||(node->cmd[0] == '>' && node->state == 2)
             || (node->cmd[0] == '<' && node->state == 2))
