@@ -18,6 +18,8 @@ typedef struct s_env
     char *env_var;
 	
 	struct s_env *next;
+	struct s_env *prev;
+
 }   t_env;
 
 typedef struct s_data
@@ -159,9 +161,11 @@ void	run_builtin(t_parce_node *parce, t_env *envi);
 void    ft_cd(t_parce_node *parce, t_env *envi);
 void    ft_env(t_env *envi);
 void    ft_pwd(t_env *envi);
+void	ft_unset(t_parce_node *parce, t_env *envi);
 t_env	*get_env_vars(char **env_vars);
 
 t_env	*ft_env_lstnew(void *content);
 void	ft_env_lstadd_back(t_env **lst, t_env *new);
+void	ft_env_delone(t_env *lst);
 
 #endif

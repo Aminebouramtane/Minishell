@@ -12,8 +12,8 @@ void	run_builtin(t_parce_node *parce, t_env *envi)
 	 	ft_env(envi);
 	else if (ft_strncmp(parce->args[0], "pwd", 3) == 0)
 		ft_pwd(envi);
-	// else if (ft_strncmp(args[0], "unset", 5) == 0)
-	// 	ft_unset(parce);
+	else if (ft_strncmp(parce->args[0], "unset", 5) == 0)
+		ft_unset(parce, envi);
 	// else if (ft_strncmp(args[0], "export", 6) == 0)
 	// 	ft_export(parce);
 	// else if (ft_strncmp(args[0], "exit", 4) == 0)
