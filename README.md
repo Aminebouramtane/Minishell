@@ -46,7 +46,7 @@ Welcome to the Minishell project! This project is a simple Unix shell created as
 After compiling, you can start Minishell by running:
 ```sh
 ./minishell
-
+```
 ## Usage
 
 Minishell supports a range of commands and features. Here are some examples:
