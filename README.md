@@ -88,11 +88,6 @@ echo [options] [string...]
 
 Options:
 - `-n`: Do not print the trailing newline.
-
-### `cd`
-
-Usage:
-```sh
 cd [directory]
 
 
