@@ -2,10 +2,8 @@
 
 void	ft_env(t_env *envi)
 {
-	int	i;
 	t_env	*temp;
 
-	i = 0;
 	temp = envi;
 	while (temp != NULL)
 	{

@@ -56,10 +56,9 @@ void	change_pwd(t_env *temp)
 void	ft_cd(t_parce_node *parce, t_env *envi)
 {
 	t_env	*temp;
-	int		i;
 	int		arg_counter;
 
-	i = 0;
+
 	arg_counter = 0;
 	temp = envi;
 	while (parce->args[arg_counter] != NULL)

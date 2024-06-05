@@ -4,11 +4,9 @@
 void	ft_pwd(t_env *envi)
 {
 	t_env *temp;
-	int	i;
 	char *path;
 
 	temp = envi;
-	i = 0;
 	while (temp)
 	{
 		path = ft_strstr(temp->env_var, "PWD=");

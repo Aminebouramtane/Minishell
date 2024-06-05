@@ -142,7 +142,7 @@ int				ft_syntax_lstsize(Datatoken *lst);
 void			rem_double_quotes(t_parce_node **node);
 int				in_delimiters(char a, char *delimiters);
 void			skip_quotes(char *target, char delimiter, int *index);
-char			*ft_my_strjoin(char const *s1, char const *s2);
+char			*ft_my_strjoin(char *s1, char *s2);
 void    		handel_heredoc(t_parce_node *parce);
 char			*expand_env_vars(const char *input);
 int				ft_here_isalnum(int c);

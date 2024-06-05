@@ -215,47 +215,31 @@ void    ft_parce(t_parce_node **parce, t_vars *data)
     }
 }
 
-char	*ft_my_strjoin(char const *s1, char const *s2)
+char	*ft_my_strjoin(char *s1, char *s2)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 	char	*ptr;
-	int		len;
+	size_t	len;
 
-	i = 0;
-	j = 0;
 	if (!s1)
-    {
-        len = ft_strlen(s2);
-        ptr = (char *)malloc(sizeof(char) * (len + 1));
-        if (ptr == NULL)
-            return (NULL);
-        while (s2[j])
-        {
-            ptr[i + j] = s2[j];
-            j++;
-        }
-        ptr[j] = '\0';
-        return (ptr);
-    }
-    else 
-    {
-        len = ft_strlen(s1) + ft_strlen(s2);
-        ptr = (char *)malloc(sizeof(char) * (len + 1));
-        if (ptr == NULL)
-            return (NULL);
-        while (s1[i])
-        {
-            ptr[i] = s1[i];
-            i++;
-        }
-        while (s2[j])
-        {
-            ptr[i + j] = s2[j];
-            j++;
-        }
-        ptr[i + j] = '\0';
-        return (ptr);
-    }
-    return (NULL);
+		len = ft_strlen(s2);
+	else
+		len = ft_strlen(s1) + ft_strlen(s2);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
+	i = -1;
+	if (s1)
+		while (s1[++i])
+			ptr[i] = s1[i];
+	else
+		i = 0;
+	j = -1;
+	while (s2[++j])
+		ptr[i + j] = s2[j];
+	ptr[i + j] = '\0';
+    free(s1);
+    s1 = NULL;
+	return (ptr);
 }
