@@ -30,7 +30,7 @@ Welcome to the Minishell project! This project is a simple Unix shell created as
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/minishell.git
+    git clone https://github.com/Aminebouramtane/minishell.git
     ```
 2. Navigate to the project directory:
     ```sh
