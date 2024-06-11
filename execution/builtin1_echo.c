@@ -38,6 +38,8 @@ void	ft_echo(t_parce_node *parce)
 	else if (parce->args[1][j] == '-')
 	{
 		j++;
+		if (parce->args[i][j] == '\0')
+			echo_without_flag(parce);
 		while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
 			j++;
 		if (parce->args[i][j] == '\0')

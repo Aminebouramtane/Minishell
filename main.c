@@ -1,14 +1,13 @@
 
 // ldapsearch uid=abouramt
 #include "minishell.h"
-
-t_vars	*data;
-
+t_env *envi;
 int main(int ac, char **av, char **env)
 {
+    t_vars	*data;
     char	*input;
     t_parce_node *parce;
-    t_env *envi;
+
 
 	envi = get_env_vars(env);
     int     i;
@@ -44,7 +43,7 @@ int main(int ac, char **av, char **env)
         if (syntax_err(data->ndata))
             continue;
         rem_double_quotes(&parce);
-        ft_execute(parce, envi);
+        ft_execute(parce);
         // while (data->ndata)
 	    // {
         //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);

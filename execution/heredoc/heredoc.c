@@ -34,7 +34,7 @@ void handel_heredoc(t_parce_node *parce)
                     output = expand_env_vars(input);
                     if (!output)
                         break;
-                    if (!ft_strncmp(input, delimiter, ft_strlen(delimiter) + 1))
+                    if (!ft_strncmp(input, delimiter))
                     {
                         free(input);
                         break;

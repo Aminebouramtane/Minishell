@@ -16,12 +16,14 @@
 typedef struct s_env
 {
     char *env_var;
-	
+
+	char	*key;
+	char	*value;
 	struct s_env *next;
 	struct s_env *prev;
 
 }   t_env;
-
+extern t_env *envi;
 typedef struct s_data
 {
 	enum
@@ -45,7 +47,6 @@ typedef struct s_data
 		IN_DOUBLE_COTE,
 		GENERAL
 	}		state;
-	t_env	*envi;
 	char			*cmd;
 	struct s_data	*next;
 	struct s_data	*prev;
@@ -154,18 +155,23 @@ char			*ft_here_strcat(char *dest, const char *src);
 //-=----------------------------------execution_prototypes--------------------------------------//
 
 
+void	ft_free(char **s);
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce, t_env *envi);
-void	run_builtin(t_parce_node *parce, t_env *envi);
-void    ft_cd(t_parce_node *parce, t_env *envi);
-void    ft_env(t_env *envi);
-void    ft_pwd(t_env *envi);
-void	ft_unset(t_parce_node *parce, t_env *envi);
+void    ft_execute(t_parce_node *parce);
+void	run_builtin(t_parce_node *parce);
+void    ft_cd(t_parce_node *parce);
+void    ft_env();
+void    ft_pwd();
+void	ft_export(t_parce_node *parce);
+void	ft_unset(t_parce_node *parce);
 t_env	*get_env_vars(char **env_vars);
 
 t_env	*ft_env_lstnew(void *content);
 void	ft_env_lstadd_back(t_env **lst, t_env *new);
 void	ft_env_delone(t_env *lst);
+void	bubbleSort(t_env *start);
+void	ft_env_lstclear(t_env *head);
+t_env	*ft_export_lstnew(t_parce_node *parce, int i);
 
 #endif

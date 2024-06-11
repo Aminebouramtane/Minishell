@@ -1,20 +1,5 @@
 #include "../minishell.h"
 
-t_env	*get_env_vars(char **env_vars)
-{
-	t_env *envi;
-	int i;
-
-	i = 0;
-	envi = NULL;
-	while (env_vars && env_vars[i])
-	{
-		ft_env_lstadd_back(&envi, ft_env_lstnew(env_vars[i]));
-		i++;
-	}
-	return (envi);
-}
-
 
 void	error_cd(char *str, int a_counter)
 {
@@ -39,13 +24,14 @@ void	change_pwd(t_env *temp)
 	temp2 = temp;
 	temp3 = temp;
 	str = NULL;
-	while (temp3 && ft_strncmp(temp3->env_var, "PWD=", 4) != 0)
+	while (temp3 && ft_strncmp(temp3->env_var, "PWD=") != 0)
 		temp3 = temp3->next;
-	str = ft_my_strjoin(str, temp3->env_var + 4);
-	while (temp && ft_strncmp(temp->env_var, "OLDPWD=", 7) != 0)
+	if (temp3)
+		str = ft_my_strjoin(str, temp3->env_var + 4);
+	while (temp && ft_strncmp(temp->env_var, "OLDPWD=") != 0)
 		temp = temp->next;
 	temp->env_var = ft_strjoin("OLDPWD=", str);
-	while (temp2 && ft_strncmp(temp2->env_var, "PWD=", 4) != 0)
+	while (temp2 && ft_strncmp(temp2->env_var, "PWD=") != 0)
 		temp2 = temp2->next;
 	if (!temp2)
 		return ;
@@ -53,7 +39,7 @@ void	change_pwd(t_env *temp)
 
 }
 
-void	ft_cd(t_parce_node *parce, t_env *envi)
+void	ft_cd(t_parce_node *parce)
 {
 	t_env	*temp;
 	int		arg_counter;
@@ -72,9 +58,14 @@ void	ft_cd(t_parce_node *parce, t_env *envi)
 	}
 	else
 	{
-		while (temp && ft_strncmp(temp->env_var, "HOME", 4) != 0)
+		while (temp && ft_strncmp(temp->env_var, "HOME") != 0)
 			temp = temp->next;
-		chdir(temp->env_var + 5);
-		change_pwd(temp);
+		if (temp && temp->env_var != NULL)
+		{
+			chdir(temp->env_var + 5);
+			change_pwd(temp);
+		}
+		else
+			ft_putstr_fd("Minishell: cd: HOME not set\n", 1);
 	}
 }

@@ -1,14 +1,5 @@
 #include "../minishell.h"
 
-static void ft_free(char **s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
- 		free(s[i++]);
-	free(s);
-}
 
 // void skip_quotes(char *target, char delimiter, int *index)
 // {

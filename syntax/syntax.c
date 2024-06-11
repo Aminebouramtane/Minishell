@@ -12,7 +12,7 @@ int     syntax_err(Datatoken *data)
     while (node)
     {
 //------------------------------------redirection after echo----------------------------------
-        if (node && node->next && (ft_strncmp(node->cmd, "echo", ft_strlen(node->cmd)) == 0))
+        if (node && node->next && (ft_strncmp(node->cmd, "echo") == 0))
         {
             node = node->next;
             while (node && node->cmd[0] == ' ' && node->state == 2)
@@ -29,7 +29,6 @@ int     syntax_err(Datatoken *data)
                     return (1);
                 }
             }
-            printf("hna\n");
         }
 //--------------------------------------pipe after pipe----------------------------------------
 //------------------------------------redirection after pipe-----------------------------------

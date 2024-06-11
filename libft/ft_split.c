@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 03:30:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/05/15 16:34:42 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/06/07 21:52:42 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	char	*get_word(char const *s, char c, int *index)
 	return (str);
 }
 
-static	void	ft_free(char **s)
+void	ft_free(char **s)
 {
 	int	i;
 
