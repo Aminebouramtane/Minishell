@@ -18,6 +18,7 @@ t_env	*get_env_vars(char **env_vars)
 		variable = ft_split(temp->env_var, '=');	
 		temp->key = ft_strdup(variable[0]);
 		temp->value = getenv(variable[0]);
+		//printf("%s\n", temp->value);
 		//printf("%s\n", temp->key);
 		//printf("%s\n", temp->value);
 		ft_free(variable);

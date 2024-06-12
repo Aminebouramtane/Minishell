@@ -19,15 +19,22 @@ t_env	*copy_list(t_env *start)
 
 void	printList(t_env *node)
 {
+	//t_env *temp;
+
+	//temp = node;
 	while (node != NULL)
 	{
-		
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(node->key, 1);
-		ft_putstr_fd("=", 1);
-		ft_putstr_fd("\"", 1);
-		ft_putstr_fd(node->value, 1);
-		ft_putstr_fd("\"\n", 1);
+		 if (node->value != NULL)
+		{
+		 	ft_putstr_fd("=", 1);
+		 	ft_putstr_fd("\"", 1);
+		 	ft_putstr_fd(node->value, 1);
+		 	ft_putstr_fd("\"\n", 1);
+		}
+		else
+			ft_putstr_fd("\n", 1);
 		node = node->next;
 	}
 }
@@ -70,7 +77,6 @@ void	bubbleSort(t_env *start)
 			ptr1 = ptr1->next;
 		}
 	}
-	printList(start);
 }
 
 
@@ -82,18 +88,24 @@ void	ft_export(t_parce_node *parce)
 
 	i = 1;
 	temp = envi;
-	if (parce->args[1] != NULL)
+	if (parce->args && parce->args[1] != NULL)
 	{
 		while (parce && parce->args[i] != NULL)
 		{
-			ft_env_lstadd_back(&envi, ft_env_lstnew(parce->args[i]));
+			ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i));
+			//printList(envi);
 			i++;
 		}
+		copy = copy_list(envi);
+		bubbleSort(copy);
+		//printList(copy);
+		ft_env_lstclear(copy);
 	}	
 	else
 	{
 		copy = copy_list(envi);
 		bubbleSort(copy);
+		printList(copy);
 		ft_env_lstclear(copy);
 	}
 }

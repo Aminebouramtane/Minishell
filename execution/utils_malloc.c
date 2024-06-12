@@ -28,10 +28,14 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 	if (my_node->env_var && parce->args[i])
 		my_node->env_var = ft_strdup(parce->args[i]);
 	my_node->key = NULL;
-	//while (parce->args[i][j] != '\0' && parce->args[i][j] != '=')
-		//j++;
-	if (parce->args[i][j] == '=')
+	while (parce->args[i][j] != '\0' && parce->args[i][j] != '=')
+		j++;
+	if (parce->args[i][j] != '\0' && parce->args[i][j] == '=')
+	{
 		my_node->key = ft_substr(parce->args[i], 0, j -1);
+	}
+	else
+		my_node->key = ft_strdup(parce->args[i]);
 	my_node->value = ft_strdup(ft_strchr(parce->args[i], '='));
 	my_node->next = NULL;
 	my_node->prev = NULL;
@@ -48,8 +52,6 @@ t_env	*ft_env_lstnew(void *content)
 	if (my_node == NULL)
 		return (NULL);
 	my_node->env_var = ft_strdup(content);
-	//while ((char)content != '\0' && ((char)content) != '=')
-		//j++;
 	my_node->key = NULL;
 	my_node->value = NULL;
 	my_node->next = NULL;
