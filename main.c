@@ -8,14 +8,15 @@ int main(int ac, char **av, char **env)
     char	*input;
     t_parce_node *parce;
 
-
 	envi = get_env_vars(env);
+
     int     i;
 
     (void)av;
     if (ac != 1)
     {
         ft_putstr_fd("Error in Args !!\n", 1);
+        envi->exit_status = 1;
         exit(1);
     }
     data = ft_malloc(sizeof(t_vars), 0);

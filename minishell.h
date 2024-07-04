@@ -19,6 +19,7 @@ typedef struct s_env
 
 	char	*key;
 	char	*value;
+	int		exit_status;
 	struct s_env *next;
 	struct s_env *prev;
 
@@ -173,5 +174,10 @@ void	ft_env_delone(t_env *lst);
 void	bubbleSort(t_env *start);
 void	ft_env_lstclear(t_env *head);
 t_env	*ft_export_lstnew(t_parce_node *parce, int i);
+void	ft_exit(t_parce_node *parce);
+
+void	run_commands(t_parce_node *parce);
+void	execute_single(t_parce_node *parce);
+void	execute_multi(t_parce_node *parce);
 
 #endif

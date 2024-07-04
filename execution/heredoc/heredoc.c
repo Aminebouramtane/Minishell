@@ -26,6 +26,7 @@ void handel_heredoc(t_parce_node *parce)
                 if (fd < 0)
                 {
                     ft_putstr_fd("Error in FD !!\n", 1);
+                    envi->exit_status = 1;
                     exit(1);
                 }
                 while (1)
@@ -51,6 +52,7 @@ void handel_heredoc(t_parce_node *parce)
             }
             parce->file = parce->file->next;
         }
+        envi->exit_status = 0;
         exit(0);
     }
     waitpid(f, NULL, 0);

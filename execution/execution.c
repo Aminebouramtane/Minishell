@@ -16,11 +16,10 @@ void	run_builtin(t_parce_node *parce)
 		ft_pwd();
 	else if (ft_strncmp(parce->args[0], "export") == 0)
 		ft_export(parce);
-	// else if (ft_strncmp(args[0], "exit") == 0)
-	// 	ft_exit(parce);
+	else if (ft_strncmp(parce->args[0], "exit") == 0)
+		ft_exit(parce);
 	
 }
-
 
 int	check_builtins(char *command)
 {
@@ -36,6 +35,17 @@ int	check_builtins(char *command)
 		return (0);
 }
 
+void	run_commands(t_parce_node *parce)
+{
+	if (parce->next == NULL)
+	{
+		execute_single(parce);							//TO DO
+	}
+	else
+	{
+		execute_multi(parce);
+	}
+}
 
 void ft_execute(t_parce_node *parce)
 {		
@@ -43,6 +53,6 @@ void ft_execute(t_parce_node *parce)
 		handel_heredoc(parce);
 	if (parce->args && check_builtins(parce->args[0]) == 1)
 		run_builtin(parce);
-	// else
-	// 	run_commands();
+	else
+		run_commands(parce);
 }
