@@ -16,7 +16,6 @@
 typedef struct s_env
 {
     char *env_var;
-
 	char	*key;
 	char	*value;
 	int		exit_status;
@@ -177,7 +176,10 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i);
 void	ft_exit(t_parce_node *parce);
 
 void	run_commands(t_parce_node *parce);
-void	execute_single(t_parce_node *parce);
-void	execute_multi(t_parce_node *parce);
+void	execute_single(t_parce_node *parce, char **envp);
+void	execute_multi(t_parce_node *parce, char **envp);
+char	**make_env_array(t_env *env);
+char	*ft_strjoin_path(char const *s1, char const *s2);
+
 
 #endif

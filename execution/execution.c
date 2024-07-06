@@ -37,13 +37,17 @@ int	check_builtins(char *command)
 
 void	run_commands(t_parce_node *parce)
 {
+	char **envp;
+	
+	envp = make_env_array(envi);
 	if (parce->next == NULL)
 	{
-		execute_single(parce);							//TO DO
+		execute_single(parce, envp);
+		free_split(envp);						//TO DO
 	}
 	else
 	{
-		execute_multi(parce);
+		execute_multi(parce, envp);
 	}
 }
 
