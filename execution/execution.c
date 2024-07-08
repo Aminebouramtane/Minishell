@@ -35,28 +35,22 @@ int	check_builtins(char *command)
 		return (0);
 }
 
-void	run_commands(t_parce_node *parce)
-{
+
+void ft_execute(t_parce_node *parce)
+{		
 	char **envp;
 	
 	envp = make_env_array(envi);
+	if (parce)
+		handel_heredoc(parce);
 	if (parce->next == NULL)
 	{
 		execute_single(parce, envp);
-		free_split(envp);						//TO DO
+		free_split(envp);
 	}
 	else
 	{
 		execute_multi(parce, envp);
+		free_split(envp);
 	}
-}
-
-void ft_execute(t_parce_node *parce)
-{		
-	if (parce)
-		handel_heredoc(parce);
-	if (parce->args && check_builtins(parce->args[0]) == 1)
-		run_builtin(parce);
-	else
-		run_commands(parce);
 }

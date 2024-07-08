@@ -75,6 +75,9 @@ typedef struct s_file
     int     redir_out;
     int     append;
     int     heredoc;
+	int		in_file_fd;
+	int		out_file_fd;
+	int		appended_file_fd;
 	int		is_quoted;
     char    *eof;
     int     index;
@@ -175,11 +178,14 @@ void	ft_env_lstclear(t_env *head);
 t_env	*ft_export_lstnew(t_parce_node *parce, int i);
 void	ft_exit(t_parce_node *parce);
 
-void	run_commands(t_parce_node *parce);
 void	execute_single(t_parce_node *parce, char **envp);
 void	execute_multi(t_parce_node *parce, char **envp);
 char	**make_env_array(t_env *env);
 char	*ft_strjoin_path(char const *s1, char const *s2);
+void	open_files_append(t_parce_node *parce);
+void	open_out_files_redir(t_parce_node *parce);
+void	open_in_files_redir(t_parce_node *parce);
+void	free_split(char **command_av);
 
 
 #endif

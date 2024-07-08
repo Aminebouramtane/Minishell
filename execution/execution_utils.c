@@ -8,8 +8,25 @@
 										✅ DONE !!!
 
 2nd step:
-		execute a single command using execve
+		execute a single command using execve ✅ DONE !!
+
+3rd step :
+		a function needed to be opened files in case of redirection and append
+
 */
+
+void	free_split(char **command_av)
+{
+	int	i;
+
+	i = 0;
+	while (command_av[i])
+	{
+		free(command_av[i]);
+		i++;
+	}
+	free(command_av);
+}
 
 char	*ft_strjoin_path(char const *s1, char const *s2)
 {

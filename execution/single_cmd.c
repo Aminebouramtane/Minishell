@@ -1,17 +1,26 @@
 #include "../minishell.h"
 
-
-void	free_split(char **command_av)
+char	*dirs_paths(char *env_path, t_parce_node *parce)
 {
-	int	i;
+	char	**dirs_path;
+	char	*s;
+	char	*command_path;
+	int		i;
 
 	i = 0;
-	while (command_av[i])
+	dirs_path = ft_split(env_path, ':');
+	command_path = ft_strjoin_path("/", parce->args[0]);
+	while (dirs_path[i] != NULL)
 	{
-		free(command_av[i]);
+		s = ft_strjoin_path(dirs_path[i], command_path);
+		if (!access(s, X_OK))
+			return (free(command_path), s);
+		else
+			(free(s));
 		i++;
 	}
-	free(command_av);
+	(free_split(dirs_path), free(env_path), free(command_path));
+	return(NULL);
 }
 
 char	*getpaths()
@@ -28,51 +37,53 @@ char	*getpaths()
 			temp = temp->next;
 	}
 	if (temp == NULL)
-		write(2, "enviroment PATH not found :\n", 27);
+	{
+		write(2, "minishell: ls: No such file or directory\n", 41);
+		envi->exit_status = 127;
+	}	
 	env_paths = ft_strdup(temp->value);
 	return (env_paths);
 }
 
-char	*dirs_paths(char *env_path, t_parce_node *parce)
-{
-	char	**dirs_path;
-	char	*s;
-	char	*command_path;
-	int		i;
-
-	i = 0;
-	dirs_path = ft_split(env_path, ':');
-	command_path = ft_strjoin_path("/", parce->args[0]);
-	while (dirs_path[i] != NULL)
-	{
-		s = ft_strjoin_path(dirs_path[i], command_path);
-		if (!access(s, X_OK | F_OK))
-			return (free(command_path), s);
-		else
-			(free(s), free(dirs_path[i]));
-		i++;
-	}
-	(free_split(dirs_path), free(env_path), free(command_path));
-	return(NULL);
-}
-
 void	execute_single(t_parce_node *parce, char **envp)
 {
-	(void)parce;
-	(void)envp;
-
 	int pid = fork();
+	char	*error_msg;
+
+	error_msg = NULL;
 	if (pid == 0)
 	{
-		char *paths = getpaths();
-		char *cmd_path = dirs_paths(paths, parce);
-		printf("%s\n", paths);
-		if (execve(cmd_path, parce->args ,envp) == -1)
+		while (parce->file)
 		{
-			printf("execve didn't work");
+			if (parce->file->redir_in)
+				open_in_files_redir(parce);
+			if (parce->file->redir_out)
+				open_out_files_redir(parce);
+			if (parce->file->append)
+				open_files_append(parce);
+			parce->file = parce->file->next;
 		}
-		envi->exit_status = 0;
-		exit(0);
+		if (check_builtins(parce->args[0]) == 1)
+				run_builtin(parce);
+		else
+		{
+			char *path_env = getpaths();
+			char *cmd_path = dirs_paths(path_env, parce);
+			if (execve(cmd_path, parce->args ,envp) == -1)
+			{
+				error_msg = ft_strjoin("Minishell: command not found: ", parce->args[0]);
+				write(2, error_msg, ft_strlen(error_msg));
+				write(2, "\n", 1);
+				free(error_msg);
+				free_split(envp);
+				free(cmd_path);
+				envi->exit_status = 1;
+				exit(1);
+			}
+			free_split(envp);
+			envi->exit_status = 0;
+			exit(0);
+		}
 	}
 	wait(NULL);
 }
