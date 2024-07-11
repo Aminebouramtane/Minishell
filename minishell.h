@@ -95,6 +95,13 @@ typedef struct s_parce_node
     struct  s_parce_node    *prev;
 }   t_parce_node;
 
+typedef struct s_heredoc
+{
+	char	*input;
+	struct s_heredoc *next;
+	struct s_heredoc *prev;
+}	t_heredoc;
+
 
 
 int				lexer(char *str, t_vars *data);
@@ -187,5 +194,14 @@ void	open_out_files_redir(t_parce_node *parce);
 void	open_in_files_redir(t_parce_node *parce);
 void	free_split(char **command_av);
 
+
+//-------------------------------------------HEREDOC--------------------------
+t_heredoc	*ft_heredoc_lstnew(void *content);
+t_heredoc	*ft_heredoc_lstlast(t_heredoc *lst);
+void	ft_heredoc_lstadd_back(t_heredoc **lst, t_heredoc *new);
+void	ft_heredoc_lstclear(t_heredoc **lst);
+void	ft_heredoc_lstdelone(t_heredoc *lst);
+char	*expande_heredoc(char *str);
+void	ft_heredoc_expand(t_heredoc *lst);
 
 #endif
