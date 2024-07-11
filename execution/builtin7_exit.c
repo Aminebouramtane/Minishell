@@ -47,12 +47,9 @@ int	valid_estatus(char *status)
 
 void	ft_exit(t_parce_node *parce)
 {
-	int i;
 	int status;
 	
-	i = 0;
 	status = 0;
-	
 	if (parce->args[1] && !valid_estatus(parce->args[1]))
 	{
 		ft_putstr_fd("exit\n", 1);

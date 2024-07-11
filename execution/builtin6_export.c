@@ -82,12 +82,10 @@ void	bubbleSort(t_env *start)
 
 void	ft_export(t_parce_node *parce)
 {
-	t_env	*temp;
 	t_env	*copy;
 	int		i;
 
 	i = 1;
-	temp = envi;
 	if (parce->args && parce->args[1] != NULL)
 	{
 		while (parce && parce->args[i] != NULL)
