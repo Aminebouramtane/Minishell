@@ -22,6 +22,8 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 
 	int j;
 	j = 0;
+	my_node = NULL;
+	my_node->env_var = NULL;
 	my_node = (t_env *)malloc(sizeof(t_env));
 	if (my_node == NULL)
 		return (NULL);
@@ -46,8 +48,6 @@ t_env	*ft_env_lstnew(void *content)
 {
 	t_env	*my_node;
 
-	int	i;
-	i = 0;
 	my_node = (t_env *)malloc(sizeof(t_env));
 	if (my_node == NULL)
 		return (NULL);
