@@ -124,6 +124,7 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
     {
         if (((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
         || ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+        || ((*node)->cmd[0] == '>' && (*node)->type == 'a' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->type == '|' && (*node)->state == 2))
             break ;
