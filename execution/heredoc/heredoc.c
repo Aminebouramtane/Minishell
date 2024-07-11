@@ -9,7 +9,6 @@ void handel_heredoc(t_parce_node *parce)
     char    *input = NULL;
     char    *line;
     char    *myfile;
-    char    *output;
 
     f = fork();
     if (f == -1)
@@ -32,9 +31,9 @@ void handel_heredoc(t_parce_node *parce)
                 while (1)
                 {
                     input = readline(">");
-                    output = expand_env_vars(input);
-                    if (!output)
-                        break;
+                    // output = expand_env_vars(input);
+                    // if (!output)
+                    //     break;
                     if (!ft_strncmp(input, delimiter))
                     {
                         free(input);
@@ -43,7 +42,7 @@ void handel_heredoc(t_parce_node *parce)
                     if (parce->file->is_quoted)
                         line = ft_my_strjoin(input, "\n");
                     else
-                        line = ft_my_strjoin(output, "\n");
+                        line = expande_heredoc(input);
                     write(fd, line, ft_strlen(line));
                     free(line);
                     free(input);
