@@ -14,6 +14,7 @@ SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimite
 	parce/utils.c parce/utils2.c parce/utils3.c parce/utils4.c  execution/execution.c execution/builtin1_echo.c execution/builtin2_cd.c syntax/syntax.c syntax/utils.c quotes/d_quotes.c \
 	execution/builtin3_env.c execution/builtin4_pwd.c execution/builtin5_unset.c execution/heredoc/heredoc.c execution/heredoc/expand.c  execution/builtin6_export.c \
 	execution/heredoc/utils.c execution/utils_malloc.c execution/builtin7_exit.c execution/execution_utils.c execution/single_cmd.c execution/multi_cmd.c execution/redirection_append.c \
+	execution/heredoc/ex_node.c execution/heredoc/ex.c
 	
 
 OBJ = $(SRC:.c=.o)
