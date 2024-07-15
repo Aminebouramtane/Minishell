@@ -19,7 +19,7 @@ SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/delimite
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $? ./libft/libft.a -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
 # $(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
 
 all : $(NAME)

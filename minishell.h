@@ -19,6 +19,7 @@ typedef struct s_env
 	char	*key;
 	char	*value;
 	int		exit_status;
+	int		fd;
 	struct s_env *next;
 	struct s_env *prev;
 
@@ -182,10 +183,12 @@ void	execute_single(t_parce_node *parce, char **envp);
 void	execute_multi(t_parce_node *parce, char **envp);
 char	**make_env_array(t_env *env);
 char	*ft_strjoin_path(char const *s1, char const *s2);
-void	open_files_append(t_parce_node *parce);
-void	open_out_files_redir(t_parce_node *parce);
-void	open_in_files_redir(t_parce_node *parce);
+void	open_files_append(t_file *file, int fd_out);
+void	open_out_files_redir(t_file *parce, int fd_out);
+void	open_in_files_redir(t_file *parce, int fd_in);
 void	free_split(char **command_av);
-
+char	*getpaths();
+char	*dirs_paths(char *env_path, t_parce_node *parce);
+void	execution_single(t_parce_node *temp, char **envp, int *fds);
 
 #endif

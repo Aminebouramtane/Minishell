@@ -47,31 +47,39 @@ char	*getpaths()
 
 void	execute_single(t_parce_node *parce, char **envp)
 {
-	int pid = fork();
+	pid_t pid = fork();
 	char	*error_msg;
+	t_parce_node *temp;
+	int	status;
 
+	status = 0;
+	temp = parce;
 	error_msg = NULL;
+	dup2(0, 100);
+	dup2(1, 99);
+	while (temp->file)
+	{
+		if (temp->file->redir_in == 1)
+			open_in_files_redir(temp->file, 0);
+		if (temp->file->redir_out == 1)
+			open_out_files_redir(temp->file, 1);
+		if (temp->file->append == 1)
+			open_files_append(temp->file, 1);
+		temp->file = temp->file->next;
+	}
 	if (pid == 0)
 	{
-		while (parce->file)
+		if (check_builtins(temp->args[0]) == 1)
 		{
-			if (parce->file->redir_in)
-				open_in_files_redir(parce);
-			if (parce->file->redir_out)
-				open_out_files_redir(parce);
-			if (parce->file->append)
-				open_files_append(parce);
-			parce->file = parce->file->next;
+			run_builtin(temp);
 		}
-		if (check_builtins(parce->args[0]) == 1)
-				run_builtin(parce);
 		else
 		{
 			char *path_env = getpaths();
-			char *cmd_path = dirs_paths(path_env, parce);
-			if (execve(cmd_path, parce->args ,envp) == -1)
+			char *cmd_path = dirs_paths(path_env, temp);
+			if (execve(cmd_path, temp->args ,envp) == -1)
 			{
-				error_msg = ft_strjoin("Minishell: command not found: ", parce->args[0]);
+				error_msg = ft_strjoin("Minishell: command not found: ", temp->args[0]);
 				write(2, error_msg, ft_strlen(error_msg));
 				write(2, "\n", 1);
 				free(error_msg);
@@ -85,5 +93,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 			exit(0);
 		}
 	}
+	close(envi->fd);
+	dup2(99, 1);
 	wait(NULL);
 }
