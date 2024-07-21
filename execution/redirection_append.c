@@ -9,8 +9,8 @@ void	open_files_append(t_file *file, int fd_out)
 	{
 		if (temp->append)
 		{
-			envi->fd = open(temp->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
-			if (envi->fd == -1)
+			temp->appended_file_fd = open(temp->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			if (envi->out_fd == -1)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
@@ -18,11 +18,9 @@ void	open_files_append(t_file *file, int fd_out)
 				envi->exit_status = 1;
 				return ;
 			}
-			if (temp->next)
-				close(envi->fd);
 			else if (temp->next == NULL)
 			{
-				dup2(envi->fd, fd_out);
+				dup2(temp->appended_file_fd, fd_out);
 			}
 		}
 		temp = temp->next;

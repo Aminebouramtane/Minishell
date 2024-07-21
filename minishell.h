@@ -19,7 +19,8 @@ typedef struct s_env
 	char	*key;
 	char	*value;
 	int		exit_status;
-	int		fd;
+	int		in_fd;
+	int		out_fd;
 	struct s_env *next;
 	struct s_env *prev;
 
@@ -196,8 +197,7 @@ void	open_in_files_redir(t_file *parce, int fd_in);
 void	free_split(char **command_av);
 char	*getpaths();
 char	*dirs_paths(char *env_path, t_parce_node *parce);
-void	execution_single(t_parce_node *temp, char **envp, int *fds);
-
+void execution_single(t_parce_node *temp, char **envp, int *fd);
 //-------------------------------------------HEREDOC--------------------------
 t_heredoc	*ft_heredoc_lstnew(void *content);
 t_heredoc	*ft_heredoc_lstlast(t_heredoc *lst);

@@ -39,7 +39,7 @@ int	check_builtins(char *command)
 void ft_execute(t_parce_node *parce)
 {		
 	char **envp;
-	
+
 	envp = make_env_array(envi);
 	if (parce)
 		handel_heredoc(parce);
@@ -51,6 +51,7 @@ void ft_execute(t_parce_node *parce)
 	else
 	{
 		execute_multi(parce, envp);
+		while (waitpid(-1, NULL, 0) != -1){};
 		free_split(envp);
 	}
 }

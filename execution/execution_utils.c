@@ -57,7 +57,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 	return (ptr);
 }
 
-char **make_env_array(t_env *env)
+char **make_env_array(t_env *env) 
 {
 	t_env	*temp;
 	char	**env_array;

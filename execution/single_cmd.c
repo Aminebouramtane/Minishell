@@ -69,7 +69,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 	}
 	if (pid == 0)
 	{
-		if (check_builtins(temp->args[0]) == 1)
+		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
 			run_builtin(temp);
 		}
@@ -93,7 +93,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 			exit(0);
 		}
 	}
-	close(envi->fd);
+	close(envi->out_fd);
 	dup2(99, 1);
 	wait(NULL);
 }
