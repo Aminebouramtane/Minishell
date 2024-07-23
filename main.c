@@ -10,8 +10,6 @@ int main(int ac, char **av, char **env)
 
 	envi = get_env_vars(env);
 
-    int     i;
-    i = 0;
     (void)av;
     if (ac != 1)
     {
