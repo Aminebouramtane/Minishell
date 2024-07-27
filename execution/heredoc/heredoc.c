@@ -1,5 +1,9 @@
 #include "../../minishell.h"
 
+void    ft_handler_heredoc()
+{
+   exit(130);
+}
 
 void handel_heredoc(t_parce_node *parce)
 {
@@ -15,6 +19,7 @@ void handel_heredoc(t_parce_node *parce)
         return ;
     else if (f == 0)
     {
+    signal(SIGINT, ft_handler_heredoc);
         while (parce->file)
         {
             if (parce->file->heredoc == 1)

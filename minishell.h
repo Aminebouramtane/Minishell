@@ -11,6 +11,7 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <signal.h>
 
 
 typedef struct s_env

@@ -2,6 +2,19 @@
 // ldapsearch uid=abouramt
 #include "minishell.h"
 t_env *envi;
+
+
+void    ft_handler()
+{
+   write(1, "\n",1);
+   rl_replace_line("", 0);
+   rl_on_new_line();
+   rl_redisplay();
+}
+void    ft_handler2()
+{
+   write(1, "\n",1);
+}
 int main(int ac, char **av, char **env)
 {
     t_vars	*data;
@@ -24,10 +37,13 @@ int main(int ac, char **av, char **env)
     if (!parce)
         return (0);
     data->flag = 0;
+    signal(SIGINT, ft_handler);
     while (1) {
         // ft_my_lstclear(&data->ndata);
+        // signal(SIGQUIT, SIG_IGN);
         data->ndata = NULL;
         input = readline("minishell$ ");
+         signal(SIGINT, ft_handler2);
         add_history(input);
         if (!input[0] || !input)
             continue ;
