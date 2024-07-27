@@ -1,5 +1,6 @@
 #include "../../minishell.h"
 
+
 void	ft_heredoc_expand_dolar(t_heredoc *lst)
 {
 	t_heredoc	*node;
@@ -12,7 +13,7 @@ void	ft_heredoc_expand_dolar(t_heredoc *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->input && node->input[0] == '$' && ft_strlen(node->input) == 1)
+		if (node->input && node->input[0] && node->input[0] == '$' && ft_strlen(node->input) == 1)
 		{
 			if (node->next && node->next->input && 
 			   (node->next->input[0] == '\'' || node->next->input[0] == '\"'))
