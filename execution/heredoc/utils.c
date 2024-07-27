@@ -80,6 +80,7 @@ t_heredoc	*ft_heredoc_lstnew(void *content)
 	if (my_node == NULL)
 		return (NULL);
 	my_node->input = content;
+	my_node->next = NULL;
 	return (my_node);
 }
 

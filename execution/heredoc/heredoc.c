@@ -31,9 +31,6 @@ void handel_heredoc(t_parce_node *parce)
                 while (1)
                 {
                     input = readline(">");
-                    // output = expand_env_vars(input);
-                    // if (!output)
-                    //     break;
                     if (!ft_strncmp(input, delimiter))
                     {
                         free(input);
@@ -44,6 +41,8 @@ void handel_heredoc(t_parce_node *parce)
                     else
                         line = expande_heredoc(input);
                     write(fd, line, ft_strlen(line));
+                    if (ft_strncmp(input, delimiter))
+                        write(fd, "\n", 1);
                     free(line);
                     free(input);
                 }
