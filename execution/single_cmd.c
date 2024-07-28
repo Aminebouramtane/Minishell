@@ -51,9 +51,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 	pid_t pid = fork();
 	char	*error_msg;
 	t_parce_node *temp;
-	int	status;
 
-	status = 0;
 	temp = parce;
 	error_msg = NULL;
 	dup2(0, 100);

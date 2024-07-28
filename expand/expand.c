@@ -14,27 +14,41 @@ void	ft_expand_dolar(Datatoken *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
+		if (node->cmd && node->cmd[0] && node->cmd[0] == '$' && ft_strlen(node->cmd) == 1 && node->next && node->next->cmd 
+		&& (node->next->cmd[0] == '\'' || node->next->cmd[0] == '\"'))
 		{
-			node->cmd++;
+			tmp = "\0";
+			node->cmd = tmp;
+		}
+		if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 1)
+		{
+			node->cmd = "$";
+		}
+		else if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
+		{
+			node->cmd = node->cmd + 1;
 			str = node->cmd;
 			env = getenv(str);
 			tmp = my_strdup_two(env);
 			if (tmp)
 				node->cmd = tmp;
-			else
-				node->cmd--;
 		}
 		else if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 2)
 		{
-			node->cmd++;
+			node->cmd = node->cmd + 1;
 			str = node->cmd;
 			env = getenv("_");
-			tmp = my_strdup_two(env);
-			if (tmp)
-				node->cmd = tmp;
+			if (str[0] == '_')
+			{
+				tmp = my_strdup_two(env);
+				if (tmp)
+					node->cmd = tmp;
+			}
 			else
-				node->cmd--;
+			{
+				tmp = "\0";
+				node->cmd = tmp;
+			}
 		}
 		node = node->next;
 	}
@@ -52,7 +66,7 @@ void	ft_expand_home(Datatoken *lst)
 	{
 		if (node->cmd[0] == '~' && node->state == 2)
 		{
-			node->cmd++;
+			node->cmd = node->cmd + 1;
 
 			str = node->cmd;
 			env = my_strdup_two(getenv("HOME"));
@@ -66,56 +80,9 @@ void	ft_expand_home(Datatoken *lst)
 	}
 }
 
-void	ft_remove_dqoutes(Datatoken **lst)
-{
-	Datatoken	*node;
-
-	node = *lst;
-	while (node)
-	{
-		if (node->cmd[0] == '\"')
-		{
-			node->cmd++;
-			if (node->prev)
-				node->prev->next = node->next;
-			if (node->next)
-				node->next->prev = node->prev;
-			if (node == *lst)
-				*lst = node->next;
-			node = node->next;
-		}
-		else
-			node = node->next;
-	}
-}
-
-void	ft_remove_qoutes(Datatoken *lst)
-{
-	Datatoken	*node;
-	char		*str;
-	int			i;
-
-	node = lst;
-	i = 0;
-	str = NULL;
-	while (node)
-	{
-		if (node->cmd[0] == '\'' && node->state == 0)
-		{
-			node->cmd++;
-			while (node->cmd[i] != '\'')
-				i++;
-			str = my_strdup(node->cmd, i);
-			node->cmd = str;
-		}
-		node = node->next;
-	}
-}
-
 void	ft_expand(Datatoken *lst)
 {
 	ft_expand_dolar(lst);
 	ft_expand_home(lst);
-	// ft_remove_qoutes(lst);
-	// ft_remove_dqoutes(&lst);
+
 }

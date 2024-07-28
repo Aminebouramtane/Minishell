@@ -1,5 +1,6 @@
 #include "../../minishell.h"
 
+
 void	ft_heredoc_expand_dolar(t_heredoc *lst)
 {
 	t_heredoc	*node;
@@ -12,27 +13,38 @@ void	ft_heredoc_expand_dolar(t_heredoc *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->input && node->input[0] == '$' && ft_strlen(node->input) > 2)
+		if (node->input && node->input[0] && node->input[0] == '$' && ft_strlen(node->input) == 1)
 		{
-			node->input++;
-			str = node->input;
+			if (node->next && node->next->input && 
+			   (node->next->input[0] == '\'' || node->next->input[0] == '\"'))
+			{
+				tmp = "\0";
+				node->input = tmp;
+			}
+		}
+		else if (node->input && node->input[0] == '$' && ft_strlen(node->input) > 1)
+		{
+			str = node->input + 1;
 			env = getenv(str);
 			tmp = my_strdup_two(env);
 			if (tmp)
 				node->input = tmp;
-			else
-				node->input--;
 		}
 		else if (node->input && node->input[0] == '$' && ft_strlen(node->input) == 2)
 		{
-			node->input++;
-			str = node->input;
+			str = node->input + 1;
 			env = getenv("_");
-			tmp = my_strdup_two(env);
-			if (tmp)
-				node->input = tmp;
+			if (str && str[0] == '_')
+			{
+				tmp = my_strdup_two(env);
+				if (tmp)
+					node->input = tmp;
+			}
 			else
-				node->input--;
+			{
+				tmp = "\0";
+				node->input = tmp;
+			}
 		}
 		node = node->next;
 	}
@@ -48,17 +60,13 @@ void	ft_heredoc_expand_home(t_heredoc *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->input[0] == '~')
+		if (node->input && node->input[0] == '~')
 		{
-			node->input++;
-
-			str = node->input;
+			str = node->input + 1;
 			env = my_strdup_two(getenv("HOME"));
 			tmp = ft_strjoin(env, str);
 			if (tmp)
 				node->input = tmp;
-			else
-				node->input--;
 		}
 		node = node->next;
 	}

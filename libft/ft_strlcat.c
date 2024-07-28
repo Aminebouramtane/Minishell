@@ -39,13 +39,11 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 char	*ft_strlcat2(char *dst, const char *src, size_t dstsize)
 {
 	size_t	len_dst;
-	size_t	len_src;
 	size_t	i;
 
 	if (!dst && !dstsize)
 		return NULL;
 	len_dst = ft_strlen(dst);
-	len_src = ft_strlen(src);
 	if (dst == NULL && dstsize == 0)
 		return NULL;
 	if (len_dst >= dstsize)
