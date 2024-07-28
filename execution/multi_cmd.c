@@ -24,6 +24,7 @@ void execution_single(t_parce_node *temp, char **envp, int *fd)
         if (temp && temp->args && check_builtins(temp->args[0]) == 1)
         {
             run_builtin(temp);
+            envi->exit_status = 0;
             exit(0);
         } 
         else

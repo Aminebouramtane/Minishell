@@ -1,5 +1,32 @@
 #include "../minishell.h"
 
+char	*ft_mystrjoin(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*ptr;
+	size_t	len;
+
+	ptr = NULL;
+	if (!s1 || s1 == NULL)
+		len = ft_strlen(s2);
+	else
+		len = ft_strlen(s1) + ft_strlen(s2);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
+	i = -1;
+	if (s1)
+		while (s1[++i])
+			ptr[i] = s1[i];
+	else
+		i = 0;
+	j = -1;
+	while (s2[++j])
+		ptr[i + j] = s2[j];
+	ptr[i + j] = '\0';
+	return (ptr);
+}
 
 void	error_cd(char *str, int a_counter)
 {
@@ -15,28 +42,19 @@ void	error_cd(char *str, int a_counter)
 	}
 }
 
-void	change_pwd(t_env *temp)
+void	change_pwd()
 {
 	t_env	*temp2;
 	t_env	*temp3;
-	char	*str;
 
-	temp2 = temp;
-	temp3 = temp;
-	str = NULL;
-	while (temp3 && ft_strncmp(temp3->env_var, "PWD=") != 0)
+	temp2 = envi;
+	temp3 = envi;
+	while (temp3 && ft_strncmp(temp3->key, "PWD") != 0)
 		temp3 = temp3->next;
-	if (temp3)
-		str = ft_my_strjoin(str, temp3->env_var + 4);
-	while (temp && ft_strncmp(temp->env_var, "OLDPWD=") != 0)
-		temp = temp->next;
-	temp->env_var = ft_strjoin("OLDPWD=", str);
-	while (temp2 && ft_strncmp(temp2->env_var, "PWD=") != 0)
+	while (temp2 && ft_strncmp(temp2->key, "OLDPWD") != 0)
 		temp2 = temp2->next;
-	if (!temp2)
-		return ;
-	temp2->env_var = ft_strjoin("PWD=", getcwd(NULL, 0));
-
+	temp2->value = temp3->value;
+	temp3->value = getcwd(NULL, 0);
 }
 
 void	ft_cd(t_parce_node *parce)
@@ -44,27 +62,25 @@ void	ft_cd(t_parce_node *parce)
 	t_env	*temp;
 	int		arg_counter;
 
-
 	arg_counter = 0;
 	temp = envi;
 	while (parce->args[arg_counter] != NULL)
 		arg_counter++;
-	if (arg_counter >= 2)
+	if (arg_counter == 2)
 	{
 		if (chdir(parce->args[1]) != 0)
 			error_cd(parce->args[1], arg_counter);
 		else
-			change_pwd(temp);
+			change_pwd();
 	}
-	else
+	else if (arg_counter > 2)
+		error_cd(parce->args[1], arg_counter);
+	else if (arg_counter == 1)
 	{
-		while (temp && ft_strncmp(temp->env_var, "HOME") != 0)
+		while (temp && ft_strncmp(temp->key, "HOME") != 0)
 			temp = temp->next;
-		if (temp && temp->env_var != NULL)
-		{
-			chdir(temp->env_var + 5);
-			change_pwd(temp);
-		}
+		if (temp && temp->env_var != NULL && temp->value != NULL)
+			(chdir(temp->value), change_pwd());
 		else
 			ft_putstr_fd("Minishell: cd: HOME not set\n", 1);
 	}

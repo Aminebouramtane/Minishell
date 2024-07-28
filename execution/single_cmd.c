@@ -9,7 +9,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 
 	i = 0;
 	dirs_path = ft_split(env_path, ':');
-	command_path = ft_strjoin_path("/", parce->args[0]);
+	if (parce && parce->args)
+		command_path = ft_strjoin_path("/", parce->args[0]);
 	while (dirs_path[i] != NULL)
 	{
 		s = ft_strjoin_path(dirs_path[i], command_path);
@@ -57,24 +58,25 @@ void	execute_single(t_parce_node *parce, char **envp)
 	error_msg = NULL;
 	dup2(0, 100);
 	dup2(1, 99);
-	while (temp->file)
-	{
-		if (temp->file->redir_in == 1)
-			open_in_files_redir(temp->file, 0);
-		if (temp->file->redir_out == 1)
-			open_out_files_redir(temp->file, 1);
-		if (temp->file->append == 1)
-			open_files_append(temp->file, 1);
-		temp->file = temp->file->next;
-	}
-	if (pid == 0)
-	{
-		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
+	
+	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
 			run_builtin(temp);
 		}
-		else
+	else
+	{
+		if (pid == 0)
 		{
+			while (temp->file)
+			{
+				if (temp->file->redir_in == 1)
+					open_in_files_redir(temp->file, 0);
+				if (temp->file->redir_out == 1)
+					open_out_files_redir(temp->file, 1);
+				if (temp->file->append == 1)
+					open_files_append(temp->file, 1);
+				temp->file = temp->file->next;
+			}
 			char *path_env = getpaths();
 			char *cmd_path = dirs_paths(path_env, temp);
 			if (execve(cmd_path, temp->args ,envp) == -1)
@@ -89,11 +91,13 @@ void	execute_single(t_parce_node *parce, char **envp)
 				exit(1);
 			}
 			free_split(envp);
+			free(cmd_path);
 			envi->exit_status = 0;
 			exit(0);
 		}
 	}
-	close(envi->out_fd);
-	dup2(99, 1);
-	wait(NULL);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			envi->exit_status = WEXITSTATUS(status);
+		dup2(99, 1);
 }
