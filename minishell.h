@@ -199,6 +199,7 @@ void	free_split(char **command_av);
 char	*getpaths();
 char	*dirs_paths(char *env_path, t_parce_node *parce);
 void execution_single(t_parce_node *temp, char **envp, int *fd);
+char	*get_value(char *key);
 //-------------------------------------------HEREDOC--------------------------
 t_heredoc	*ft_heredoc_lstnew(void *content);
 t_heredoc	*ft_heredoc_lstlast(t_heredoc *lst);

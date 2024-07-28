@@ -46,6 +46,7 @@ void	change_pwd()
 {
 	t_env	*temp2;
 	t_env	*temp3;
+	char	*buffer;
 
 	temp2 = envi;
 	temp3 = envi;
@@ -54,7 +55,9 @@ void	change_pwd()
 	while (temp2 && ft_strncmp(temp2->key, "OLDPWD") != 0)
 		temp2 = temp2->next;
 	temp2->value = temp3->value;
-	temp3->value = getcwd(NULL, 0);
+	buffer = getcwd(NULL, 0);
+	temp3->value = ft_strdup(buffer);
+	free(buffer);
 }
 
 void	ft_cd(t_parce_node *parce)
@@ -68,7 +71,14 @@ void	ft_cd(t_parce_node *parce)
 		arg_counter++;
 	if (arg_counter == 2)
 	{
-		if (chdir(parce->args[1]) != 0)
+		if (parce && ft_strncmp(parce->args[1], "-") == 0)
+			{
+				while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)
+					temp = temp->next;
+				chdir(temp->value);
+				change_pwd();
+			}
+		else if (chdir(parce->args[1]) != 0)
 			error_cd(parce->args[1], arg_counter);
 		else
 			change_pwd();
