@@ -15,6 +15,11 @@ void    ft_handler2()
 {
    write(1, "\n",1);
 }
+void    ft_handler3()
+{
+    exit(0);
+    write(1, "exit\n",1);
+}
 int main(int ac, char **av, char **env)
 {
     t_vars	*data;
@@ -38,12 +43,17 @@ int main(int ac, char **av, char **env)
         return (0);
     data->flag = 0;
     signal(SIGINT, ft_handler);
+    
     while (1) {
-        // ft_my_lstclear(&data->ndata);
-        // signal(SIGQUIT, SIG_IGN);
+        signal(SIGQUIT, SIG_IGN);
         data->ndata = NULL;
         input = readline("minishell$ ");
-         signal(SIGINT, ft_handler2);
+        signal(SIGINT, ft_handler2);
+        if (input == NULL)
+        {
+            printf("exit\n");
+            break;
+        }
         add_history(input);
         if (!input[0] || !input)
             continue ;
