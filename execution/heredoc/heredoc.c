@@ -36,6 +36,11 @@ void handel_heredoc(t_parce_node *parce)
                 while (1)
                 {
                     input = readline(">");
+                    if (input == NULL)
+                    {
+                        printf("bash: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", delimiter);
+                        break;
+                    }
                     if (!ft_strncmp(input, delimiter))
                     {
                         free(input);
