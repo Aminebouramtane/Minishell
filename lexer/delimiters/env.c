@@ -1,4 +1,3 @@
-
 #include "../../minishell.h"
 
 void	fill_env_in_node(char *str, size_t *i, t_vars *data, char *delimiters)

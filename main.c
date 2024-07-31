@@ -45,7 +45,7 @@ int main(int ac, char **av, char **env)
     signal(SIGINT, ft_handler);
     
     while (1) {
-        signal(SIGQUIT, SIG_IGN);
+        // signal(SIGQUIT, SIG_IGN);
         data->ndata = NULL;
         input = readline("minishell$ ");
         signal(SIGINT, ft_handler2);
@@ -69,12 +69,12 @@ int main(int ac, char **av, char **env)
             continue;
         rem_double_quotes(&parce);
         ft_execute(parce);
-        // while (data->ndata)
-	    // {
-        //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
-        //     data->ndata = data->ndata->next;
-        //     <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
-	    // }
+        while (data->ndata)
+	    {
+           printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
+            data->ndata = data->ndata->next;
+            // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+	    }
         // printf("####################PARSING#########################\n");
         // while (parce) 
 	    // {

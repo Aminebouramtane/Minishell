@@ -209,4 +209,11 @@ void	ft_heredoc_lstdelone(t_heredoc *lst);
 char	*expande_heredoc(char *str);
 void	ft_heredoc_expand(t_heredoc *lst);
 
+
+//norm
+
+void	ft_expand_dolar_single_char(Datatoken *node);
+void	ft_expand_dolar_two_chars(Datatoken *node);
+void	ft_handle_special_case(Datatoken *node);
+
 #endif
