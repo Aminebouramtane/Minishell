@@ -66,6 +66,7 @@ int main(int ac, char **av, char **env)
         ft_execute(parce);
         free(input);
     }
+    ft_malloc(sizeof(Datatoken), 1);
     ft_malloc(sizeof(t_vars), 1);
     ft_malloc(sizeof(t_parce_node), 1);
     // system("leaks minishell");

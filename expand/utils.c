@@ -21,7 +21,10 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 		{
 			tmp = my_strdup_two(env);
 			if (tmp)
+			{
+				free(node->cmd - 1);
 				node->cmd = tmp;
+			}
 		}
 		else
 		{

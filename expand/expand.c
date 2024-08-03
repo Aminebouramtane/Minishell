@@ -1,4 +1,5 @@
 #include "../minishell.h"
+#include <stdlib.h>
 
 void	ft_expand_dolar_long(Datatoken *node)
 {
@@ -13,7 +14,14 @@ void	ft_expand_dolar_long(Datatoken *node)
 		env = getenv(str);
 		tmp = my_strdup_two(env);
 		if (tmp)
+		{
+			free(node->cmd - 1); // Free the original command
 			node->cmd = tmp;
+		}
+		else
+		{
+			node->cmd--; // Restore the original pointer if allocation failed
+		}
 	}
 }
 
@@ -55,9 +63,15 @@ void	ft_expand_home(Datatoken *lst)
 			env = my_strdup_two(getenv("HOME"));
 			tmp = ft_strjoin(env, node->cmd);
 			if (tmp)
+			{
+				free(node->cmd - 1); // Free the original command
 				node->cmd = tmp;
+			}
 			else
-				node->cmd--;
+			{
+				node->cmd--; // Restore the original pointer if allocation failed
+			}
+			free(env); // Free the duplicated HOME string
 		}
 		node = node->next;
 	}
