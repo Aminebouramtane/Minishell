@@ -1,33 +1,34 @@
-
 #include "../minishell.h"
 
-t_parce_node	*ft_parce_lstnew(void *cmd, t_file *file)
+Datatoken	*ft_my_lstnew(void *content, char type, char state)
 {
-	t_parce_node	*my_node;
+	Datatoken	*my_node;
 
-	my_node = (t_parce_node *)ft_malloc(sizeof(t_parce_node), 0);
+	my_node = (Datatoken *)ft_malloc(sizeof(Datatoken), 0);
 	if (my_node == NULL)
 		return (NULL);
-	my_node->cmd = cmd;
-	my_node->args = NULL;
-	my_node->file = file;
+	my_node->cmd = content;
+	my_node->type = type;
+	my_node->state = state;
 	my_node->prev = NULL;
 	my_node->next = NULL;
 	return (my_node);
 }
 
-t_parce_node	*ft_parce_lstlast(t_parce_node *lst)
+Datatoken	*ft_my_lstlast(Datatoken *lst)
 {
 	if (!lst)
 		return (NULL);
 	while (lst->next)
+	{
 		lst = lst->next;
+	}
 	return (lst);
 }
 
-void	ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new)
+void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 {
-	t_parce_node	*last;
+	Datatoken	*last;
 
 	if (!*lst)
 	{
@@ -43,10 +44,10 @@ void	ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new)
 }
 
 
-void	ft_parce_lstclear(t_parce_node **lst)
+void	ft_my_lstclear(Datatoken **lst)
 {
-	t_parce_node	*c;
-	t_parce_node	*n;
+	Datatoken	*c;
+	Datatoken	*n;
 
 	if (lst && *lst)
 	{
@@ -62,7 +63,7 @@ void	ft_parce_lstclear(t_parce_node **lst)
 	}
 }
 
-void	ft_parce_lstdelone(t_parce_node *lst)
+void	ft_my_lstdelone(Datatoken *lst)
 {
 	if (!lst)
 		return ;
@@ -72,4 +73,3 @@ void	ft_parce_lstdelone(t_parce_node *lst)
 		free(lst);
 	}
 }
-

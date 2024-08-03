@@ -4,12 +4,12 @@ void process_quotes(char *str);
 
 void process_quotes(char *str)
 {
-    int i = 0;
+    int i = -1;
     int j = 0;
     int inside_single_quotes = 0;
     int inside_double_quotes = 0;
 
-    while (str[i])
+    while (str[++i])
     {
         if (str[i] == '\'')
         {
@@ -27,7 +27,6 @@ void process_quotes(char *str)
         }
         else
             str[j++] = str[i];
-        i++;
     }
     str[j] = '\0';
 }
