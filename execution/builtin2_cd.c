@@ -1,48 +1,6 @@
 #include "../minishell.h"
 
-char	*ft_mystrjoin(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-	char	*ptr;
-	size_t	len;
-
-	ptr = NULL;
-	if (!s1 || s1 == NULL)
-		len = ft_strlen(s2);
-	else
-		len = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *)malloc(sizeof(char) * (len + 1));
-	if (!ptr)
-		return (NULL);
-	i = -1;
-	if (s1)
-		while (s1[++i])
-			ptr[i] = s1[i];
-	else
-		i = 0;
-	j = -1;
-	while (s2[++j])
-		ptr[i + j] = s2[j];
-	ptr[i + j] = '\0';
-	return (ptr);
-}
-
-void	error_cd(char *str, int a_counter)
-{
-	if (a_counter == 2)
-	{
-		ft_putstr_fd("minishell: cd: no such file or directory: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd("\n", 2);
-	}
-	else
-	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-	}
-}
-
-void	change_pwd()
+void	change_pwd(void)
 {
 	t_env	*temp2;
 	t_env	*temp3;
@@ -60,6 +18,16 @@ void	change_pwd()
 	free(buffer);
 }
 
+void	cd_home(t_env *temp)
+{
+	while (temp && ft_strncmp(temp->key, "HOME") != 0)
+			temp = temp->next;
+	if (temp && temp->env_var != NULL && temp->value != NULL)
+		(chdir(temp->value), change_pwd());
+	else
+		ft_putstr_fd("Minishell: cd: HOME not set\n", 1);
+}
+
 void	ft_cd(t_parce_node *parce)
 {
 	t_env	*temp;
@@ -72,12 +40,12 @@ void	ft_cd(t_parce_node *parce)
 	if (arg_counter == 2)
 	{
 		if (parce && ft_strncmp(parce->args[1], "-") == 0)
-			{
-				while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)
-					temp = temp->next;
-				chdir(temp->value);
-				change_pwd();
-			}
+		{
+			while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)
+				temp = temp->next;
+			chdir(temp->value);
+			change_pwd();
+		}
 		else if (chdir(parce->args[1]) != 0)
 			error_cd(parce->args[1], arg_counter);
 		else
@@ -86,12 +54,5 @@ void	ft_cd(t_parce_node *parce)
 	else if (arg_counter > 2)
 		error_cd(parce->args[1], arg_counter);
 	else if (arg_counter == 1)
-	{
-		while (temp && ft_strncmp(temp->key, "HOME") != 0)
-			temp = temp->next;
-		if (temp && temp->env_var != NULL && temp->value != NULL)
-			(chdir(temp->value), change_pwd());
-		else
-			ft_putstr_fd("Minishell: cd: HOME not set\n", 1);
-	}
+		cd_home(temp);
 }

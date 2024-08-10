@@ -1,6 +1,5 @@
 #include "../../minishell.h"
 
-
 void	ft_heredoc_expand_dolar(t_heredoc *lst)
 {
 	t_heredoc	*node;
@@ -13,16 +12,18 @@ void	ft_heredoc_expand_dolar(t_heredoc *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->input && node->input[0] && node->input[0] == '$' && ft_strlen(node->input) == 1)
+		if (node->input && node->input[0]
+			&& node->input[0] == '$' && ft_strlen(node->input) == 1)
 		{
-			if (node->next && node->next->input && 
-			   (node->next->input[0] == '\'' || node->next->input[0] == '\"'))
+			if (node->next && node->next->input && (node->next->input[0] == '\''
+					|| node->next->input[0] == '\"'))
 			{
 				tmp = "\0";
 				node->input = tmp;
 			}
 		}
-		else if (node->input && node->input[0] == '$' && ft_strlen(node->input) > 1)
+		else if (node->input && node->input[0] == '$'
+			&& ft_strlen(node->input) > 1)
 		{
 			str = node->input + 1;
 			env = getenv(str);
@@ -30,7 +31,8 @@ void	ft_heredoc_expand_dolar(t_heredoc *lst)
 			if (tmp)
 				node->input = tmp;
 		}
-		else if (node->input && node->input[0] == '$' && ft_strlen(node->input) == 2)
+		else if (node->input && node->input[0] == '$'
+			&& ft_strlen(node->input) == 2)
 		{
 			str = node->input + 1;
 			env = getenv("_");

@@ -21,10 +21,10 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 		i++;
 	}
 	(free_split(dirs_path), free(env_path), free(command_path));
-	return(NULL);
+	return (NULL);
 }
 
-char	*getpaths()
+char	*getpaths(void)
 {
 	char	*env_paths;
 	t_env	*temp;
@@ -41,64 +41,57 @@ char	*getpaths()
 	{
 		write(2, "minishell: ls: No such file or directory\n", 41);
 		envi->exit_status = 127;
-	}	
+	}
 	env_paths = ft_strdup(temp->value);
 	return (env_paths);
 }
 
+void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
+{
+	char	*error_msg;
+
+	error_msg = NULL;
+	error_msg = ft_strjoin("Minishell: command not found: ",
+			temp->args[0]);
+	write(2, error_msg, ft_strlen(error_msg));
+	write(2, "\n", 1);
+	free(error_msg);
+	free_split(envp);
+	free(cmd_path);
+	envi->exit_status = 1;
+	exit(1);
+}
+
+void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
+{
+	if (execve(cmd_path, temp->args, envp) == -1)
+		execve_error(temp, envp, cmd_path);
+	successful_exit();
+}
+
 void	execute_single(t_parce_node *parce, char **envp)
 {
-	pid_t pid = fork();
-	char	*error_msg;
-	t_parce_node *temp;
-	int status;
+	t_parce_node	*temp;
+	int				status;
+	pid_t			pid;
+	char			*cmd_path;
 
+	pid = 0;
 	temp = parce;
-	error_msg = NULL;
-	dup2(0, 100);
-	dup2(1, 99);
-	
+	cmd_path = get_cmd_path(temp);
+	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-	{
-		run_builtin(temp);
-	}
+		open_and_run(temp);
 	else
 	{
+		pid = fork();
 		if (pid == 0)
 		{
-			while (temp->file)
-			{
-				if (temp->file->redir_in == 1)
-					open_in_files_redir(temp->file, 0);
-				if (temp->file->redir_out == 1)
-					open_out_files_redir(temp->file, 1);
-				if (temp->file->append == 1)
-					open_files_append(temp->file, 1);
-				temp->file = temp->file->next;
-			}
+			open_files(temp);
 			if (temp->args)
-			{
-				char *path_env = getpaths();
-				char *cmd_path = dirs_paths(path_env, temp);
-				if (execve(cmd_path, temp->args ,envp) == -1)
-				{
-					error_msg = ft_strjoin("Minishell: command not found: ", temp->args[0]);
-					write(2, error_msg, ft_strlen(error_msg));
-					write(2, "\n", 1);
-					free(error_msg);
-					free_split(envp);
-					free(cmd_path);
-					envi->exit_status = 1;
-					exit(1);
-				}
-				envi->exit_status = 0;
-				exit(0);
-			}
-			
+				execution_execve(cmd_path, temp, envp);
 		}
+		waiting(pid, status);
 	}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			envi->exit_status = WEXITSTATUS(status);
-		dup2(99, 1);
+	return_in_out();
 }

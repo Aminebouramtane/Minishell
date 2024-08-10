@@ -1,109 +1,69 @@
 #include "../minishell.h"
 
-t_env	*copy_list(t_env *start)
+void	show_exported(t_env	*copy)
 {
-	t_env	*export;
-
-	if (start == NULL)
-		return (NULL);
-	export = malloc(sizeof(t_env));
-	if (export == NULL)
-		return (NULL);
-	export->env_var = ft_strdup(start->env_var);
-	export->key = ft_strdup(start->key);
-	export->value = ft_strdup(start->value);
-	export->next = copy_list(start->next);
-	return (export);
+	copy = copy_list(envi);
+	bubblesort(copy);
+	printlist(copy);
+	ft_env_lstclear(copy);
 }
 
-
-void	printList(t_env *node)
+void	append_the_export(t_parce_node *parce, t_env *temp, char *buff, int *i)
 {
-	//t_env *temp;
-
-	//temp = node;
-	while (node != NULL)
-	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(node->key, 1);
-		 if (node->value != NULL)
-		{
-		 	ft_putstr_fd("=", 1);
-		 	ft_putstr_fd("\"", 1);
-		 	ft_putstr_fd(node->value, 1);
-		 	ft_putstr_fd("\"\n", 1);
-		}
-		else
-			ft_putstr_fd("\n", 1);
-		node = node->next;
-	}
+	while (temp && ft_strncmp(temp->key, buff) != 0)
+		temp = temp->next;
+	printf("hnaaaa+\n");
+	temp->env_var = ft_strdup(parce->args[i[0]]);
+	temp->key = ft_substr(parce->args[i[0]], 0, i[1]);
+	temp->value = ft_my_strjoin(get_value(buff),
+			ft_my_strchr(parce->args[i[0]], '='));
 }
 
-void	swap_node_value(t_env *ptr1, char *temp)
+void	copy_and_sort(t_env *copy)
 {
-	temp = ptr1->env_var;
-	ptr1->env_var = ptr1->next->env_var;
-	ptr1->next->env_var = temp;
-	temp = ptr1->key;
-	ptr1->key = ptr1->next->key;
-	ptr1->next->key = temp;
-	temp = ptr1->value;
-	ptr1->value = ptr1->next->value;
-	ptr1->next->value = temp;
+	copy = copy_list(envi);
+	bubblesort(copy);
+	ft_env_lstclear(copy);
 }
 
-
-void	bubbleSort(t_env *start)
+void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 {
-	int		swapped;
-	char	*temp;
-	t_env	*ptr1;
+	char	*buff;
 
-	swapped = 1;
-	temp = NULL;
-	if (start == NULL)
-        return;
-	while (swapped)
-	{
-		swapped = 0;
-		ptr1 = start;
-		while (ptr1->next != NULL)
-		{
-			if (ft_strncmp(ptr1->env_var, ptr1->next->env_var) > 0)
-			{
-				swap_node_value(ptr1, temp);
-				swapped = 1;
-			}
-			ptr1 = ptr1->next;
-		}
-	}
+	buff = ft_strdup(parce->args[i[0]]);
+	while (parce->args[i[0]][i[1]] != '\0'
+		&& parce->args[i[0]][i[1]] != '='
+		&& parce->args[i[0]][i[1]] != '+')
+		i[1]++;
+	buff[i[1]] = '\0';
+	if (valid_key(buff) == 0 || (parce->args[i[0]][i[1]] == '+'
+		&& valid_key(buff) == 0))
+		ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i[0]));
+	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '+')
+		append_the_export(parce, temp, buff, i);
+	free(buff);
+	i[1] = 0;
 }
-
 
 void	ft_export(t_parce_node *parce)
 {
 	t_env	*copy;
-	int		i;
+	t_env	*temp;
+	int		*i;
 
-	i = 1;
+	i[0] = 1;
+	i[1] = 0;
+	temp = envi;
 	if (parce->args && parce->args[1] != NULL)
 	{
-		while (parce && parce->args[i] != NULL)
+		while (parce && parce->args[i[0]] != NULL)
 		{
-			ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i));
-			//printList(envi);
-			i++;
+			process_arg(parce, i, temp);
+			i[0]++;
+			temp = envi;
 		}
-		copy = copy_list(envi);
-		bubbleSort(copy);
-		//printList(copy);
-		ft_env_lstclear(copy);
-	}	
-	else
-	{
-		copy = copy_list(envi);
-		bubbleSort(copy);
-		printList(copy);
-		ft_env_lstclear(copy);
+		copy_and_sort(copy);
 	}
+	else
+		show_exported(copy);
 }

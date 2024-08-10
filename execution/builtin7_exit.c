@@ -1,5 +1,14 @@
 #include "../minishell.h"
 
+void	exit_error(t_parce_node *parce)
+{
+	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("minishell: exit: ", 1);
+	ft_putstr_fd(parce->args[1], 1);
+	ft_putstr_fd(": numeric argument required\n", 1);
+	envi->exit_status = 2;
+	exit(2);
+}
 
 static long	ft_strtol(const char *str)
 {
@@ -26,13 +35,12 @@ static long	ft_strtol(const char *str)
 	return (res * sign);
 }
 
-
 int	valid_estatus(char *status)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(status[i] != '\0' && status[i] == ' ')
+	while (status[i] != '\0' && status[i] == ' ')
 		i++;
 	if (status[i] != '\0' && (status[i] == '+' || status[i] == '-'))
 		i++;
@@ -47,18 +55,11 @@ int	valid_estatus(char *status)
 
 void	ft_exit(t_parce_node *parce)
 {
-	int status;
-	
+	int	status;
+
 	status = 0;
 	if (parce->args[1] && !valid_estatus(parce->args[1]))
-	{
-		ft_putstr_fd("exit\n", 1);
-		ft_putstr_fd("minishell: exit: ", 1);
-		ft_putstr_fd(parce->args[1], 1);
-		ft_putstr_fd(": numeric argument required\n", 1);
-		envi->exit_status = 2;
-		exit(2);
-	}
+		exit_error(parce);
 	if (!parce->args[1])
 	{
 		ft_putstr_fd("exit\n", 1);
