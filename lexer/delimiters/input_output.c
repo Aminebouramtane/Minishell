@@ -1,18 +1,30 @@
-
 #include "../../minishell.h"
+
+void	ft_check_here_one(Datatoken **node, t_vars *data)
+{
+	if (data->flag)
+		*node = ft_my_lstnew("<<", 'h', IN_DOUBLE_COTE);
+	else
+		*node = ft_my_lstnew("<<", 'h', GENERAL);
+}
+
+void	ft_check_here_two(Datatoken **node, t_vars *data)
+{
+	if (data->flag)
+		*node = ft_my_lstnew(">>", 'a', IN_DOUBLE_COTE);
+	else
+		*node = ft_my_lstnew(">>", 'a', GENERAL);
+}
 
 void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
-	size_t			a;
+	size_t		a;
 
 	a = *i;
 	if (str[a + 1] == '<')
 	{
-		if (data->flag)
-			node = ft_my_lstnew("<<", 'h', IN_DOUBLE_COTE);
-		else
-			node = ft_my_lstnew("<<", 'h', GENERAL);
+		ft_check_here_one(&node, data);
 		a = a + 2;
 		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
 			a++;
@@ -23,9 +35,7 @@ void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 		if (data->flag)
 			node = ft_my_lstnew("<", '<', IN_DOUBLE_COTE);
 		else
-		{
 			node = ft_my_lstnew("<", '<', GENERAL);
-		}
 		a++;
 		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
 			a++;
@@ -37,15 +47,12 @@ void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 void	fill_output_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
-	size_t			a;
+	size_t		a;
 
 	a = *i;
 	if (str[a + 1] == '>')
 	{
-		if (data->flag)
-			node = ft_my_lstnew(">>", 'a', IN_DOUBLE_COTE);
-		else
-			node = ft_my_lstnew(">>", 'a', GENERAL);
+		ft_check_here_two(&node, data);
 		a = a + 2;
 		while ((str[a] == ' ' || str[a] == '\t') && !data->flag)
 			a++;

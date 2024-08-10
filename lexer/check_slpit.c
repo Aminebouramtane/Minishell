@@ -76,6 +76,31 @@ static int count_word(char *s, char *delimiters)
 	return (count);
 }
 
+int skip_delimiters(char *s, char *delimiters, int i)
+{
+	while (s[i] && in_delimiters(s[i], delimiters))
+		i++;
+	return i;
+}
+
+void process_quoted_string(char *src, int *i, char quote)
+{
+	split_quotes(src, quote, i);
+	while (src[*i] && !in_delimiters(src[*i], " \t\n\"\'"))
+		(*i)++;
+}
+void process_non_quoted_string(char *src, int *i, char *delimiters)
+{
+	while (src[*i] && !in_delimiters(src[*i], delimiters))
+	{
+		if (src[*i] == '\"')
+			process_quoted_string(src, i, '\"');
+		else if (src[*i] == '\'')
+			process_quoted_string(src, i, '\'');
+		else
+			(*i)++;
+	}
+}
 static char *get_word(char *dst, char *src, char *delimiters, int *index)
 {
 	int i;
@@ -83,38 +108,14 @@ static char *get_word(char *dst, char *src, char *delimiters, int *index)
 	int len;
 
 	i = *index;
-	while (src[i] && in_delimiters(src[i], delimiters))
-		i++;
+	i = skip_delimiters(src, delimiters, i);
 	start = i;
 	if (src[i] == '\"')
-	{
-		split_quotes(src, '\"', &i); 
- 		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
- 		i++;
-	}
+		process_quoted_string(src, &i, '\"');
 	else if (src[i] == '\'')
-	{
-		split_quotes(src, '\'', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-	}
+		process_quoted_string(src, &i, '\'');
 	else
-	while (src[i] && !in_delimiters(src[i], delimiters))
-	{
-		i++;
-		if (src[i] == '\"')
-		{
-			split_quotes(src, '\"', &i); 
-			while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-		}
-		else if (src[i] == '\'') 
- 		{
- 			split_quotes(src, '\'', &i); 
- 			while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
- 				i++;
- 		}
- 	}
+		process_non_quoted_string(src, &i, delimiters);
 	len = (i - start) + 1;
 	dst = ft_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
@@ -176,3 +177,9 @@ char **split_lexer(char *s, char *delimiters)
 // 	return 0;
 // // gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
 // }
+
+//==================================================================
+
+//==================================================================
+
+//=========================================================================

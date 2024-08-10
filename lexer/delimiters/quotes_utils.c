@@ -1,25 +1,28 @@
 #include "../../minishell.h"
 
-void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
+void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
 	char		*tmp;
-	int			start;
-	int			end;
+	size_t			start;
+	size_t			end;
 
 	start = *i;
 	end = *i + 1;
 	while (str[end])
 	{
-		if (in_delimiters(str[end], delimiters))
-			break;
+		if (str[end] == '\'')
+		{
+			end++;
+			break ;
+		}
 		end++;
 	}
-	*i = end;
 	tmp = my_strdup(str + start, end - start);
 	if (data->flag)
 		node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
 	else
-		node = ft_my_lstnew(tmp, 's', GENERAL);
+		node = ft_my_lstnew(tmp, 's', IN_COTE);
 	ft_my_lstadd_back(&(data->ndata), node);
+	*i = end;
 }

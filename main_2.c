@@ -1,6 +1,8 @@
 
+// ldapsearch uid=abouramt
 #include "minishell.h"
 t_env *envi;
+
 
 void    ft_handler()
 {
@@ -56,7 +58,10 @@ int main(int ac, char **av, char **env)
         if (!input[0] || !input)
             continue ;
 		if (!check_quotes(input))
-			(ft_putstr_fd("Error in quotes !!\n", 1)),(exit(1));
+		{
+			ft_putstr_fd("Error in quotes !!\n", 1);
+			exit(1);
+		}
         lexer(input, data);
         ft_expand(data->ndata);
         ft_parce(&parce, data);
@@ -64,18 +69,19 @@ int main(int ac, char **av, char **env)
             continue;
         rem_double_quotes(&parce);
         ft_execute(parce);
-        // while (data->ndata)
-	    // {
-        //    printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
-        //     data->ndata = data->ndata->next;
-	    // }
+        while (data->ndata)
+	    {
+           printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
+            data->ndata = data->ndata->next;
+            // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+	    }
         // printf("####################PARSING#########################\n");
         // while (parce) 
 	    // {
         //     printf("cmd ## %s\n", parce->cmd);
         //     if (parce->args)
         //     {
-        //         int i = 0; 
+        //         i = 0; 
         //         while (parce->args[i])
         //         {
         //            printf("args ## %s\n", parce->args[i]);

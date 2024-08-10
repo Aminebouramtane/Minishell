@@ -240,4 +240,17 @@ char	*expande_heredoc(char *str);
 void	ft_heredoc_expand(t_heredoc *lst);
 
 
+void	ft_expand_dolar_single_char(Datatoken *node);
+void	ft_expand_dolar_two_chars(Datatoken *node);
+void	ft_handle_special_case(Datatoken *node);
+void	fill_qoute_in_node(char *str, size_t *i, t_vars *data);
+Datatoken *initialize_node(Datatoken *data, int *len);
+char	*ft_remove_qoutes(char *lst);
+void	ft_remove_dqoutes(Datatoken **lst);
+void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file);
+void    ft_append(Datatoken **node, t_parce_node **parce, t_file **file);
+void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file);
+void	ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag);
+void    ft_cmd(Datatoken **node, t_parce_node **parce);
+
 #endif
