@@ -1,7 +1,6 @@
-
 #include "../../minishell.h"
 
-void	fill_env_in_heredoc(char *str,t_heredoc **here, size_t *i, char *del)
+void	fill_env_in_heredoc(char *str, t_heredoc **here, size_t *i, char *del)
 {
 	t_heredoc		*node;
 	char			*tmp;
@@ -22,7 +21,7 @@ void	fill_env_in_heredoc(char *str,t_heredoc **here, size_t *i, char *del)
 	ft_heredoc_lstadd_back(here, node);
 }
 
-void	fill_in_heredoc(char *str,t_heredoc **here, size_t *i, char *del)
+void	fill_in_heredoc(char *str, t_heredoc **here, size_t *i, char *del)
 {
 	t_heredoc		*node;
 	char			*tmp;

@@ -2,7 +2,7 @@
 
 void	echo_without_flag(t_parce_node *parce)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (parce->args[i] != NULL)
@@ -18,17 +18,17 @@ void	echo_without_flag(t_parce_node *parce)
 void	echo_print(t_parce_node *parce, int i)
 {
 	while (parce->args[i] != NULL)
-		{
-			ft_putstr_fd(parce->args[i], 1);
-			if (parce->args[i + 1] != NULL)
-				ft_putstr_fd(" ", 1);
-			i++;
-		}
+	{
+		ft_putstr_fd(parce->args[i], 1);
+		if (parce->args[i + 1] != NULL)
+			ft_putstr_fd(" ", 1);
+		i++;
+	}
 }
 
 void	ft_echo(t_parce_node *parce)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 1;
@@ -48,9 +48,8 @@ void	ft_echo(t_parce_node *parce)
 		{
 			echo_print(parce, 1);
 			ft_putstr_fd("\n", 1);
-		}	
+		}
 	}
 	else
 		echo_without_flag(parce);
-	
 }
