@@ -28,6 +28,7 @@ void	append_exported(t_env *my_node, t_parce_node *parce
 void	add_new_export(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator)
 {
+	printf("hi %d ========== %s\n",iterator[0], parce->args[iterator[0]]);
 	my_node->env_var = ft_strdup(parce->args[iterator[0]]);
 	my_node->key = ft_substr(buff, 0, iterator[1]);
 	my_node->value = ft_strdup(ft_my_strchr(parce->args[iterator[0]], '='));
@@ -37,7 +38,7 @@ void	add_new_export(t_env *my_node, t_parce_node *parce
 	buff = NULL;
 }
 
-void	init_node(t_env	*my_node)
+void	*init_node(t_env	*my_node)
 {
 	my_node = NULL;
 	my_node = (t_env *)malloc(sizeof(t_env));
@@ -46,6 +47,7 @@ void	init_node(t_env	*my_node)
 		return (NULL);
 	my_node->key = NULL;
 	my_node->value = NULL;
+	return (NULL);
 }
 
 char	*ft_my_strchr(const char *s, int c)

@@ -49,8 +49,9 @@ void	ft_export(t_parce_node *parce)
 {
 	t_env	*copy;
 	t_env	*temp;
-	int		*i;
+	int		i[2];
 
+	copy = NULL;
 	i[0] = 1;
 	i[1] = 0;
 	temp = envi;

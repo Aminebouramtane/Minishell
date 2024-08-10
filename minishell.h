@@ -175,6 +175,7 @@ void    ft_execute(t_parce_node *parce);
 void	run_builtin(t_parce_node *parce);
 void    ft_cd(t_parce_node *parce);
 char	*ft_mystrjoin(char *s1, char *s2);
+char	*copy_ptr(char const *s1, char const *s2, char *ptr);
 void	error_cd(char *str, int a_counter);
 void    ft_env();
 void    ft_pwd();
@@ -201,6 +202,11 @@ void	swap_node_value(t_env *ptr1, char *temp);
 void	bubblesort(t_env *start);
 int		valid_key(char *key);
 void	show_exported(t_env	*copy);
+void	*init_node(t_env	*my_node);
+void	append_exported(t_env *my_node, t_parce_node *parce
+						, char *buff, int *iterator);
+void	add_new_export(t_env *my_node, t_parce_node *parce
+						, char *buff, int *iterator);
 
 void	ft_exit(t_parce_node *parce);
 
