@@ -174,8 +174,11 @@ void	ft_echo(t_parce_node *parce);
 void    ft_execute(t_parce_node *parce);
 void	run_builtin(t_parce_node *parce);
 void    ft_cd(t_parce_node *parce);
+char	*ft_mystrjoin(char *s1, char *s2);
+void	error_cd(char *str, int a_counter);
 void    ft_env();
 void    ft_pwd();
+void	handle_shlvl();
 void	ft_export(t_parce_node *parce);
 void	ft_unset(t_parce_node *parce);
 t_env	*get_env_vars(char **env_vars);
@@ -183,9 +186,22 @@ t_env	*get_env_vars(char **env_vars);
 t_env	*ft_env_lstnew(void *content);
 void	ft_env_lstadd_back(t_env **lst, t_env *new);
 void	ft_env_delone(t_env *lst);
-void	bubbleSort(t_env *start);
+void	bubblesort(t_env *start);
 void	ft_env_lstclear(t_env *head);
 t_env	*ft_export_lstnew(t_parce_node *parce, int i);
+void	exprt_without_value(t_env *my_node, t_parce_node *parce
+							, char *buff, int *iterator);
+void	append_exported(t_env *my_node, t_parce_node *parce
+						, char *buff, int *iterator);
+void	add_new_export(t_env *my_node, t_parce_node *parce
+						, char *buff, int *iterator);
+t_env	*copy_list(t_env *start);
+void	printlist(t_env *node);
+void	swap_node_value(t_env *ptr1, char *temp);
+void	bubblesort(t_env *start);
+int		valid_key(char *key);
+void	show_exported(t_env	*copy);
+
 void	ft_exit(t_parce_node *parce);
 
 void	execute_single(t_parce_node *parce, char **envp);
@@ -198,9 +214,23 @@ void	open_in_files_redir(t_file *parce, int fd_in);
 void	free_split(char **command_av);
 char	*getpaths();
 char	*dirs_paths(char *env_path, t_parce_node *parce);
-void execution_single(t_parce_node *temp, char **envp, int *fd);
+void	execution_single(t_parce_node *temp, char **envp, int *fd);
+void	keep_in_out(void);
+void	return_in_out(void);
+void	open_files(t_parce_node *temp);
+void	open_and_run(t_parce_node *temp);
+char	*get_cmd_path(t_parce_node *temp);
+void	successful_exit(void);
+char	*getpaths(void);
+char	*dirs_paths(char *env_path, t_parce_node *parce);
+void	waiting(pid_t pid, int status);
+void	execve_error(t_parce_node *temp, char **envp, char *cmd_path);
 char	*get_value(char *key);
+int		valid_key(char *key);
+char	*ft_my_strchr(const char *s, int c);
+
 //-------------------------------------------HEREDOC--------------------------
+
 t_heredoc	*ft_heredoc_lstnew(void *content);
 t_heredoc	*ft_heredoc_lstlast(t_heredoc *lst);
 void	ft_heredoc_lstadd_back(t_heredoc **lst, t_heredoc *new);
@@ -208,5 +238,6 @@ void	ft_heredoc_lstclear(t_heredoc **lst);
 void	ft_heredoc_lstdelone(t_heredoc *lst);
 char	*expande_heredoc(char *str);
 void	ft_heredoc_expand(t_heredoc *lst);
+
 
 #endif
