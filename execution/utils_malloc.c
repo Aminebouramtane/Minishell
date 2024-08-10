@@ -20,24 +20,23 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 {
 	t_env	*my_node;
 	char	*buff;
-	int		j;
 	int		iterator[2];
 
-	j = 0;
 	buff = NULL;
+	my_node = malloc(sizeof(t_env));
 	init_node(my_node);
-	while (parce->args[i][j] != '\0' && parce->args[i][j] != '='
-			&& parce->args[i][j] != '+')
-		j++;
 	iterator[0] = i;
-	iterator[1] = j;
+	iterator[1] = 0;
+	while (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] != '='
+			&& parce->args[i][iterator[1]] != '+')
+		iterator[1]++;
 	buff = ft_strdup(parce->args[i]);
-	buff[j] = '\0';
+	buff[iterator[1]] = '\0';
 	if (valid_key(buff) == 0)
 	{
-		if (parce->args[i][j] != '\0' && parce->args[i][j] == '=')
-			add_exported(my_node, parce, buff, iterator);
-		else if (parce->args[i][j] != '\0' && parce->args[i][j] == '+')
+		if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '=')
+			add_new_export(my_node, parce, buff, iterator);
+		else if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '+')
 			add_new_export(my_node, parce, buff, iterator);
 		else
 			exprt_without_value(my_node, parce, buff, iterator);

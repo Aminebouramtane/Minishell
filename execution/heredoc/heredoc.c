@@ -1,7 +1,8 @@
 #include "../../minishell.h"
 
-void	ft_handler_heredoc(void)
+void	ft_handler_heredoc(int sigint)
 {
+	(void) sigint;
 	exit(130);
 }
 

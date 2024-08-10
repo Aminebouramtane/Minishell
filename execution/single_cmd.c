@@ -78,6 +78,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 
 	pid = 0;
 	temp = parce;
+	status = 0;
 	cmd_path = get_cmd_path(temp);
 	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
