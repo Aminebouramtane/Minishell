@@ -32,8 +32,5 @@ int lexer(char *str, t_vars *data)
 	while (str[i])
 		process_character(str, &i, data);
 
-	if (data->ndata->cmd[0] == '\"')
-		data->ndata = data->ndata->next;
-
 	return 1;
 }

@@ -53,6 +53,7 @@ void process_special_chars(char *str, size_t *i, t_vars *data)
 void inside_dqoutes(char *str, t_vars *data)
 {
     size_t i = 0;
+
     while (i < ft_strlen(str))
     {
         process_non_special_chars(str, &i, data);
@@ -83,7 +84,7 @@ void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 		end++;
 	}
 	*i = end;
-	tmp = my_strdup(str + start, end - start + 1);
+	tmp = my_strdup(str + start, end - start);
 	inside_dqoutes(tmp, data);
     data->flag = 0;
 }

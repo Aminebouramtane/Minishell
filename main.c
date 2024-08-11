@@ -73,7 +73,7 @@ int main(int ac, char **av, char **env)
         while (parce) 
 	    {
             printf("cmd ## %s\n", parce->cmd);
-            printf("cmd ## %s\n", parce->first);
+            printf("first ## %s\n", parce->first);
             if (parce->args)
             {
                 int i = 0; 

@@ -22,7 +22,7 @@ void handle_special_cases(Datatoken **node, t_parce_node **parce_node, t_file **
 	else if ((*node)->cmd[0] == '|' && (*node)->type == '|' && (*node)->state == 2)
 	{
 		(*parce_node)->args = split_lexer((*parce_node)->cmd, " \t\n\r\f\v");
-		printf("===================%s\n", (*parce_node)->args[0]);
+		printf("==================================%s\n", (*parce)->args[0]);
 		(*parce_node)->first = my_strdup_two((*parce)->args[0]);
 		ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
 		*file = NULL;
