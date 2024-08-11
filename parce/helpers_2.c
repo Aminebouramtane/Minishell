@@ -15,7 +15,9 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
         (*node) = (*node)->next;
     }
     if (!*node)
-        (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v"); 
+        (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
+    if (!*node && (*parce)->args && (*parce)->args[0])
+        (*parce)->first = my_strdup_two((*parce)->args[0]);
 }
 
 void initialize_and_traverse_node(Datatoken **node, char **str, size_t *a)

@@ -8,7 +8,6 @@ void process_non_special_chars(char *str, size_t *i, t_vars *data)
         fill_qoute_in_node(str, i, data);
 }
 
-
 void process_double_quotes(char *str, size_t *i, t_vars *data)
 {
     Datatoken *node;
@@ -24,12 +23,13 @@ void process_double_quotes(char *str, size_t *i, t_vars *data)
         }
         else
         {
+            data->f_qoute = 0;
             data->flag = 0;
-            return;
         }
         (*i)++;
     }
 }
+
 
 void process_special_chars(char *str, size_t *i, t_vars *data)
 {
@@ -53,7 +53,6 @@ void process_special_chars(char *str, size_t *i, t_vars *data)
 void inside_dqoutes(char *str, t_vars *data)
 {
     size_t i = 0;
-
     while (i < ft_strlen(str))
     {
         process_non_special_chars(str, &i, data);
@@ -71,7 +70,7 @@ void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 	size_t			end;
 
 	start = *i;
-	end = *i + 1;
+	end = *i;
 	data->flag = 0;
 	data->f_qoute = 0;
 	while (str[end])
@@ -84,6 +83,7 @@ void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 		end++;
 	}
 	*i = end;
-	tmp = my_strdup(str + start, end - start);
+	tmp = my_strdup(str + start, end - start + 1);
 	inside_dqoutes(tmp, data);
+    data->flag = 0;
 }

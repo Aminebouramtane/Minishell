@@ -9,6 +9,7 @@ t_parce_node	*ft_parce_lstnew(void *cmd, t_file *file)
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = cmd;
+	my_node->first = NULL;
 	my_node->args = NULL;
 	my_node->file = file;
 	my_node->prev = NULL;

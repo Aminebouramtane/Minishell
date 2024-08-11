@@ -92,6 +92,7 @@ typedef struct s_file
 typedef struct s_parce_node
 {
     char    *cmd;
+	char	*first;
     char    **args;
     t_file  *file;
     struct  s_parce_node    *next;
