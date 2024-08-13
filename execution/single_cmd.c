@@ -9,8 +9,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 
 	i = 0;
 	dirs_path = ft_split(env_path, ':');
-	if (parce && parce->args)
-		command_path = ft_strjoin_path("/", parce->args[0]);
+	if (parce && parce->first)
+		command_path = ft_strjoin_path("/", parce->first);
 	while (dirs_path[i] != NULL)
 	{
 		s = ft_strjoin_path(dirs_path[i], command_path);
@@ -52,7 +52,7 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 
 	error_msg = NULL;
 	error_msg = ft_strjoin("Minishell: command not found: ",
-			temp->args[0]);
+			temp->first);
 	write(2, error_msg, ft_strlen(error_msg));
 	write(2, "\n", 1);
 	free(error_msg);
@@ -92,6 +92,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 			if (temp->args)
 				execution_execve(cmd_path, temp, envp);
 		}
+		free(cmd_path);
 		waiting(pid, status);
 	}
 	return_in_out();

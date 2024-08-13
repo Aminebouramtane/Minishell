@@ -31,6 +31,7 @@ void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 	char	*buff;
 
 	buff = ft_strdup(parce->args[i[0]]);
+	ft_malloc(sizeof(buff), 0);
 	while (parce->args[i[0]][i[1]] != '\0'
 		&& parce->args[i[0]][i[1]] != '='
 		&& parce->args[i[0]][i[1]] != '+')
@@ -41,7 +42,6 @@ void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 		ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i[0]));
 	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '+')
 		append_the_export(parce, temp, buff, i);
-	free(buff);
 	i[1] = 0;
 }
 

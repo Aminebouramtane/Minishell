@@ -10,7 +10,9 @@ void	back_to_parent(int *fd)
 void	execution_single(t_parce_node *temp, char **envp, int *fd)
 {
 	pid_t	pid;
+	char	*cmd_path;
 
+	cmd_path = get_cmd_path(temp);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -25,8 +27,8 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 		}
 		else
 		{
-			if (execve(get_cmd_path(temp), temp->args, envp) == -1)
-				execve_error(temp, envp, get_cmd_path(temp));
+			if (execve(cmd_path, temp->args, envp) == -1)
+				execve_error(temp, envp, cmd_path);
 			successful_exit();
 		}
 	}

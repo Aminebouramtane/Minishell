@@ -107,7 +107,6 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 
-
 int				lexer(char *str, t_vars *data);
 int				in_delimiters(char a, char *delimiters);
 int				end_of_cmd(char *str, char *delimiter);
