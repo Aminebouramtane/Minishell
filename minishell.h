@@ -235,7 +235,7 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path);
 char	*get_value(char *key);
 int		valid_key(char *key);
 char	*ft_my_strchr(const char *s, int c);
-
+void    ft_handler2();
 //-------------------------------------------HEREDOC--------------------------
 
 t_heredoc	*ft_heredoc_lstnew(void *content);
@@ -259,5 +259,6 @@ void    ft_append(Datatoken **node, t_parce_node **parce, t_file **file);
 void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file);
 void	ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag);
 void    ft_cmd(Datatoken **node, t_parce_node **parce);
+void    ft_handler();
 
 #endif

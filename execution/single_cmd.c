@@ -9,8 +9,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 
 	i = 0;
 	dirs_path = ft_split(env_path, ':');
-	if (parce && parce->args)
-		command_path = ft_strjoin_path("/", parce->args[0]);
+	if (parce && parce->first)
+		command_path = ft_strjoin_path("/", parce->first);
 	while (dirs_path[i] != NULL)
 	{
 		s = ft_strjoin_path(dirs_path[i], command_path);
@@ -20,7 +20,7 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 			(free(s));
 		i++;
 	}
-	(free_split(dirs_path), free(env_path), free(command_path));
+	// (free_split(dirs_path), free(env_path), free(command_path));
 	return (NULL);
 }
 
@@ -91,6 +91,8 @@ void	execute_single(t_parce_node *parce, char **envp)
 			open_files(temp);
 			if (temp->args)
 				execution_execve(cmd_path, temp, envp);
+			else
+				exit (0);
 		}
 		waiting(pid, status);
 	}
