@@ -2,11 +2,11 @@
 
 void handle_redirection(Datatoken **node, t_parce_node **parce_node, t_file **file)
 {
-	if ((*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
+	if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '<' && (*node)->type == '<' && (*node)->state == 2)
 		ft_input(node, parce_node, file);
-	else if ((*node)->cmd[0] == '>' && (*node)->type == 'a' && (*node)->state == 2)
+	else if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '>' && (*node)->type == 'a' && (*node)->state == 2)
 		ft_append(node, parce_node, file);
-	else if ((*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
+	else if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
 		ft_output(node, parce_node, file);
 	else
 		ft_cmd(node, parce_node);
@@ -22,7 +22,6 @@ void handle_special_cases(Datatoken **node, t_parce_node **parce_node, t_file **
 	else if ((*node)->cmd[0] == '|' && (*node)->type == '|' && (*node)->state == 2)
 	{
 		(*parce_node)->args = split_lexer((*parce_node)->cmd, " \t\n\r\f\v");
-		printf("==================================%s\n", (*parce)->args[0]);
 		(*parce_node)->first = my_strdup_two((*parce)->args[0]);
 		ft_parce_lstadd_back(parce, ft_parce_lstnew(NULL, NULL));
 		*file = NULL;

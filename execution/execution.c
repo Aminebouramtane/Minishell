@@ -42,8 +42,10 @@ void	ft_execute(t_parce_node *parce)
 	char	**envp;
 
 	envp = make_env_array(envi);
-	if (parce)
+	if (parce  )
+	{
 		handel_heredoc(parce);
+	}
 	if (parce->next == NULL)
 	{
 		execute_single(parce, envp);

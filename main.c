@@ -46,7 +46,7 @@ int main(int ac, char **av, char **env)
         // signal(SIGQUIT, SIG_IGN);
         data->ndata = NULL;
         input = readline("minishell$ ");
-        signal(SIGINT, ft_handler2);
+        // signal(SIGINT, ft_handler);
         if (input == NULL)
         {
             printf("exit\n");

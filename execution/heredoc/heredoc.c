@@ -21,9 +21,9 @@ void	handel_heredoc(t_parce_node *parce)
 		return ;
 	else if (f == 0)
 	{
-		signal(SIGINT, ft_handler_heredoc);
 		while (parce->file)
 		{
+			printf("in heredoc\n");
 			if (parce->file->heredoc == 1)
 			{
 				myfile = parce->file->file;
@@ -37,6 +37,7 @@ void	handel_heredoc(t_parce_node *parce)
 				}
 				while (1)
 				{
+					signal(SIGINT, ft_handler_heredoc);
 					input = readline(">");
 					if (input == NULL)
 					{
@@ -46,6 +47,7 @@ void	handel_heredoc(t_parce_node *parce)
 					if (!ft_strncmp(input, delimiter))
 					{
 						free(input);
+						signal(SIGINT, SIG_IGN);
 						break ;
 					}
 					if (parce->file->is_quoted)
@@ -62,8 +64,11 @@ void	handel_heredoc(t_parce_node *parce)
 			}
 			parce->file = parce->file->next;
 		}
+		printf("end heredoc\n");
 		envi->exit_status = 0;
+		
 		exit(0);
 	}
-	waitpid(f, NULL, 0);
+	int status;
+	waitpid(f, &status, 0);		
 }
