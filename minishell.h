@@ -226,7 +226,7 @@ void	return_in_out(void);
 void	open_files(t_parce_node *temp);
 void	open_and_run(t_parce_node *temp);
 char	*get_cmd_path(t_parce_node *temp);
-void	successful_exit(void);
+void	successful_exit(char *cmd_path);
 char	*getpaths(void);
 char	*dirs_paths(char *env_path, t_parce_node *parce);
 void	waiting(pid_t pid, int status);

@@ -8,6 +8,7 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	int		i;
 
 	i = 0;
+	command_path = NULL;
 	dirs_path = ft_split(env_path, ':');
 	if (parce && parce->first)
 		command_path = ft_strjoin_path("/", parce->first);
@@ -15,12 +16,15 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	{
 		s = ft_strjoin_path(dirs_path[i], command_path);
 		if (!access(s, X_OK))
-			return (free(command_path), s);
+			return (free(command_path),free_split(dirs_path), s);
 		else
 			(free(s));
 		i++;
 	}
-	// (free_split(dirs_path), free(env_path), free(command_path));
+	if (dirs_path)
+		free_split(dirs_path);
+	if (command_path)
+		free(command_path);
 	return (NULL);
 }
 
@@ -30,6 +34,7 @@ char	*getpaths(void)
 	t_env	*temp;
 
 	temp = envi;
+	env_paths = NULL;
 	while (temp)
 	{
 		if (ft_strncmp(temp->key, "PATH") == 0)
@@ -41,6 +46,7 @@ char	*getpaths(void)
 	{
 		write(2, "minishell: ls: No such file or directory\n", 41);
 		envi->exit_status = 127;
+		return (env_paths);
 	}
 	env_paths = ft_strdup(temp->value);
 	return (env_paths);
@@ -66,7 +72,7 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 {
 	if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
-	successful_exit();
+	successful_exit(cmd_path);
 }
 
 void	execute_single(t_parce_node *parce, char **envp)
@@ -92,7 +98,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 			if (temp->args)
 				execution_execve(cmd_path, temp, envp);
 			else
-				exit (0);
+				successful_exit(cmd_path);
 		}
 		free(cmd_path);
 		waiting(pid, status);
