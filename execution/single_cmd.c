@@ -99,7 +99,6 @@ void	execute_single(t_parce_node *parce, char **envp)
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 	{
 		open_and_run(temp);
-		free_split(envp);
 	}
 	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 	{
@@ -120,6 +119,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 			waiting(pid, status);
 		}
 	}
-	free_split(envp);
+	if (envp)
+		free_split(envp);
 	return_in_out();
 }
