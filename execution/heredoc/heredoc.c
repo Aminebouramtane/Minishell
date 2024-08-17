@@ -56,7 +56,6 @@ void	handel_heredoc(t_parce_node *parce)
 					write(fd, line, ft_strlen(line));
 					if (ft_strncmp(input, delimiter))
 						write(fd, "\n", 1);
-					free(line);
 					free(input);
 				}
 				close(fd);

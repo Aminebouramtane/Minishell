@@ -118,8 +118,8 @@ void	execute_single(t_parce_node *parce, char **envp)
 		else
 		{
 			waiting(pid, status);
-			free_split(envp);
 		}
 	}
+	free_split(envp);
 	return_in_out();
 }
