@@ -67,7 +67,7 @@ char	*my_strdup_two(const char *s1)
 	if (!s1 || !*s1)
 		return (NULL);
 	size = ft_strlen(s1);
-	tab = (char *)ft_malloc(sizeof(char) * (ft_strlen(s1) + 1), 0);
+	tab = ft_malloc(sizeof(char) * (ft_strlen(s1) + 1), 0);
 	if (tab == NULL)
 		return (NULL);
 	j = 0;

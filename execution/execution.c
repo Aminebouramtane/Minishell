@@ -42,14 +42,14 @@ void	ft_execute(t_parce_node *parce)
 	char	**envp;
 
 	envp = make_env_array(envi);
-	if (parce  )
+	if (parce)
 	{
-		handel_heredoc(parce);
+		if (parce->file)
+			handel_heredoc(parce);
 	}
 	if (parce->next == NULL)
 	{
 		execute_single(parce, envp);
-		free_split(envp);
 	}
 	else
 	{
@@ -57,6 +57,5 @@ void	ft_execute(t_parce_node *parce)
 		while (waitpid(-1, NULL, 0) != -1)
 		{
 		}
-		free_split(envp);
 	}
 }

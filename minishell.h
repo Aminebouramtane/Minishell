@@ -107,7 +107,7 @@ typedef struct s_heredoc
 }	t_heredoc;
 
 
-int				lexer(char *str, t_vars *data);
+int				lexer(char *str, t_vars **data);
 int				in_delimiters(char a, char *delimiters);
 int				end_of_cmd(char *str, char *delimiter);
 char			*my_strdup(const char *s1, int size);
@@ -226,7 +226,7 @@ void	return_in_out(void);
 void	open_files(t_parce_node *temp);
 void	open_and_run(t_parce_node *temp);
 char	*get_cmd_path(t_parce_node *temp);
-void	successful_exit(char *cmd_path);
+void	successful_exit(char *cmd_path, char **envp);
 char	*getpaths(void);
 char	*dirs_paths(char *env_path, t_parce_node *parce);
 void	waiting(pid_t pid, int status);
@@ -258,6 +258,7 @@ void    ft_append(Datatoken **node, t_parce_node **parce, t_file **file);
 void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file);
 void	ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag);
 void    ft_cmd(Datatoken **node, t_parce_node **parce);
+void free_t_parce_list(t_parce_node *head);
 void    ft_handler();
 
 #endif

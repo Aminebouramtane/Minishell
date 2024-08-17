@@ -64,7 +64,7 @@ char	*ft_my_strjoin(char *s1, char *s2)
 		len = ft_strlen(s2);
 	else
 		len = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	ptr = ft_malloc(sizeof(char) * (len + 1), 0);
 	if (!ptr)
 		return (NULL);
 	i = -1;

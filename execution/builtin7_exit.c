@@ -7,6 +7,7 @@ void	exit_error(t_parce_node *parce)
 	ft_putstr_fd(parce->args[1], 1);
 	ft_putstr_fd(": numeric argument required\n", 1);
 	envi->exit_status = 2;
+	ft_malloc(0, 1);
 	exit(2);
 }
 
@@ -64,6 +65,7 @@ void	ft_exit(t_parce_node *parce)
 	{
 		ft_putstr_fd("exit\n", 1);
 		envi->exit_status = 0;
+		ft_malloc(0, 1);
 		exit(0);
 	}
 	if (parce->args[1] && parce->args[2])
@@ -76,6 +78,7 @@ void	ft_exit(t_parce_node *parce)
 		ft_putstr_fd("exit\n", 1);
 		status = ft_strtol(parce->args[1]);
 		envi->exit_status = (int)status;
+		ft_malloc(0, 1);
 		exit((int)status);
 	}
 }

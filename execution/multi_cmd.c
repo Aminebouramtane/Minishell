@@ -12,7 +12,7 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 	pid_t	pid;
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(temp);
+	cmd_path = NULL;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -23,13 +23,14 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
 			run_builtin(temp);
-			successful_exit(cmd_path);
+			successful_exit(cmd_path, envp);
 		}
 		else
 		{
+			cmd_path = get_cmd_path(temp);
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
-			successful_exit(cmd_path);
+			successful_exit(cmd_path, envp);
 		}
 	}
 	else
@@ -49,13 +50,13 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
 			run_builtin(temp);
-			successful_exit(cmd_path);
+			successful_exit(cmd_path, envp);
 		}
 		else
 		{
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
-			successful_exit(cmd_path);
+			successful_exit(cmd_path, envp);
 		}
 	}
 	close(fd[1]);

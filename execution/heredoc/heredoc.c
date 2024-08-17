@@ -23,7 +23,6 @@ void	handel_heredoc(t_parce_node *parce)
 	{
 		while (parce->file)
 		{
-			printf("in heredoc\n");
 			if (parce->file->heredoc == 1)
 			{
 				myfile = parce->file->file;
@@ -64,9 +63,9 @@ void	handel_heredoc(t_parce_node *parce)
 			}
 			parce->file = parce->file->next;
 		}
-		printf("end heredoc\n");
 		envi->exit_status = 0;
-		
+		ft_env_lstclear(envi);
+		ft_malloc(0, 1);
 		exit(0);
 	}
 	int status;

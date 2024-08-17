@@ -1,9 +1,13 @@
 #include "../minishell.h"
 
-void	successful_exit(char *cmd_path)
+void	successful_exit(char *cmd_path, char **envp)
 {
+	(void) envp;
 	envi->exit_status = 0;
-	free(cmd_path);
+	if (cmd_path)
+		free(cmd_path);
+	ft_free(envp);
+	ft_malloc(0, 1);
 	exit(0);
 }
 

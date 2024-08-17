@@ -1,67 +1,107 @@
 
 #include "../minishell.h"
 
-void	ft_malloc_lstclear(t_leaks **lst)
+int	free_lstsize(t_leaks *lst)
 {
-	t_leaks	*c;
-	t_leaks	*n;
+	int	count;
 
-	if (lst && *lst)
+	if (!lst)
+		return (0);
+	count = 0;
+	while (lst)
 	{
-		c = *lst;
-		while (c)
-		{
-			n = c->next;
-            free(c->add);
-			c->add = NULL;
-			free(c);
-			c = n;
-		}
-		*lst = NULL;
+		count++;
+		lst = lst->next;
 	}
+	return (count);
 }
 
-void	ft_malloc_lstadd_back(t_leaks **lst, t_leaks *new)
+t_leaks	*free_lstlast(t_leaks *lst)
 {
-	t_leaks	*last;
+	int	last;
 
-	if (!*lst)
-	{
-		*lst = new;
+	last = free_lstsize(lst);
+	while (last-- > 1)
+		lst = lst->next;
+	return (lst);
+}
+
+void	free_lstadd_back(t_leaks **lst, t_leaks *new)
+{
+	static t_leaks	*head;
+
+	if (!lst)
 		return ;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		head = free_lstlast(*lst);
+		head->next = new;
 	}
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
 }
 
-t_leaks	*malloc_lstnew(void *content)
+t_leaks	*free_lstnew(char *value)
 {
-	t_leaks	*my_node;
+	t_leaks	*head;
 
-	my_node = (t_leaks *)malloc(sizeof(t_leaks));
-	if (my_node == NULL)
+	head = malloc(sizeof(t_leaks));
+	if (!head)
 		return (NULL);
-	my_node->add = content;
-	my_node->next = NULL;
-	return (my_node);
+	head->add = value;
+	head->next = NULL;
+	return (head);
 }
 
-void    *ft_malloc(int size, int flag)
+void	free_lstclear(t_leaks **lst)
 {
-    static  t_leaks *add;
-    void    *tmp;
-    
-    tmp = NULL;
-    if (flag)
-        ft_malloc_lstclear(&add);
-    else
-    {
-        tmp = malloc(size);
-        if (!tmp)
-            return (NULL);
-        ft_malloc_lstadd_back(&add, malloc_lstnew(tmp));
-    }
-	return (tmp);
+	t_leaks	*next;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		next = (*lst)->next;
+		if (*lst)
+		{
+			if ((*lst)->add)
+			{
+				free((*lst)->add);
+			}
+			if (*lst)
+				free(*lst);
+		}
+		*lst = next;
+	}
+	*lst = NULL;
+}
+
+void	*ft_malloc(int size, int flag)
+{
+	static t_leaks	*address;
+	void			*p;
+	t_leaks			*new_node;
+
+	p = NULL;
+	if (flag)
+		free_lstclear(&address);
+	else
+	{
+		p = malloc(size);
+		if (!p)
+		{
+			ft_malloc(0, 1);
+			return (NULL);
+		}
+		new_node = free_lstnew(p);
+		if (!new_node)
+		{
+			free(p);
+			p = NULL;
+			ft_malloc(0, 1);
+			return (NULL);
+		}
+		free_lstadd_back(&address, new_node);
+	}
+	return (p);
 }

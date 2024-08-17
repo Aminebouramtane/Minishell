@@ -1,5 +1,25 @@
 #include "../../minishell.h"
 
+char	*my_f_strdup(const char *s1, int size)
+{
+	int		j;
+	char	*tab;
+
+	if (!s1 || !*s1 || size == 0)
+		return (NULL);
+	tab = (char *)malloc(sizeof(char) * (size + 1));
+	if (tab == NULL)
+		return (NULL);
+	j = 0;
+	while (s1 && j < size)
+	{
+		tab[j] = s1[j];
+		j++;
+	}
+	tab[j] = '\0';
+	return (tab);
+}
+
 void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
 {
 	Datatoken	*node;

@@ -4,7 +4,7 @@ Datatoken	*ft_my_lstnew(void *content, char type, char state)
 {
 	Datatoken	*my_node;
 
-	my_node = (Datatoken *)ft_malloc(sizeof(Datatoken), 0);
+	my_node = (Datatoken *) ft_malloc(sizeof(Datatoken), 0);
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = content;

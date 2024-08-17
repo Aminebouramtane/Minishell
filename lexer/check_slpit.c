@@ -1,18 +1,19 @@
 #include "../minishell.h"
 
 
-// void skip_quotes(char *target, char delimiter, int *index)
-// {
-// 	int i;
+void	*ft_ft_calloc(size_t count, size_t size)
+{
+	char	*ptr;
+	int		mult;
 
-// 	i = *index;
-// 	i++;
-// 	while (target[i] && target[i] != delimiter)
-// 		i++;
-// 	if (target[i] == delimiter)
-// 		i++;
-// 	*index = i;
-// }
+	mult = count * size;
+	ptr = ft_malloc(mult, 0);
+	if (ptr == NULL)
+		return (NULL);
+	else
+		ft_bzero(ptr, mult);
+	return (ptr);
+}
 
 void split_quotes(char *target, char delimiter, int *index)
 {
@@ -117,7 +118,7 @@ static char *get_word(char *dst, char *src, char *delimiters, int *index)
 	else
 		process_non_quoted_string(src, &i, delimiters);
 	len = (i - start) + 1;
-	dst = ft_calloc(len, sizeof(char));
+	dst = ft_ft_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);
@@ -134,7 +135,7 @@ static char **fill_array(char **dst, char *src, char *delimiters, int number_wor
 	{
 		dst[i] = get_word(dst[i], src, delimiters, &index_word);
 		if (!dst[i])
-		ft_free(dst);
+			ft_free(dst);
 		i++;
 	}
 	return (dst);
@@ -149,7 +150,7 @@ char **split_lexer(char *s, char *delimiters)
 		return (NULL);
 	count = 0;
 	count = count_word(s, delimiters);
-	dst = ft_calloc(count + 1, sizeof(char *));
+	dst = ft_ft_calloc(count + 1, sizeof(char *));
 	if (!dst)
 		return (NULL);
 	dst = fill_array(dst, s, delimiters, count);

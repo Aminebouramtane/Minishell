@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:34:02 by abouramt          #+#    #+#             */
-/*   Updated: 2024/06/03 17:17:40 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/08/16 23:27:56 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	ptr[i + j] = '\0';
-	free((void *)s2);
 	return (ptr);
 }
