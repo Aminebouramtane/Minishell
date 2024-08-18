@@ -30,7 +30,6 @@ int lexer(char *str, t_vars **data)
 
 	i = 0;
 	*data = ft_malloc(sizeof(t_vars), 0);
-	printf("in  ---------------------------------- %p ----------------------------------\n", *data);
 	if (!*data)
 		return (0);
     (*data)->flag = 0;

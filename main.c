@@ -40,9 +40,8 @@ int main(int ac, char **av, char **env)
     signal(SIGINT, ft_handler);
 	envi = get_env_vars(env);
     while (1) {
-        // signal(SIGQUIT, SIG_IGN);
+        signal(SIGQUIT, SIG_IGN);
         input = readline("minishell$ ");
-        // signal(SIGINT, ft_handler);
         if (input == NULL)
         {
             printf("exit\n");
@@ -52,12 +51,15 @@ int main(int ac, char **av, char **env)
         if (!input[0] || !input)
             continue ;
 		if (!check_quotes(input))
-			(ft_putstr_fd("Error in quotes !!\n", 1)),(exit(1));
+        {
+			ft_putstr_fd("Error in quotes !!\n", 1);
+            continue;
+        }
         lexer(input, &data);
         ft_expand(data->ndata);
-        ft_parce(&parce, data);
         if (syntax_err(data->ndata))
             continue;
+        ft_parce(&parce, data);
         rem_double_quotes(&parce);
         ft_execute(parce);
         free(input);
