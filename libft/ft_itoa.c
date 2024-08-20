@@ -35,7 +35,7 @@ static char	*convert(long num, int is_negative)
 		digits = 1;
 	if (is_negative)
 		digits++;
-	str = (char *)malloc(sizeof(char) * (digits + 1));
+	str = ft_malloc(sizeof(char) * (digits + 1), 0);
 	if (!str)
 		return (NULL);
 	str[digits--] = '\0';

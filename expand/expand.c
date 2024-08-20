@@ -14,6 +14,8 @@ void	ft_expand_dolar_long(Datatoken *node)
 		tmp = my_strdup_two(env);
 		if (tmp)
 			node->cmd = tmp;
+		else
+			node->cmd = "\0";
 	}
 }
 
