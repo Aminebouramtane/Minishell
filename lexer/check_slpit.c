@@ -26,10 +26,7 @@ void split_quotes(char *target, char delimiter, int *index)
 		if (target[i] == delimiter)
 		{
 			i++;
-			if (target[i] == '\'' || target[i] == '\"')
-				delimiter = target[i];
-			else
-				break;
+			break;
 		}
 		i++;
 	}
@@ -50,7 +47,7 @@ static int count_word(char *s, char *delimiters)
 		if (s[i] == '\"')
 		{
 			split_quotes(s, '\"', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+			while (s[i] && !in_delimiters(s[i], " \t\n"))
 				i++;
 			if (flag)
 				count++;
@@ -58,7 +55,7 @@ static int count_word(char *s, char *delimiters)
 		else if (s[i] && s[i] == '\'')
 		{
 			split_quotes(s, '\'', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+			while (s[i] && !in_delimiters(s[i], " \t\n"))
 				i++;
 			if (flag)
 				count++;
@@ -74,6 +71,7 @@ static int count_word(char *s, char *delimiters)
 			break ;
 		i++;
 	}
+	printf("========= %d\n", count);
 	return (count);
 }
 
@@ -87,19 +85,14 @@ int skip_delimiters(char *s, char *delimiters, int i)
 void process_quoted_string(char *src, int *i, char quote)
 {
 	split_quotes(src, quote, i);
-	while (src[*i] && !in_delimiters(src[*i], " \t\n\"\'"))
-		(*i)++;
+	// while (src[*i] && !in_delimiters(src[*i], " \t\n\'\""))
+	// 	(*i)++;
 }
 void process_non_quoted_string(char *src, int *i, char *delimiters)
 {
 	while (src[*i] && !in_delimiters(src[*i], delimiters))
 	{
-		if (src[*i] == '\"')
-			process_quoted_string(src, i, '\"');
-		else if (src[*i] == '\'')
-			process_quoted_string(src, i, '\'');
-		else
-			(*i)++;
+		(*i)++;
 	}
 }
 static char *get_word(char *dst, char *src, char *delimiters, int *index)
@@ -111,15 +104,22 @@ static char *get_word(char *dst, char *src, char *delimiters, int *index)
 	i = *index;
 	i = skip_delimiters(src, delimiters, i);
 	start = i;
-	if (src[i] == '\"')
-		process_quoted_string(src, &i, '\"');
-	else if (src[i] == '\'')
-		process_quoted_string(src, &i, '\'');
-	else
-		process_non_quoted_string(src, &i, delimiters);
+	while (src[i])
+	{
+		if (src[i] == '\"' || src[i] == '\'')
+		{
+			process_quoted_string(src, &i, src[i]);
+		}
+		else if (src[i] && !in_delimiters(src[i], "\'\" \n\t"))
+			process_non_quoted_string(src, &i, " \t\n\'\"");
+		else
+			break ;
+	}
+	
 	len = (i - start) + 1;
 	dst = ft_ft_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
+	printf("==========######## %s\n", dst);
 	*index = i;
 	return (dst);
 }
