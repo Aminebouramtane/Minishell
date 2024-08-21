@@ -71,7 +71,7 @@ static int count_word(char *s, char *delimiters)
 			break ;
 		i++;
 	}
-	printf("========= %d\n", count);
+	// printf("========= %d\n", count);
 	return (count);
 }
 
@@ -119,7 +119,7 @@ static char *get_word(char *dst, char *src, char *delimiters, int *index)
 	len = (i - start) + 1;
 	dst = ft_ft_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
-	printf("==========######## %s\n", dst);
+	// printf("==========######## %s\n", dst);
 	*index = i;
 	return (dst);
 }

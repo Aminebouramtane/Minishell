@@ -8,7 +8,10 @@ void		process_character(char *str, size_t *i, t_vars *data)
 	if (str[*i] == '\'')
 		fill_qoute_in_node(str, i, data);
 	if (str[*i] == '\"')
+	{
 		fill_dqoute_in_node(str, i, data);
+		data->flag = 0;
+	}
 	if (str[*i] == '<')
 		fill_input_in_node(str, i, data);
 	if (str[*i] == '>')

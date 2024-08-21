@@ -18,7 +18,6 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv("_");
-		printf("--------------------------%d\n", envi->exit_status);
 		if (str[0] == '_' || str[0] == '?')
 		{
 			if (str[0] == '_')
