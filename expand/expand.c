@@ -8,6 +8,11 @@ void	ft_expand_dolar_long(Datatoken *node)
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
 	{
+		if (ft_isdigit(node->cmd[1]))
+		{
+			node->cmd = node->cmd + 2;
+			return ;
+		}
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv(str);
