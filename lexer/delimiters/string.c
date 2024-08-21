@@ -1,25 +1,5 @@
 #include "../../minishell.h"
 
-char	*my_f_strdup(const char *s1, int size)
-{
-	int		j;
-	char	*tab;
-
-	if (!s1 || !*s1 || size == 0)
-		return (NULL);
-	tab = (char *)malloc(sizeof(char) * (size + 1));
-	if (tab == NULL)
-		return (NULL);
-	j = 0;
-	while (s1 && j < size)
-	{
-		tab[j] = s1[j];
-		j++;
-	}
-	tab[j] = '\0';
-	return (tab);
-}
-
 void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
 {
 	Datatoken	*node;
@@ -37,8 +17,10 @@ void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
 	}
 	*i = end;
 	tmp = my_strdup(str + start, end - start);
-	if (data->flag)
+	if (data->flag == 1)
 		node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
+	else if (data->flag == 2)
+		node = ft_my_lstnew(tmp, 's', IN_COTE);
 	else
 		node = ft_my_lstnew(tmp, 's', GENERAL);
 	ft_my_lstadd_back(&(data->ndata), node);
