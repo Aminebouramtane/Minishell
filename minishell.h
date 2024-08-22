@@ -81,6 +81,7 @@ typedef struct s_file
 	int		in_file_fd;
 	int		out_file_fd;
 	int		appended_file_fd;
+	int		heredoc_file_fd;
 	int		is_quoted;
     char    *eof;
     int     index;
@@ -217,6 +218,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2);
 void	open_files_append(t_file *file, int fd_out);
 void	open_out_files_redir(t_file *parce, int fd_out);
 void	open_in_files_redir(t_file *parce, int fd_in);
+int		open_files_heredoc(t_file *file);
 void	free_split(char **command_av);
 char	*getpaths();
 char	*dirs_paths(char *env_path, t_parce_node *parce);

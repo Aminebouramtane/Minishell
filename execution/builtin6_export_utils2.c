@@ -18,20 +18,23 @@ t_env	*copy_list(t_env *start)
 
 void	printlist(t_env *node)
 {
-	while (node != NULL)
+	t_env *temp;
+
+	temp = node;
+	while (temp != NULL)
 	{
 		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(node->key, 1);
-		if (node->value != NULL)
+		ft_putstr_fd(temp->key, 1);
+		if (temp->value != NULL)
 		{
 			ft_putstr_fd("=", 1);
 			ft_putstr_fd("\"", 1);
-			ft_putstr_fd(node->value, 1);
+			ft_putstr_fd(temp->value, 1);
 			ft_putstr_fd("\"\n", 1);
 		}
 		else
 			ft_putstr_fd("\n", 1);
-		node = node->next;
+		temp = temp->next;
 	}
 }
 

@@ -13,7 +13,6 @@ void	handel_heredoc(t_parce_node *parce)
 	char	*delimiter;
 	char	*input;
 	char	*line;
-	char	*myfile;
 
 	input = NULL;
 	f = fork();
@@ -25,15 +24,8 @@ void	handel_heredoc(t_parce_node *parce)
 		{
 			if (parce->file->heredoc == 1)
 			{
-				myfile = parce->file->file;
+				fd = open_files_heredoc(parce->file);
 				delimiter = parce->file->eof;
-				fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
-				if (fd < 0)
-				{
-					ft_putstr_fd("Error in FD !!\n", 1);
-					envi->exit_status = 1;
-					exit(1);
-				}
 				while (1)
 				{
 					signal(SIGINT, ft_handler_heredoc);
