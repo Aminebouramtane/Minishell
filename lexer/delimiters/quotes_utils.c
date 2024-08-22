@@ -9,7 +9,6 @@ void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 
 	start = *i;
 	end = *i;
-	printf("etred\n");
 	while (str[end])
 	{
 		if (str[end] == '\'' || str[end + 1] == '\"')

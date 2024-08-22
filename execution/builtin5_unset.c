@@ -8,7 +8,7 @@ void	ft_unset(t_parce_node *parce)
 	if (!parce || !parce->args || !parce->args[1])
 		return ;
 	while (temp && temp->env_var
-		&& ft_strncmp(parce->args[1], temp->env_var) != 0)
+		&& ft_strncmp(parce->args[1], temp->key) != 0)
 		temp = temp->next;
 	if (!temp)
 		return ;

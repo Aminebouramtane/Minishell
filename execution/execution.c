@@ -40,14 +40,22 @@ int	check_builtins(char *command)
 void	ft_execute(t_parce_node *parce)
 {
 	char	**envp;
+	t_parce_node	*tmp;
 
+	tmp = parce;
 	envp = NULL;
+	envp = make_env_array(envi);
 	if (parce)
 	{
-		if (parce->file)
-			handel_heredoc(parce);
+		while (tmp)
+		{
+			if (tmp->file)
+			{
+				handel_heredoc(tmp);
+			}
+			tmp = tmp->next;
+		}
 	}
-	envp = make_env_array(envi);
 	if (parce->next == NULL)
 	{
 		execute_single(parce, envp);
