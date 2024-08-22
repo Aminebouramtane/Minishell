@@ -11,8 +11,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	command_path = NULL;
 	s = NULL;
 	dirs_path = ft_split(env_path, ':');
-	if (parce && parce->first)
-		command_path = ft_strjoin_path("/", parce->first);
+	if (parce && parce->args[0])
+		command_path = ft_strjoin_path("/", parce->args[0]);
 	while (dirs_path[i] != NULL)
 	{
 		s = ft_strjoin_path(dirs_path[i], command_path);

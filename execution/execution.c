@@ -40,8 +40,20 @@ int	check_builtins(char *command)
 void	ft_execute(t_parce_node *parce)
 {
 	char	**envp;
+	t_file	*file;
 
 	envp = NULL;
+	file = parce->file;
+	while (file)
+	{
+		if (file->heredoc && file->index == 16)
+		{
+			printf("minishell: maximum here-document count exceeded");
+			exit(2);
+		}
+		file = file->next;
+	}
+	
 	if (parce)
 	{
 		if (parce->file)
