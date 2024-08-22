@@ -8,12 +8,19 @@ void	ft_expand_dolar_long(Datatoken *node)
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
 	{
+		if (ft_isdigit(node->cmd[1]))
+		{
+			node->cmd = node->cmd + 2;
+			return ;
+		}
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv(str);
 		tmp = my_strdup_two(env);
 		if (tmp)
 			node->cmd = tmp;
+		else
+			node->cmd = "\0";
 	}
 }
 
@@ -32,7 +39,7 @@ void	ft_expand_dolar(Datatoken *lst)
 	while (node)
 	{
 		ft_handle_special_case(node);
-		if (node->cmd && node->cmd[0] == '$')
+		if (node->cmd && node->cmd[0] == '$' && node->state == 2)
 		{
 			ft_expand_dolar_single(node);
 		}
@@ -49,7 +56,7 @@ void	ft_expand_home(Datatoken *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->cmd[0] == '~' && node->state == 2)
+		if (node->cmd[0] == '~' && node->state != 0)
 		{
 			node->cmd += 1;
 			env = my_strdup_two(getenv("HOME"));

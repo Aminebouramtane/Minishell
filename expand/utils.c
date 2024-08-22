@@ -9,25 +9,26 @@ void	ft_expand_dolar_single_char(Datatoken *node)
 void	ft_expand_dolar_two_chars(Datatoken *node)
 {
 	char	*str;
-	char	*tmp;
 	char	*env;
+	char	*tmp;
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 2)
 	{
+		tmp = node->cmd;
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv("_");
-		if (str[0] == '_')
+		if (str[0] == '_' || str[0] == '?')
 		{
-			tmp = my_strdup_two(env);
-			if (tmp)
-				node->cmd = tmp;
+			if (str[0] == '_')
+				node->cmd = my_strdup_two(env);
+			else if (str[0] == '?')
+				node->cmd = ft_itoa(envi->exit_status);
+			else
+				node->cmd = "\0";
 		}
 		else
-		{
-			tmp = "\0";
 			node->cmd = tmp;
-		}
 	}
 }
 

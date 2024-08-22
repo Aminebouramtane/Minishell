@@ -15,6 +15,8 @@ void process_quotes(char *str)
         {
             if (inside_double_quotes)
                 str[j++] = str[i];
+            else if (inside_single_quotes)
+                inside_single_quotes = 0;
             else
                 inside_single_quotes = 1;
         }
@@ -22,6 +24,8 @@ void process_quotes(char *str)
         {
             if (inside_single_quotes)
                 str[j++] = str[i];
+            else if (inside_double_quotes)
+                inside_double_quotes = 0;
             else
                 inside_double_quotes = 1;
         }

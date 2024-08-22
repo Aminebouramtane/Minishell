@@ -41,10 +41,22 @@ void	ft_execute(t_parce_node *parce)
 {
 	char	**envp;
 	t_parce_node	*tmp;
-
+	t_file	*file;
+  
 	tmp = parce;
 	envp = NULL;
 	envp = make_env_array(envi);
+	file = parce->file;
+	while (file)
+	{
+		if (file->heredoc && file->index == 16)
+		{
+			printf("minishell: maximum here-document count exceeded");
+			exit(2);
+		}
+		file = file->next;
+	}
+	
 	if (parce)
 	{
 		while (tmp)

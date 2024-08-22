@@ -16,20 +16,17 @@ void process_double_quotes(char *str, size_t *i, t_vars *data)
     {
         node = ft_my_lstnew("\"", '\"', IN_DOUBLE_COTE);
         ft_my_lstadd_back(&(data->ndata), node);
-        if (data->f_qoute == 0)
+        if (data->flag == 0)
         {
-            data->f_qoute = 1;
             data->flag = 1;
         }
-        else
+        else if(data->flag == 1)
         {
-            data->f_qoute = 0;
             data->flag = 0;
         }
         (*i)++;
     }
 }
-
 
 void process_special_chars(char *str, size_t *i, t_vars *data)
 {
@@ -48,7 +45,6 @@ void process_special_chars(char *str, size_t *i, t_vars *data)
     if (str[*i] == ' ' || str[*i] == '\t')
         fill_white_spaces_in_node(str, i, data);
 }
-
 
 void inside_dqoutes(char *str, t_vars *data)
 {
@@ -73,7 +69,6 @@ void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 	start = *i;
 	end = *i;
 	data->flag = 0;
-	data->f_qoute = 0;
 	while (str[end])
 	{
 		if (str[end] == '\"')
@@ -81,10 +76,9 @@ void	fill_dqoute_in_node(char *str, size_t *i, t_vars *data)
 			end++;
 			break ;
 		}
-		end++;
+        end++;
 	}
 	*i = end;
 	tmp = my_strdup(str + start, end - start);
 	inside_dqoutes(tmp, data);
-    data->flag = 0;
 }
