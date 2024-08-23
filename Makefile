@@ -17,20 +17,22 @@ SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/utils2.c
 	execution/builtin6_export.c execution/builtin6_export_utils.c execution/builtin6_export_utils2.c \
 	execution/heredoc/utils.c execution/utils_malloc.c execution/builtin7_exit.c execution/execution_utils.c \
 	execution/execution_utils1.c execution/execution_utils2.c execution/single_cmd.c execution/multi_cmd.c execution/redirection_append.c \
-	execution/heredoc/ex_node.c execution/heredoc/ex.c execution/heredoc/utils_2.c execution/shlvl.c
+	execution/heredoc/ex_node.c execution/heredoc/ex.c execution/heredoc/utils_2.c execution/shlvl.c signals.c
 
 OBJ = $(SRC:.c=.o)
 
 $(NAME) : $(OBJ)
+	make all -C ./libft
 	$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
-# $(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
 
 all : $(NAME)
 
 clean :
+	make clean -C ./libft
 	rm -f $(OBJ)
 
 fclean :
+	make fclean -C ./libft
 	rm -f $(OBJ) $(NAME)
 
 re : fclean all

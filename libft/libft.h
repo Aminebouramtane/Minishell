@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <fcntl.h>
+# include "../minishell.h"
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

@@ -84,8 +84,6 @@ int skip_delimiters(char *s, char *delimiters, int i)
 void process_quoted_string(char *src, int *i, char quote)
 {
 	split_quotes(src, quote, i);
-	// while (src[*i] && !in_delimiters(src[*i], " \t\n\'\""))
-	// 	(*i)++;
 }
 void process_non_quoted_string(char *src, int *i, char *delimiters)
 {
@@ -118,7 +116,6 @@ static char *get_word(char *dst, char *src, char *delimiters, int *index)
 	len = (i - start) + 1;
 	dst = ft_ft_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
-	// printf("==========######## %s\n", dst);
 	*index = i;
 	return (dst);
 }
@@ -155,31 +152,3 @@ char **split_lexer(char *s, char *delimiters)
 	dst = fill_array(dst, s, delimiters, count);
 	return (dst);
 }
-
-// # include <stdio.h>
-// # include <stdlib.h>
-// # include <string.h>
-// # include <unistd.h>
-// # include <sys/wait.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
-
-// int main(int ac, char *av[])
-// {
-// 	char	*input = readline("-->");
-// 	char **spliter = split_lexer(input, " \t");
-// 	int i = 0;
-// 	while (spliter[i])
-// 	{
-// 		printf("%s\n", spliter[i]);
-// 		i++;
-// 	}
-// 	return 0;
-// // gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
-// }
-
-//==================================================================
-
-//==================================================================
-
-//=========================================================================

@@ -15,7 +15,7 @@ int handle_echo_command(Datatoken **node)
         {
             if (!(*node)->next)
             {
-                ft_putstr_fd("syntax error near unexpected token `newline'\n", 1);
+                ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
                 return 1;
             }
         }
@@ -27,7 +27,7 @@ int handle_pipe_command(Datatoken *node, int len)
 {
     if (node && node->cmd[0] == '|' && node->state == 2 && len == 1)
     {
-        ft_putstr_fd("syntax error near unexpected token `|'\n", 1);
+        ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
         return 1;
     }
     return 0;
@@ -42,17 +42,17 @@ int handle_subsequent_pipe_redirect(Datatoken **node)
             *node = (*node)->next;
         if (!(*node))
         {
-            ft_putstr_fd("syntax error near unexpected token `|'\n", 1);
+            ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return 1;
         }
         if ((*node)->cmd[0] == '|' && (*node)->state == 2)
         {
-            ft_putstr_fd("syntax error near unexpected token `||'\n", 1);
+            ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
             return 1;
         }
         if ((*node)->cmd[0] == '>' && (*node)->state == 2)
         {
-            ft_putstr_fd("syntax error near unexpected token `|'\n", 1);
+            ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return 1;
         }
     }
@@ -65,7 +65,7 @@ int handle_final_redirect(Datatoken *node)
     if (node && !node->next && ((node->cmd[0] == '>' && node->state == 2)
         || (node->cmd[0] == '<' && node->state == 2)))
     {
-        ft_putstr_fd("syntax error near unexpected token `newline'\n", 1);
+        ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
         return 1;
     }
     if (node && node->next && ((node->cmd[0] == '>' && node->state == 2)
@@ -78,7 +78,7 @@ int handle_final_redirect(Datatoken *node)
             return 0;
         if (node->cmd[0] == '|' && node->state == 2)
         {
-            ft_putstr_fd("syntax error near unexpected token `|'\n", 1);
+            ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return 1;
         }
     }
