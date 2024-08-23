@@ -71,7 +71,6 @@ static int count_word(char *s, char *delimiters)
 			break ;
 		i++;
 	}
-	// printf("========= %d\n", count);
 	return (count);
 }
 

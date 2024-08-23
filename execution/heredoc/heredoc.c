@@ -32,7 +32,9 @@ void	handel_heredoc(t_parce_node *parce)
 					input = readline(">");
 					if (input == NULL)
 					{
-						printf("Minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", delimiter);
+						ft_putstr_fd("Minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+						ft_putstr_fd(delimiter, 2);
+						ft_putstr_fd("')\n", 2);
 						break ;
 					}
 					if (!ft_strncmp(input, delimiter))

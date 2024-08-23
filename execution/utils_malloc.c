@@ -57,6 +57,7 @@ t_env	*ft_env_lstnew(void *content)
 	variable = ft_split(my_node->env_var, '=');
 	my_node->key = ft_strdup(variable[0]);
 	my_node->value = ft_strdup(variable[1]);
+	my_node->exit_status = 0;
 	my_node->next = NULL;
 	my_node->prev = NULL;
 	ft_free(variable);

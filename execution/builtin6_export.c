@@ -14,12 +14,9 @@ void	append_the_export(t_parce_node *parce, t_env *temp, char *buff, int *i)
 		temp = temp->next;
 	temp->env_var = ft_strdup(parce->args[i[0]]);
 	temp->key = ft_substr(parce->args[i[0]], 0, i[1]);
-	printf("hna 1 %s\n", get_value(buff));
-	temp->value = ft_my_strjoin(get_value(buff),
-			ft_my_strchr(parce->args[i[0]], '='));
 	
-	printf("hna 2 %s\n", ft_my_strchr(parce->args[i[0]], '='));
-	printf("hna 3 %s\n", temp->value);
+	temp->value = ft_strjoin_path(get_value(buff),
+			ft_my_strchr(parce->args[i[0]], '='));
 }
 
 void	copy_and_sort(t_env *copy)
@@ -39,12 +36,34 @@ void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 		&& parce->args[i[0]][i[1]] != '+')
 		i[1]++;
 	buff[i[1]] = '\0';
-	printf("========================%c\n", parce->args[i[0]][i[1]]);
 	if (valid_key(buff) == 0 || (parce->args[i[0]][i[1]] == '+'
 		&& valid_key(buff) == 0))
 		ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i[0]));
 	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '+')
+	{
 		append_the_export(parce, temp, buff, i);
+	}
+	free(buff);
+}
+
+int	valid_export(char *args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i] != '\0')
+	{
+		if (args[0] == '=' || ft_isdigit(args[0]) == 1)
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(args, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			envi->exit_status = 1;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 void	ft_export(t_parce_node *parce)
@@ -61,18 +80,16 @@ void	ft_export(t_parce_node *parce)
 	{
 		while (parce && parce->args[i[0]] != NULL)
 		{
-			process_arg(parce, i, temp);
+			if (valid_export(parce->args[i[0]]) == 0)
+				process_arg(parce, i, temp);
 			i[0]++;
-			printf("i[0] = %d\n", i[0]);
 			i[1] = 0;
-			printf("i[1] = %d\n", i[1]);
 			temp = envi;
 		}
 		copy_and_sort(copy);
 	}
 	else
 	{
-		printf("show_exported\n");
 		show_exported(copy);
 	}
 }

@@ -30,7 +30,7 @@ int main(int ac, char **av, char **env)
     (void)av;
     if (ac != 1)
     {
-        ft_putstr_fd("Error in Args !!\n", 1);
+        ft_putstr_fd("Error in Args !!\n", 2);
         envi->exit_status = 1;
         exit(1);
     }
@@ -52,7 +52,7 @@ int main(int ac, char **av, char **env)
             continue ;
 		if (!check_quotes(input))
         {
-			ft_putstr_fd("Error in quotes !!\n", 1);
+			ft_putstr_fd("Error in quotes !!\n", 2);
             continue;
         }
         lexer(input, &data);
