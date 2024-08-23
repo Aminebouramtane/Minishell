@@ -9,13 +9,19 @@ void    ft_cmd(Datatoken **node, t_parce_node **parce)
         || ((*node)->cmd[0] == '>' && (*node)->type == 'a' && (*node)->state == 2)
         || ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
         || ((*node)->type == '|' && (*node)->state == 2))
+		{
             break ;
+		}
         else
+		{
             (*parce)->cmd = ft_my_strjoin((*parce)->cmd, (*node)->cmd);
+		}
         (*node) = (*node)->next;
     }
     if (!*node)
+	{
         (*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
+	}
     if (!*node && (*parce)->args && (*parce)->args[0])
         (*parce)->first = my_strdup_two((*parce)->args[0]);
 }

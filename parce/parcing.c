@@ -8,8 +8,7 @@ void handle_redirection(Datatoken **node, t_parce_node **parce_node, t_file **fi
 		ft_append(node, parce_node, file);
 	else if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '>' && (*node)->type == '>' && (*node)->state == 2)
 		ft_output(node, parce_node, file);
-	else
-		ft_cmd(node, parce_node);
+	ft_cmd(node, parce_node);
 }
 
 void handle_special_cases(Datatoken **node, t_parce_node **parce_node, t_file **file, int *flag, t_parce_node **parce)
