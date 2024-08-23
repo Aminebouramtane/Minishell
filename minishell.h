@@ -262,5 +262,11 @@ void	ft_heredoc(Datatoken **node, t_parce_node **parce, t_file **file, int *flag
 void    ft_cmd(Datatoken **node, t_parce_node **parce);
 void free_t_parce_list(t_parce_node *head);
 void    ft_handler();
+void	handle_child_process(t_parce_node *parce);
+void	process_heredoc_file(t_parce_node *parce);
+void	ft_expand_h_dolar_single_char(t_heredoc *node);
+void	ft_expand_h_dolar_two_chars(t_heredoc *node);
+void	ft_expand_h_dolar_long(t_heredoc *node);
+void	read_and_write_heredoc(int fd, char *delimiter, int is_quoted);
 
 #endif

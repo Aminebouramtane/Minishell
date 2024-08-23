@@ -76,7 +76,5 @@ char	*ft_my_strjoin(char *s1, char *s2)
 	while (s2[++j])
 		ptr[i + j] = s2[j];
 	ptr[i + j] = '\0';
-    //free(s1);
-    //s1 = NULL;
 	return (ptr);
 }
