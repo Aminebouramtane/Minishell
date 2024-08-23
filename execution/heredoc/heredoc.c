@@ -6,67 +6,59 @@ void	ft_handler_heredoc(int sigint)
 	exit(130);
 }
 
-void	handel_heredoc(t_parce_node *parce)
+void handel_heredoc(t_parce_node *parce)
 {
-	int		f;
-	int		fd;
-	char	*delimiter;
-	char	*input;
-	char	*line;
-	char	*myfile;
+    int f;
+    int status;
 
-	input = NULL;
-	f = fork();
-	if (f == -1)
-		return ;
-	else if (f == 0)
-	{
-		while (parce->file)
-		{
-			if (parce->file->heredoc == 1)
-			{
-				myfile = parce->file->file;
-				delimiter = parce->file->eof;
-				fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
-				if (fd < 0)
-				{
-					ft_putstr_fd("Error in FD !!\n", 1);
-					envi->exit_status = 1;
-					exit(1);
-				}
-				while (1)
-				{
-					signal(SIGINT, ft_handler_heredoc);
-					input = readline(">");
-					if (input == NULL)
-					{
-						printf("Minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", delimiter);
-						break ;
-					}
-					if (!ft_strncmp(input, delimiter))
-					{
-						free(input);
-						signal(SIGINT, SIG_IGN);
-						break ;
-					}
-					if (parce->file->is_quoted)
-						line = ft_my_strjoin(input, "\n");
-					else
-						line = expande_heredoc(input);
-					write(fd, line, ft_strlen(line));
-					if (ft_strncmp(input, delimiter))
-						write(fd, "\n", 1);
-					free(input);
-				}
-				close(fd);
-			}
-			parce->file = parce->file->next;
-		}
-		envi->exit_status = 0;
-		ft_env_lstclear(envi);
-		ft_malloc(0, 1);
-		exit(0);
-	}
-	int status;
-	waitpid(f, &status, 0);		
+    f = fork();
+    if (f == -1)
+        return;
+    else if (f == 0)
+        handle_child_process(parce);
+    waitpid(f, &status, 0);
+}
+
+static char *read_user_input(char *delimiter)
+{
+    char *input;
+
+    signal(SIGINT, ft_handler_heredoc);
+    input = readline(">");
+    if (input == NULL)
+    {
+        printf("Minishell: warning: here-document at line \
+		1 delimited by end-of-file (wanted `%s')\n", delimiter);
+    }
+    return (input);
+}
+
+static void process_input_line(int fd, char *input, char *delimiter, int is_quoted)
+{
+    char *line;
+
+    if (is_quoted)
+        line = ft_my_strjoin(input, "\n");
+    else
+        line = expande_heredoc(input);
+    write(fd, line, ft_strlen(line));
+    if (ft_strncmp(input, delimiter))
+        write(fd, "\n", 1);
+}
+
+void read_and_write_heredoc(int fd, char *delimiter, int is_quoted)
+{
+    char *input;
+
+    while (1)
+    {
+        input = read_user_input(delimiter);
+        if (input == NULL || !ft_strncmp(input, delimiter))
+        {
+            free(input);
+            break;
+        }
+        process_input_line(fd, input, delimiter, is_quoted);
+        free(input);
+    }
 }
