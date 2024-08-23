@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:54:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/08/05 15:44:19 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/08/23 21:19:33 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	j = 0;
 	while (j < len && i < ft_strlen(s))
 	{
-			ptr[j] = s[i];
-			j++;
-			i++;
+		ptr[j] = s[i];
+		j++;
+		i++;
 	}
 	ptr[j] = '\0';
 	return (ptr);
