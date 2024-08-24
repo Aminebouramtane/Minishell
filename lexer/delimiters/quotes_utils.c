@@ -1,22 +1,5 @@
 #include "../../minishell.h"
 
-static void process_quotes(char *str, size_t *i, t_vars *data)
-{
-
-    if (str[*i] == '\'')
-    {
-        if (data->flag == 0)
-        {
-            data->flag = 1;
-        }
-        else if(data->flag == 1)
-        {
-            data->flag = 0;
-        }
-        (*i)++;
-    }
-}
-
 void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 {
 	Datatoken	*node;
@@ -26,7 +9,6 @@ void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 
 	start = *i;
 	end = *i;
-	process_quotes(str + end, i, data);
 	while (str[end])
 	{
 		end++;

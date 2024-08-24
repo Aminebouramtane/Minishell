@@ -104,6 +104,7 @@ void	ft_exit(t_parce_node *parce)
 	{
 		ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 1);
+		envi->exit_status = 1;
 	}
 	else
 	{

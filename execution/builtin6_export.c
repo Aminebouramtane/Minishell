@@ -53,7 +53,7 @@ int	valid_export(char *args)
 	i = 0;
 	while (args[i] != '\0')
 	{
-		if (args[0] == '=' || ft_isdigit(args[0]) == 1)
+		if (!ft_isalpha(args[0]) || ((i != 0) && (!ft_isalnum(args[i])) && (args[i] != '=' && args[i] != '+')))
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(args, 2);
