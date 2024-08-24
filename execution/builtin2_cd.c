@@ -25,7 +25,10 @@ void	cd_home(t_env *temp)
 	if (temp && temp->env_var != NULL && temp->value != NULL)
 		(chdir(temp->value), change_pwd());
 	else
-		ft_putstr_fd("Minishell: cd: HOME not set\n", 1);
+	{
+		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
+		envi->exit_status = 1;
+	}
 }
 
 void	ft_cd(t_parce_node *parce)

@@ -51,17 +51,25 @@ int	valid_export(char *args)
 	int	i;
 
 	i = 0;
-	while (args[i] != '\0')
+	if (!ft_isalpha(args[0]))
 	{
-		if (!ft_isalpha(args[0]) || ((i != 0) && (!ft_isalnum(args[i])) && (args[i] != '=' && args[i] != '+')))
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(args, 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			envi->exit_status = 1;
-			return (1);
-		}
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(args, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		envi->exit_status = 1;
+		return (1);
+	}
+	while (args[i] != '=' && args[i] != '\0' && ft_isalnum(args[i]))
 		i++;
+	if (args[i] == '=' || args[i] == '\0' || (args[i] == '+' && args[i + 1] != '\0'))
+		return (0);
+	if (ft_isalnum(args[i]) == 0)
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(args, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		envi->exit_status = 1;
+		return (1);
 	}
 	return (0);
 }

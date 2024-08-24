@@ -71,6 +71,12 @@ int main(int ac, char **av, char **env)
         if (process_input(input, &data, &parce))
             continue;
         ft_execute(parce);
+        while (data->ndata)
+	    {
+           //printf("cmd ## %s state ## %d type ## %c\n", data->ndata->cmd, data->ndata->state, data->ndata->type);
+            data->ndata = data->ndata->next;
+            // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+	    }
         free(input);
         ft_malloc(0, 1);
     }

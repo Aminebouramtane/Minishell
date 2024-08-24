@@ -35,10 +35,12 @@ void	error_cd(char *str, int a_counter)
 		ft_putstr_fd("minishell: cd: no such file or directory: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("\n", 2);
+		envi->exit_status = 1;
 	}
 	else
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		envi->exit_status = 1;
 	}
 }
 
