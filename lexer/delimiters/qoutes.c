@@ -14,7 +14,6 @@ void process_double_quotes(char *str, size_t *i, t_vars *data)
 
     if (str[*i] == '\"')
     {
-        printf("enter\n");
         node = ft_my_lstnew("\"", '\"', IN_DOUBLE_COTE);
         ft_my_lstadd_back(&(data->ndata), node);
         if (data->flag == 0)
