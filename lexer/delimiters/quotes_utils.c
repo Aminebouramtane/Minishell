@@ -19,10 +19,20 @@ void	fill_qoute_in_node(char *str, size_t *i, t_vars *data)
 		}
 	}
 	tmp = my_strdup(str + start, end - start);
-	if (data->flag)
-		node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
+	if (!check_quotes(tmp) || data->f_qoute == 1)
+	{
+		node = ft_my_lstnew("'", 's', IN_DOUBLE_COTE);
+		ft_my_lstadd_back(&(data->ndata), node);
+		*i += 1;
+		return ;
+	}
 	else
-		node = ft_my_lstnew(tmp, 's', IN_COTE);
+	{
+		if (data->flag)
+			node = ft_my_lstnew(tmp, 's', IN_DOUBLE_COTE);
+		else
+			node = ft_my_lstnew(tmp, 's', IN_COTE);
+	}
 	ft_my_lstadd_back(&(data->ndata), node);
 	*i = end;
 }

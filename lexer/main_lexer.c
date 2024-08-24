@@ -8,10 +8,7 @@ void		process_character(char *str, size_t *i, t_vars *data)
 	if (str[*i] == '\'')
 		fill_qoute_in_node(str, i, data);
 	if (str[*i] == '\"')
-	{
 		fill_dqoute_in_node(str, i, data);
-		data->flag = 0;
-	}
 	if (str[*i] == '<')
 		fill_input_in_node(str, i, data);
 	if (str[*i] == '>')
@@ -36,6 +33,7 @@ int lexer(char *str, t_vars **data)
 	if (!*data)
 		return (0);
     (*data)->flag = 0;
+    (*data)->f_qoute = 0;
     (*data)->ndata = NULL;
 	while (str[i])
 		process_character(str, &i, *data);
