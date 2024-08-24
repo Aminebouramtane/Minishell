@@ -38,11 +38,8 @@ void	ft_expand_dolar(Datatoken *lst)
 	node = lst;
 	while (node)
 	{
-		ft_handle_special_case(node);
 		if (node->cmd && node->cmd[0] == '$' && node->state != 0)
-		{
 			ft_expand_dolar_single(node);
-		}
 		node = node->next;
 	}
 }
