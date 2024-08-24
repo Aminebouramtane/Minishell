@@ -14,6 +14,11 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 2)
 	{
+		if (ft_isdigit(node->cmd[1]))
+		{
+			node->cmd = "\0";
+			return ;
+		}
 		tmp = node->cmd;
 		node->cmd += 1;
 		str = node->cmd;
