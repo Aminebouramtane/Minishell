@@ -91,7 +91,7 @@ void	open_in_files_redir(t_file *file, int fd_in)
 				//ft_lstclear_env(envi);
 				//ft_malloc(0, 1);
 				envi->exit_status = 126;
-				//exit(126);
+				exit(126);
 			}
 			if (temp->in_file_fd == -1)
 			{
@@ -99,7 +99,7 @@ void	open_in_files_redir(t_file *file, int fd_in)
 				write(2, temp->file, ft_strlen(temp->file));
 				write(2, ": No such file or directory\n", 28);
 				envi->exit_status = 127;
-				return ;
+				exit(127);
 			}
 			dup2(temp->in_file_fd, fd_in);
 		}
