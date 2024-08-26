@@ -3,9 +3,9 @@
 void	exit_error(t_parce_node *parce)
 {
 	ft_putstr_fd("exit\n", 1);
-	ft_putstr_fd("minishell: exit: ", 1);
-	ft_putstr_fd(parce->args[1], 1);
-	ft_putstr_fd(": numeric argument required\n", 1);
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(parce->args[1], 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
 	envi->exit_status = 2;
 	ft_malloc(0, 1);
 	exit(2);
@@ -103,7 +103,7 @@ void	ft_exit(t_parce_node *parce)
 	if (parce->args[1] && parce->args[2])
 	{
 		ft_putstr_fd("exit\n", 1);
-		ft_putstr_fd("minishell: exit: too many arguments\n", 1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		envi->exit_status = 1;
 	}
 	else

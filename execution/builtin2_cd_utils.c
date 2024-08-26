@@ -32,8 +32,9 @@ void	error_cd(char *str, int a_counter)
 {
 	if (a_counter == 2)
 	{
-		ft_putstr_fd("minishell: cd: no such file or directory: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": No such file or directory", 2);
 		ft_putstr_fd("\n", 2);
 		envi->exit_status = 1;
 	}

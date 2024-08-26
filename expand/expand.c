@@ -13,6 +13,12 @@ void	ft_expand_dolar_long(Datatoken *node)
 			node->cmd = node->cmd + 2;
 			return ;
 		}
+		if (node->cmd[1] == '?')
+		{
+			tmp = ft_itoa(envi->exit_status);
+			node->cmd = ft_my_strjoin(tmp, node->cmd + 2);
+			return ;
+		}
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv(str);

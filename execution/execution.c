@@ -52,6 +52,7 @@ void	ft_execute(t_parce_node *parce)
 		if (file->heredoc && file->index == 16)
 		{
 			printf("minishell: maximum here-document count exceeded");
+			envi->exit_status = 2;
 			exit(2);
 		}
 		file = file->next;

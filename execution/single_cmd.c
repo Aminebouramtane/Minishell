@@ -49,9 +49,10 @@ char	*getpaths(void)
 	}
 	if (temp == NULL)
 	{
-		write(2, "minishell: ls: No such file or directory\n", 41);
+		write(2, "minishell: : No such file or directory\n", 39);
 		envi->exit_status = 127;
-		return (env_paths);
+		exit(127);
+		//return (env_paths);
 	}
 	env_paths = ft_strdup(temp->value);
 	return (env_paths);
@@ -59,25 +60,29 @@ char	*getpaths(void)
 
 void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 {
-	char	*error_msg;
-
-	error_msg = NULL;
-	error_msg = ft_strjoin("Minishell: command not found: ",
-			temp->args[0]);
-	write(2, error_msg, ft_strlen(error_msg));
-	write(2, "\n", 1);
-	free(error_msg);
+	ft_putstr_fd(temp->args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
 	if (cmd_path)
 		free(cmd_path);
 	ft_free(envp);
-	envi->exit_status = 1;
-	ft_env_lstclear(envi);
+	envi->exit_status = 127;
+	//ft_env_lstclear(envi);
 	ft_malloc(0, 1);
-	exit(1);
+	exit(127);
 }
 
 void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 {
+	if (errno == EACCES && (temp->args[0][0] == '/' || temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
+			|| (temp->args[0][0] == '.' && temp->args[0][1] == '/')) && !access(temp->args[0], F_OK))
+	{
+		ft_putstr_fd(temp->args[0], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		//ft_lstclear_env(g_env);
+		ft_malloc(0, 1);
+		envi->exit_status = 126;
+		exit(126);
+	}
 	if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
 	else
