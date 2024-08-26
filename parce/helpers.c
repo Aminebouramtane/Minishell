@@ -59,6 +59,7 @@ void    ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
+    process_quotes(str);
     ft_file_lstadd_back(file, ft_file_lstnew(str, 1, 0));
     (*parce)->file = *file;
     if (!*node)
@@ -83,6 +84,7 @@ void    ft_append(Datatoken **node, t_parce_node **parce, t_file **file)
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
+    process_quotes(str);
     ft_file_lstadd_back(file, ft_file_append_lstnew(str, 1));
     (*parce)->file = *file;
     if (!*node)
@@ -107,6 +109,7 @@ void    ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
             str = ft_my_strjoin(str, (*node)->cmd);
         (*node) = (*node)->next;
     }
+    process_quotes(str);
     ft_file_lstadd_back(file, ft_file_lstnew(str, 0, 1));
     (*parce)->file = *file;
     if (!*node)

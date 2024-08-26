@@ -1,7 +1,5 @@
 #include "../minishell.h"
 
-void process_quotes(char *str);
-
 void process_quotes(char *str)
 {
     int i = -1;

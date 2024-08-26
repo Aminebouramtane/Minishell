@@ -275,5 +275,6 @@ void	initialize_shell(int ac, char **env);
 char	*read_main_user_input(void);
 int		process_input(char *input, t_vars **data, t_parce_node **parce);
 void	cleanup_and_exit(void);
+void	process_quotes(char *str);
 
 #endif
