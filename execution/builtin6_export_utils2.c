@@ -25,12 +25,16 @@ void	printlist(t_env *node)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(temp->key, 1);
-		if (temp->value != NULL)
+		if (temp->value != NULL && *temp->value != '\0')
 		{
 			ft_putstr_fd("=", 1);
 			ft_putstr_fd("\"", 1);
 			ft_putstr_fd(temp->value, 1);
 			ft_putstr_fd("\"\n", 1);
+		}
+		else if (ft_strncmp(temp->value,  "\0") == 0)
+		{
+			ft_putstr_fd("=\"\"\n", 1);
 		}
 		else
 			ft_putstr_fd("\n", 1);

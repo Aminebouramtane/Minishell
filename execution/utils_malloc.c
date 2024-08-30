@@ -32,15 +32,13 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 		iterator[1]++;
 	buff = ft_strdup(parce->args[i]);
 	buff[iterator[1]] = '\0';
-	if (valid_key(buff) == 0)
-	{
-		if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '=')
-			add_new_export(my_node, parce, buff, iterator);
-		else if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '+')
-			add_new_export(my_node, parce, buff, iterator);
-		else
-			exprt_without_value(my_node, parce, buff, iterator);
-	}
+	if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '=')
+		add_new_export(my_node, parce, buff, iterator);
+	else if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '+')
+		add_new_export(my_node, parce, buff, iterator);
+	else
+		exprt_without_value(my_node, parce, buff, iterator);
+
 	return (my_node);
 }
 
@@ -92,6 +90,12 @@ void	ft_env_delone(t_env *lst)
 	if (lst)
 	{
 		free(lst->env_var);
+		lst->env_var = NULL;
+		free(lst->key);
+		lst->key = NULL;
+		free(lst->value);
+		lst->value = NULL;
 		free(lst);
+		lst = NULL;
 	}
 }

@@ -1,5 +1,66 @@
 #include "../minishell.h"
 
+void	check_access(char *cmd_path)
+{
+	if (access(cmd_path, X_OK) != 0)
+	{
+		if (errno == EACCES && (cmd_path[0] == '/' || cmd_path[ft_strlen(cmd_path) - 1] == '/'
+				|| (cmd_path[0] == '.' && cmd_path[1] == '/')) && !access(cmd_path, F_OK))
+		{
+			ft_putstr_fd(cmd_path, 2);
+			ft_putendl_fd(": Permission denied", 2);
+			//ft_lstclear_env(g_env);
+			ft_malloc(0, 1);
+			envi->exit_status = 126;
+			exit(126);
+		}
+		else if (errno == ENOENT && (cmd_path[0] == '/' || cmd_path[ft_strlen(cmd_path) - 1] == '/'
+				|| (cmd_path[0] == '.' && cmd_path[1] == '/')))
+		{
+			ft_putstr_fd(cmd_path, 2);
+			ft_putendl_fd(": No such file or directory", 2);
+			ft_malloc(0, 1);
+			//ft_lstclear_env(g_env);
+			envi->exit_status = 127;
+			exit(127);
+		}
+		else
+		{
+			ft_putstr_fd(cmd_path, 2);
+			ft_putstr_fd(": command not found\n", 2);
+			envi->exit_status = 127;
+			//ft_env_lstclear(envi);
+			ft_malloc(0, 1);
+			exit(127);
+		}
+	}
+}
+
+int	is_direcotry(char *cmd_path)
+{
+	int	fd;
+
+	fd = open(cmd_path, __O_DIRECTORY);
+	return (fd != -1 && (cmd_path[0] == '/' ||
+				((cmd_path[0] == '.') && cmd_path[1] == '/')));
+}
+
+void	is_directory_check(char *cmd_path)
+{
+	if (cmd_path)
+	{
+		if (is_direcotry(cmd_path))
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd_path, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			//ft_lstclear_env(g_env);
+			ft_malloc(0, 1);
+			envi->exit_status = 126;
+			exit(126);
+		}
+	}
+}
 char	*dirs_paths(char *env_path, t_parce_node *parce)
 {
 	char	**dirs_path;
@@ -10,6 +71,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	i = 0;
 	command_path = NULL;
 	s = NULL;
+
+	dirs_path = NULL;
 	dirs_path = ft_split(env_path, ':');
 	if (parce && parce->args[0])
 		command_path = ft_strjoin_path("/", parce->args[0]);
@@ -33,11 +96,12 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	return (ft_strdup(""));
 }
 
-char	*getpaths(void)
+char	*getpaths(t_parce_node *parce)
 {
 	char	*env_paths;
 	t_env	*temp;
 
+	(void)parce;
 	temp = envi;
 	env_paths = NULL;
 	while (temp)
@@ -49,7 +113,9 @@ char	*getpaths(void)
 	}
 	if (temp == NULL)
 	{
-		write(2, "minishell: : No such file or directory\n", 39);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(parce->args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		envi->exit_status = 127;
 		exit(127);
 		//return (env_paths);
@@ -60,29 +126,47 @@ char	*getpaths(void)
 
 void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 {
-	ft_putstr_fd(temp->args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
-	if (cmd_path)
-		free(cmd_path);
-	ft_free(envp);
-	envi->exit_status = 127;
-	//ft_env_lstclear(envi);
-	ft_malloc(0, 1);
-	exit(127);
-}
-
-void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
-{
+	if (!temp->args[0])
+		return	;
 	if (errno == EACCES && (temp->args[0][0] == '/' || temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
 			|| (temp->args[0][0] == '.' && temp->args[0][1] == '/')) && !access(temp->args[0], F_OK))
 	{
 		ft_putstr_fd(temp->args[0], 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		ft_putendl_fd(": Permission denied", 2);
 		//ft_lstclear_env(g_env);
+		ft_free(envp);
+		free(cmd_path);
 		ft_malloc(0, 1);
+
 		envi->exit_status = 126;
 		exit(126);
 	}
+	else if (errno == ENOENT && (temp->args[0][0] == '/' || temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
+			|| (temp->args[0][0] == '.' && temp->args[0][1] == '/')))
+	{
+		ft_putendl_fd(": No such file or directory", 2);
+		ft_free(envp);		
+		free(cmd_path);
+		ft_malloc(0, 1);
+		//ft_lstclear_env(g_env);
+		envi->exit_status = 127;
+		exit(127);
+	}
+	else
+	{
+		ft_putendl_fd(": command not found", 2);
+		//ft_lstclear_env(g_env);
+		ft_free(envp);
+		free(cmd_path);
+		ft_malloc(0, 1);
+		envi->exit_status = 127;
+		exit(127);
+	}
+}
+
+void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
+{
+	
 	if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
 	else
@@ -110,8 +194,12 @@ void	execute_single(t_parce_node *parce, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
-			cmd_path = get_cmd_path(temp);
 			open_files(temp);
+			cmd_path = get_cmd_path(temp);
+			is_directory_check(temp->args[0]);
+			//is_directory_check(cmd_path);
+			if (access(cmd_path, X_OK) != 0)
+				check_access(temp->args[0]);
 			if (temp->args)
 			{
 				execution_execve(cmd_path, temp, envp);

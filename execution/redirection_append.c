@@ -28,15 +28,23 @@ void	open_files_append(t_file *file, int fd_out)
 	{
 		if (temp->append)
 		{
-			temp->appended_file_fd = open(temp->file, O_WRONLY
-					| O_APPEND | O_CREAT, 0644);
-			if (temp->appended_file_fd == -1)
+			temp->appended_file_fd = open(temp->file, O_CREAT | O_WRONLY
+					| O_APPEND , 0644);
+			if (temp->in_file_fd == -1 && errno == 13)
+			{
+				ft_putendl_fd("minishell : Permission denied", 2);
+				//ft_lstclear_env(envi);
+				//ft_malloc(0, 1);
+				envi->exit_status = 126;
+				exit(1);
+			}
+			if (temp->in_file_fd == -1 && errno == ENOENT)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
 				write(2, ": No such file or directory\n", 28);
-				envi->exit_status = 127;
-				return ;
+				envi->exit_status = 1;
+				exit(1);
 			}
 			else if (temp->next == NULL)
 			{
@@ -58,13 +66,21 @@ void	open_out_files_redir(t_file *file, int fd_out)
 		{
 			temp->out_file_fd = open(temp->file, O_WRONLY
 					| O_TRUNC | O_CREAT, 0644);
-			if (temp->out_file_fd == -1)
+			if (temp->in_file_fd == -1 && errno == EACCES)
+			{
+				ft_putendl_fd("minishell : Permission denied", 2);
+				//ft_lstclear_env(envi);
+				//ft_malloc(0, 1);
+				envi->exit_status = 126;
+				exit(1);
+			}
+			if (temp->in_file_fd == -1 && errno == ENOENT)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
 				write(2, ": No such file or directory\n", 28);
-				envi->exit_status = 127;
-				return ;
+				envi->exit_status = 1;
+				exit(1);
 			}
 			if (temp->next)
 				close(temp->out_file_fd);
@@ -85,21 +101,21 @@ void	open_in_files_redir(t_file *file, int fd_in)
 		if (temp->redir_in)
 		{
 			temp->in_file_fd = open(temp->file, O_RDONLY);
-			if (access(temp->file, F_OK))
+			if (temp->in_file_fd == -1 && errno == EACCES)
 			{
 				ft_putendl_fd("minishell : Permission denied", 2);
 				//ft_lstclear_env(envi);
 				//ft_malloc(0, 1);
-				envi->exit_status = 126;
-				exit(126);
+				envi->exit_status = 1;
+				exit(1);
 			}
-			if (temp->in_file_fd == -1)
+			if (temp->in_file_fd == -1 && errno == ENOENT)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
 				write(2, ": No such file or directory\n", 28);
-				envi->exit_status = 127;
-				exit(127);
+				envi->exit_status = 1;
+				exit(1);
 			}
 			dup2(temp->in_file_fd, fd_in);
 		}

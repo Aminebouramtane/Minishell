@@ -22,7 +22,7 @@ char *read_main_user_input(void)
     signal(SIGQUIT, SIG_IGN);
     input = readline("minishell$ ");
     if (input == NULL)
-        printf("exit\n");
+        ft_putstr_fd("exit\n", 1);
     else
         add_history(input);
     return input;

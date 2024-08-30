@@ -28,6 +28,8 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 		else
 		{
 			cmd_path = get_cmd_path(temp);
+			is_directory_check(cmd_path);
+			check_access(cmd_path);
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
 			successful_exit(cmd_path, envp);
@@ -54,6 +56,9 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 		}
 		else
 		{
+			cmd_path = get_cmd_path(temp);
+			is_directory_check(cmd_path);
+			check_access(cmd_path);
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
 			successful_exit(cmd_path, envp);
