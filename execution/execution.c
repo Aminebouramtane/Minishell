@@ -37,16 +37,8 @@ int	check_builtins(char *command)
 		return (0);
 }
 
-void	ft_execute(t_parce_node *parce)
+void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 {
-	char	**envp;
-	t_parce_node	*tmp;
-	t_file	*file;
-  
-	tmp = parce;
-	envp = NULL;
-	envp = make_env_array(envi);
-	file = parce->file;
 	while (file)
 	{
 		if (file->heredoc && file->index == 16)
@@ -57,7 +49,6 @@ void	ft_execute(t_parce_node *parce)
 		}
 		file = file->next;
 	}
-	
 	if (parce)
 	{
 		while (tmp)
@@ -69,10 +60,21 @@ void	ft_execute(t_parce_node *parce)
 			tmp = tmp->next;
 		}
 	}
+}
+
+void	ft_execute(t_parce_node *parce)
+{
+	char			**envp;
+	t_parce_node	*tmp;
+	t_file			*file;
+
+	tmp = parce;
+	envp = NULL;
+	file = parce->file;
+	heredocing(file, parce, tmp);
+	envp = make_env_array(envi);
 	if (parce->next == NULL)
-	{
 		execute_single(parce, envp);
-	}
 	else
 	{
 		execute_multi(parce, envp);

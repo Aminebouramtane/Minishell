@@ -44,4 +44,3 @@ void	error_cd(char *str, int a_counter)
 		envi->exit_status = 1;
 	}
 }
-

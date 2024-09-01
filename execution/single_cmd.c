@@ -171,7 +171,9 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 
 void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 {
-	if (execve(cmd_path, temp->args, envp) == -1)
+	if (!cmd_path)
+		execve_error(temp, envp, cmd_path);
+	else if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
 	else
 		successful_exit(cmd_path, envp);
@@ -191,28 +193,27 @@ void	execute_single(t_parce_node *parce, char **envp)
 	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		open_and_run(temp);
-
-	pid = fork();
-	if (pid == 0)
+	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 	{
-		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-			exit(envi->exit_status);
-		else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
+		pid = fork();
+		if (pid == 0)
 		{
+			if (temp && temp->args && check_builtins(temp->args[0]) == 1)
+				exit(envi->exit_status);
 			open_files(temp);
 			cmd_path = get_cmd_path(temp);
 			is_directory_check(temp->args[0], envp);
-			if (access(cmd_path, X_OK) != 0)
+			if (cmd_path && access(cmd_path, X_OK) != 0)
 				check_access(temp->args[0], envp);
 			if (temp->args)
 			{
 				execution_execve(cmd_path, temp, envp);
 			}
 		}
-	}	
-	else
-	{
-		waiting(pid, status);
+		else
+		{
+			waiting(pid, status);
+		}
 	}
 	if (envp)
 		free_split(envp);

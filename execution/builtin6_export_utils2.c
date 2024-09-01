@@ -18,7 +18,7 @@ t_env	*copy_list(t_env *start)
 
 void	printlist(t_env *node)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	temp = node;
 	while (temp != NULL)
@@ -32,7 +32,7 @@ void	printlist(t_env *node)
 			ft_putstr_fd(temp->value, 1);
 			ft_putstr_fd("\"\n", 1);
 		}
-		else if (ft_strncmp(temp->value,  "\0") == 0)
+		else if (ft_strncmp(temp->value, "\0") == 0)
 		{
 			ft_putstr_fd("=\"\"\n", 1);
 		}

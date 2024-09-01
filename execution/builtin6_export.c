@@ -8,19 +8,6 @@ void	show_exported(t_env	*copy)
 	ft_env_lstclear(copy);
 }
 
-void	append_the_export(t_parce_node *parce, t_env *temp, char *buff, int *i)
-{
-	if (parce->args[i[0]][i[1]] == '+')
-	{
-		while (temp && ft_strncmp(temp->key, buff) != 0)
-			temp = temp->next;
-		temp->env_var = ft_strdup(parce->args[i[0]]);
-		temp->key = ft_substr(parce->args[i[0]], 0, i[1]);
-		temp->value = ft_strjoin_path(get_value(buff),
-				ft_my_strchr(parce->args[i[0]], '='));
-	}
-}
-
 void	copy_and_sort(t_env *copy)
 {
 	copy = copy_list(envi);
@@ -31,8 +18,8 @@ void	copy_and_sort(t_env *copy)
 void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 {
 	char	*buff;
+	t_env	*temp2;
 
-	t_env *temp2;
 	temp2 = envi;
 	buff = ft_strdup(parce->args[i[0]]);
 	while (parce->args[i[0]][i[1]] != '\0'
@@ -46,12 +33,12 @@ void	process_arg(t_parce_node *parce, int *i, t_env *temp)
 	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '+')
 		append_the_export(parce, temp, buff, i);
 	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '=')
-		{
-			while(temp2 && ft_strncmp(temp2->key, buff) != 0)
-				temp2 = temp2->next;
-			ft_unset_a_node(temp2);
-			ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i[0]));
-		}
+	{
+		while (temp2 && ft_strncmp(temp2->key, buff) != 0)
+			temp2 = temp2->next;
+		ft_unset_a_node(temp2);
+		ft_env_lstadd_back(&envi, ft_export_lstnew(parce, i[0]));
+	}
 	free(buff);
 }
 
@@ -70,7 +57,8 @@ int	valid_export(char *args)
 	}
 	while (args[i] != '=' && args[i] != '\0' && ft_isalnum(args[i]))
 		i++;
-	if (args[i] == '=' || args[i] == '\0' || (args[i] == '+' && args[i + 1] != '\0' && args[i + 1] != '+'))
+	if (args[i] == '=' || args[i] == '\0'
+		|| (args[i] == '+' && args[i + 1] != '\0' && args[i + 1] != '+'))
 		return (0);
 	if (ft_isalnum(args[i]) == 0)
 	{
@@ -109,5 +97,4 @@ void	ft_export(t_parce_node *parce)
 	{
 		show_exported(copy);
 	}
-	//envi->exit_status = 0;
 }

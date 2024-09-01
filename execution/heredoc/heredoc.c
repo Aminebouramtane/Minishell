@@ -15,7 +15,10 @@ void handel_heredoc(t_parce_node *parce)
     if (f == -1)
         return;
     else if (f == 0)
+	{
         handle_child_process(parce);
+		ft_env_lstclear(envi);
+	}
     waitpid(f, &status, 0);
 }
 

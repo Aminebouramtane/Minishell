@@ -10,7 +10,7 @@ void handle_child_process(t_parce_node *parce)
     }
     envi->exit_status = 0;
     ft_env_lstclear(envi);
-    ft_malloc(0, 1);
+	ft_malloc(0, 1);
     exit(0);
 }
 
