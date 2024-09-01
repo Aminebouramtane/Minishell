@@ -19,6 +19,7 @@ int	open_files_heredoc(t_file *file)
 	return (temp->heredoc_file_fd);
 }
 
+
 void	open_files_append(t_file *file, int fd_out)
 {
 	t_file	*temp;
@@ -30,19 +31,12 @@ void	open_files_append(t_file *file, int fd_out)
 		{
 			temp->appended_file_fd = open(temp->file, O_CREAT | O_WRONLY
 					| O_APPEND , 0644);
-			if (temp->in_file_fd == -1 && errno == 13)
-			{
-				ft_putendl_fd("minishell : Permission denied", 2);
-				//ft_lstclear_env(envi);
-				//ft_malloc(0, 1);
-				envi->exit_status = 126;
-				exit(1);
-			}
-			if (temp->in_file_fd == -1 && errno == ENOENT)
+			if (temp->appended_file_fd == -1)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
-				write(2, ": No such file or directory\n", 28);
+				perror(" ");
+				ft_putstr_fd("", 2);
 				envi->exit_status = 1;
 				exit(1);
 			}
@@ -66,19 +60,12 @@ void	open_out_files_redir(t_file *file, int fd_out)
 		{
 			temp->out_file_fd = open(temp->file, O_WRONLY
 					| O_TRUNC | O_CREAT, 0644);
-			if (temp->in_file_fd == -1 && errno == EACCES)
-			{
-				ft_putendl_fd("minishell : Permission denied", 2);
-				//ft_lstclear_env(envi);
-				//ft_malloc(0, 1);
-				envi->exit_status = 126;
-				exit(1);
-			}
-			if (temp->in_file_fd == -1 && errno == ENOENT)
+			if (temp->out_file_fd == -1)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
-				write(2, ": No such file or directory\n", 28);
+				perror(" ");
+				ft_putstr_fd("", 2);
 				envi->exit_status = 1;
 				exit(1);
 			}
@@ -101,19 +88,13 @@ void	open_in_files_redir(t_file *file, int fd_in)
 		if (temp->redir_in)
 		{
 			temp->in_file_fd = open(temp->file, O_RDONLY);
-			if (temp->in_file_fd == -1 && errno == EACCES)
-			{
-				ft_putendl_fd("minishell : Permission denied", 2);
-				//ft_lstclear_env(envi);
-				//ft_malloc(0, 1);
-				envi->exit_status = 1;
-				exit(1);
-			}
-			if (temp->in_file_fd == -1 && errno == ENOENT)
+			
+			if (temp->in_file_fd  == -1)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));
-				write(2, ": No such file or directory\n", 28);
+				perror(" ");
+				ft_putstr_fd("", 2);
 				envi->exit_status = 1;
 				exit(1);
 			}

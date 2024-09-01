@@ -12,8 +12,6 @@ void	return_in_out(void)
 	dup2(99, 1);
 }
 
-
-
 void	open_files_heredocc(t_file *file, int fd_in)
 {
 	t_file	*temp;
@@ -43,10 +41,18 @@ void	open_files(t_parce_node *temp)
 	}
 }
 
+	void	successful_built(void)
+{
+	envi->exit_status = 0;
+	ft_malloc(0, 1);
+	exit(0);
+}
+
 void	open_and_run(t_parce_node *temp)
 {
 	open_files(temp);
 	run_builtin(temp);
+	//successful_built();
 }
 
 char	*get_cmd_path(t_parce_node *temp)

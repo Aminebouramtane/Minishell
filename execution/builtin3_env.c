@@ -29,4 +29,6 @@ void	ft_env(void)
 		}
 		temp = temp->next;
 	}
+	envi->exit_status = 0;
+	//exit(0);
 }

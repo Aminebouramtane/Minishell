@@ -31,4 +31,5 @@ void	ft_unset(t_parce_node *parce)
 		i++;
 		temp = envi;
 	}
+	envi->exit_status = 0;
 }

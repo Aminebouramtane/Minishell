@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	check_access(char *cmd_path)
+void	check_access(char *cmd_path, char **envp)
 {
 	if (access(cmd_path, X_OK) != 0)
 	{
@@ -9,9 +9,10 @@ void	check_access(char *cmd_path)
 		{
 			ft_putstr_fd(cmd_path, 2);
 			ft_putendl_fd(": Permission denied", 2);
-			//ft_lstclear_env(g_env);
+			ft_free(envp);
 			ft_malloc(0, 1);
 			envi->exit_status = 126;
+			ft_env_lstclear(envi);
 			exit(126);
 		}
 		else if (errno == ENOENT && (cmd_path[0] == '/' || cmd_path[ft_strlen(cmd_path) - 1] == '/'
@@ -20,16 +21,18 @@ void	check_access(char *cmd_path)
 			ft_putstr_fd(cmd_path, 2);
 			ft_putendl_fd(": No such file or directory", 2);
 			ft_malloc(0, 1);
-			//ft_lstclear_env(g_env);
+			ft_free(envp);
 			envi->exit_status = 127;
+			ft_env_lstclear(envi);
 			exit(127);
 		}
 		else
 		{
 			ft_putstr_fd(cmd_path, 2);
 			ft_putstr_fd(": command not found\n", 2);
+			ft_free(envp);
 			envi->exit_status = 127;
-			//ft_env_lstclear(envi);
+			ft_env_lstclear(envi);
 			ft_malloc(0, 1);
 			exit(127);
 		}
@@ -45,7 +48,7 @@ int	is_direcotry(char *cmd_path)
 				((cmd_path[0] == '.') && cmd_path[1] == '/')));
 }
 
-void	is_directory_check(char *cmd_path)
+void	is_directory_check(char *cmd_path, char **envp)
 {
 	if (cmd_path)
 	{
@@ -54,9 +57,10 @@ void	is_directory_check(char *cmd_path)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd_path, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			//ft_lstclear_env(g_env);
+			ft_free(envp);
 			ft_malloc(0, 1);
 			envi->exit_status = 126;
+			ft_env_lstclear(envi);
 			exit(126);
 		}
 	}
@@ -71,9 +75,11 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	i = 0;
 	command_path = NULL;
 	s = NULL;
-
 	dirs_path = NULL;
 	dirs_path = ft_split(env_path, ':');
+	
+	if (parce && parce->args[0] && ft_strchr(parce->args[0], '/'))
+		return (ft_strdup(parce->args[0]));
 	if (parce && parce->args[0])
 		command_path = ft_strjoin_path("/", parce->args[0]);
 	while (dirs_path[i] != NULL)
@@ -93,7 +99,7 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 		ft_free(dirs_path);
 	if (command_path)
 		free(command_path);
-	return (ft_strdup(""));
+	return (NULL);
 }
 
 char	*getpaths(t_parce_node *parce)
@@ -133,12 +139,11 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 	{
 		ft_putstr_fd(temp->args[0], 2);
 		ft_putendl_fd(": Permission denied", 2);
-		//ft_lstclear_env(g_env);
 		ft_free(envp);
 		free(cmd_path);
 		ft_malloc(0, 1);
-
 		envi->exit_status = 126;
+		ft_env_lstclear(envi);
 		exit(126);
 	}
 	else if (errno == ENOENT && (temp->args[0][0] == '/' || temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
@@ -148,25 +153,24 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 		ft_free(envp);		
 		free(cmd_path);
 		ft_malloc(0, 1);
-		//ft_lstclear_env(g_env);
 		envi->exit_status = 127;
+		ft_env_lstclear(envi);
 		exit(127);
 	}
 	else
 	{
 		ft_putendl_fd(": command not found", 2);
-		//ft_lstclear_env(g_env);
 		ft_free(envp);
 		free(cmd_path);
 		ft_malloc(0, 1);
 		envi->exit_status = 127;
+		ft_env_lstclear(envi);
 		exit(127);
 	}
 }
 
 void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 {
-	
 	if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
 	else
@@ -186,31 +190,29 @@ void	execute_single(t_parce_node *parce, char **envp)
 	cmd_path = NULL;
 	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-	{
 		open_and_run(temp);
-	}
-	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
+
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
+			exit(envi->exit_status);
+		else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 		{
 			open_files(temp);
 			cmd_path = get_cmd_path(temp);
-			is_directory_check(temp->args[0]);
-			//is_directory_check(cmd_path);
+			is_directory_check(temp->args[0], envp);
 			if (access(cmd_path, X_OK) != 0)
-				check_access(temp->args[0]);
+				check_access(temp->args[0], envp);
 			if (temp->args)
 			{
 				execution_execve(cmd_path, temp, envp);
 			}
-			else
-				successful_exit(cmd_path, envp);
 		}
-		else
-		{
-			waiting(pid, status);
-		}
+	}	
+	else
+	{
+		waiting(pid, status);
 	}
 	if (envp)
 		free_split(envp);

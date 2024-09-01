@@ -28,6 +28,7 @@ void	cd_home(t_env *temp)
 	{
 		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 		envi->exit_status = 1;
+		//exit(1);
 	}
 }
 
@@ -58,4 +59,5 @@ void	ft_cd(t_parce_node *parce)
 		error_cd(parce->args[1], arg_counter);
 	else if (arg_counter == 1)
 		cd_home(temp);
+	//exit(envi->exit_status);
 }

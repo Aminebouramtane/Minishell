@@ -19,4 +19,5 @@ void	handle_shlvl(void)
 	{
 		temp->value = ft_itoa(1);
 	}
+	exit(envi->exit_status);
 }

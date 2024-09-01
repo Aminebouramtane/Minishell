@@ -52,4 +52,6 @@ void	ft_echo(t_parce_node *parce)
 	}
 	else
 		echo_without_flag(parce);
+	envi->exit_status = 0;
+	//exit(0);
 }

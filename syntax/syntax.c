@@ -50,7 +50,7 @@ int handle_subsequent_pipe_redirect(Datatoken **node)
             ft_putstr_fd("syntax error near unexpected token `||'\n", 2);
             return 1;
         }
-        if ((*node)->cmd[0] == '>' && (*node)->state == 2)
+        if ((*node)->cmd[0] == '>' && (*node)->state == 2 && !(*node)->next)
         {
             ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return 1;

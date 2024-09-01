@@ -2,7 +2,6 @@
 
 void	successful_exit(char *cmd_path, char **envp)
 {
-	(void) envp;
 	envi->exit_status = 0;
 	if (cmd_path)
 		free(cmd_path);

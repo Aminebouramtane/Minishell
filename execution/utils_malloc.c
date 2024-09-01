@@ -42,6 +42,24 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 	return (my_node);
 }
 
+int	ft_strncmp_env(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while ((*s1 != '\0' || *s2 != '\0') && (i < n))
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		s1++;
+		s2++;
+		i++;
+	}
+	return (0);
+}
+
 t_env	*ft_env_lstnew(void *content)
 {
 	t_env	*my_node;
@@ -54,7 +72,7 @@ t_env	*ft_env_lstnew(void *content)
 	my_node->env_var = ft_strdup(content);
 	variable = ft_split(my_node->env_var, '=');
 	my_node->key = ft_strdup(variable[0]);
-	my_node->value = ft_strdup(variable[1]);
+	my_node->value = ft_strdup(ft_strstr(content, "=") + 1);
 	my_node->exit_status = 0;
 	my_node->next = NULL;
 	my_node->prev = NULL;

@@ -4,7 +4,7 @@ CC = cc
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address 
 
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/utils.c lexer/utils2.c lexer/delimiters/qoutes.c lexer/delimiters/quotes_utils.c lexer/delimiters/parentheses.c lexer/delimiters/input_output.c \
 	lexer/delimiters/string.c lexer/delimiters/pipe.c lexer/delimiters/env.c\

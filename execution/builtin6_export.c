@@ -109,4 +109,5 @@ void	ft_export(t_parce_node *parce)
 	{
 		show_exported(copy);
 	}
+	//envi->exit_status = 0;
 }
