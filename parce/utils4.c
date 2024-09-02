@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils4.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 14:00:35 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/02 14:01:03 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -13,7 +23,7 @@ t_file	*ft_file_append_lstnew(char *file, int append)
 	my_node->redir_in = 0;
 	my_node->redir_out = 0;
 	my_node->heredoc = 0;
-    my_node->append = append;
+	my_node->append = append;
 	my_node->eof = NULL;
 	my_node->index = 0;
 	my_node->next = NULL;
@@ -46,4 +56,3 @@ void	ft_file_append_lstadd_back(t_file **lst, t_file *new)
 	new->prev = last;
 	new->next = NULL;
 }
-

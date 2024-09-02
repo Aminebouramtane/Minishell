@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_lexer.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 12:18:35 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/02 12:19:53 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
-void		process_character(char *str, size_t *i, t_vars *data)
+void	process_character(char *str, size_t *i, t_vars *data)
 {
 	if (!in_delimiters(str[*i], "|<>$() \t\'\""))
 		fill_string_in_node(str, i, data, "|<>$() \t\'\"");
@@ -24,18 +35,19 @@ void		process_character(char *str, size_t *i, t_vars *data)
 	if (str[*i] == ' ' || str[*i] == '\t')
 		fill_white_spaces_in_node(str, i, data);
 }
-int lexer(char *str, t_vars **data)
+
+int	lexer(char *str, t_vars **data)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	*data = ft_malloc(sizeof(t_vars), 0);
 	if (!*data)
 		return (0);
-    (*data)->flag = 0;
-    (*data)->f_qoute = 0;
-    (*data)->ndata = NULL;
+	(*data)->flag = 0;
+	(*data)->f_qoute = 0;
+	(*data)->ndata = NULL;
 	while (str[i])
 		process_character(str, &i, *data);
-	return 1;
+	return (1);
 }

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 14:01:34 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/02 14:01:54 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -43,7 +54,6 @@ void	ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new)
 	new->next = NULL;
 }
 
-
 void	ft_parce_lstclear(t_parce_node **lst)
 {
 	t_parce_node	*c;
@@ -73,4 +83,3 @@ void	ft_parce_lstdelone(t_parce_node *lst)
 		free(lst);
 	}
 }
-

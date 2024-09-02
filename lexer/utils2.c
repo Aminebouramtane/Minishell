@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 12:20:08 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/02 12:21:13 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 Datatoken	*ft_my_lstnew(void *content, char type, char state)
@@ -42,7 +54,6 @@ void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 	new->prev = last;
 	new->next = NULL;
 }
-
 
 void	ft_my_lstclear(Datatoken **lst)
 {

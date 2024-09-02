@@ -180,8 +180,8 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 		execve_error(temp, envp, cmd_path);
 	else if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
-	else
-		successful_exit(cmd_path, envp);
+
+	successful_exit(cmd_path, envp);
 }
 
 void	execute_single(t_parce_node *parce, char **envp, char **env)

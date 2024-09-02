@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-void handle_child_process(t_parce_node *parce)
+void	handle_child_process(t_parce_node *parce)
 {
 	while (parce->file)
 	{
@@ -17,11 +17,11 @@ void handle_child_process(t_parce_node *parce)
 	exit(0);
 }
 
-void process_heredoc_file(t_parce_node *parce)
+void	process_heredoc_file(t_parce_node *parce)
 {
-    int fd;
-    char *myfile;
-    char *delimiter;
+	int		fd;
+	char	*myfile;
+	char	*delimiter;
 
     myfile = parce->file->file;
     delimiter = parce->file->eof;

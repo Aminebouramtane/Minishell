@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 13:31:03 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/02 13:31:42 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -46,7 +56,6 @@ void	ft_file_lstadd_back(t_file **lst, t_file *new)
 	new->next = NULL;
 }
 
-
 void	ft_file_lstclear(t_file **lst)
 {
 	t_file	*c;
@@ -76,4 +85,3 @@ void	ft_file_lstdelone(t_file *lst)
 		free(lst);
 	}
 }
-
