@@ -4,7 +4,7 @@ void process_quotes(char *str)
 {
     int i = -1;
     int j = 0;
-    int inside_single_quotes = 0;
+    int inside_s_quotes = 0;
     int inside_double_quotes = 0;
 
     while (str[++i])
@@ -13,14 +13,14 @@ void process_quotes(char *str)
         {
             if (inside_double_quotes)
                 str[j++] = str[i];
-            else if (inside_single_quotes)
-                inside_single_quotes = 0;
+            else if (inside_s_quotes)
+                inside_s_quotes = 0;
             else
-                inside_single_quotes = 1;
+                inside_s_quotes = 1;
         }
         else if (str[i] == '\"')
         {
-            if (inside_single_quotes)
+            if (inside_s_quotes)
                 str[j++] = str[i];
             else if (inside_double_quotes)
                 inside_double_quotes = 0;

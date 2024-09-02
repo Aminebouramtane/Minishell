@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/01 16:56:09 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/01 16:57:56 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
+void	fill_string_in_node(char *str, size_t *i,
+	t_vars *data, char *delimiters)
 {
 	Datatoken	*node;
 	char		*tmp;
@@ -12,7 +25,7 @@ void	fill_string_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
 	while (str[end])
 	{
 		if (in_delimiters(str[end], delimiters))
-			break;
+			break ;
 		end++;
 	}
 	*i = end;

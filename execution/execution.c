@@ -57,7 +57,6 @@ void	ft_execute(t_parce_node *parce)
 		}
 		file = file->next;
 	}
-	
 	if (parce)
 	{
 		while (tmp)

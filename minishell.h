@@ -279,5 +279,10 @@ char	*read_main_user_input(void);
 int		process_input(char *input, t_vars **data, t_parce_node **parce);
 void	cleanup_and_exit(void);
 void	process_quotes(char *str);
+int		count_word(char *s, char *delimiters);
+void	split_quotes(char *target, char delimiter, int *index);
+void	*ft_ft_calloc(size_t count, size_t size);
+void	split_quotes(char *target, char delimiter, int *index);
+int		skip_delimiters(char *s, char *delimiters, int i);
 
 #endif

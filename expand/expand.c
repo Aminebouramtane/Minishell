@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/01 16:54:16 by abouramt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_expand_dolar_long(Datatoken *node)
 {
 	char	*str;
-	char	*tmp;
 	char	*env;
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
@@ -15,16 +26,15 @@ void	ft_expand_dolar_long(Datatoken *node)
 		}
 		if (node->cmd[1] == '?')
 		{
-			tmp = ft_itoa(envi->exit_status);
-			node->cmd = ft_my_strjoin(tmp, node->cmd + 2);
+			node->cmd = ft_my_strjoin(ft_itoa(envi->exit_status), \
+			node->cmd + 2);
 			return ;
 		}
 		node->cmd += 1;
 		str = node->cmd;
 		env = getenv(str);
-		tmp = my_strdup_two(env);
-		if (tmp)
-			node->cmd = tmp;
+		if (my_strdup_two(env))
+			node->cmd = my_strdup_two(env);
 		else
 			node->cmd = "\0";
 	}
