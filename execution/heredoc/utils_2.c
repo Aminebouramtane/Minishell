@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:44:59 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:34:27 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	handle_child_process(t_parce_node *parce)
 {
-	while (parce->file)
-	{
-		if (parce->file->heredoc == 1)
-			process_heredoc_file(parce);
-		parce->file = parce->file->next;
-	}
-	envi->exit_status = 0;
-	ft_env_lstclear(envi);
+    while (parce->file)
+    {
+        if (parce->file->heredoc == 1)
+            process_heredoc_file(parce);
+        parce->file = parce->file->next;
+    }
+    envi->exit_status = 0;
+    ft_env_lstclear(envi);
 	ft_malloc(0, 1);
-	exit(0);
+    exit(0);
 }
 
 void	process_heredoc_file(t_parce_node *parce)

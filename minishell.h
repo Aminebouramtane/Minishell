@@ -169,7 +169,7 @@ char			*ft_here_strchr(const char *s, int c);
 char			*ft_here_strcat(char *dest, const char *src);
 //-=----------------------------------execution_prototypes--------------------------------------//
 
-
+//-----------------------------------built-ins prototypes------------------------------------//
 void	ft_free(char **s);
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
@@ -199,6 +199,7 @@ void	append_exported(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator);
 void	add_new_export(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator);
+void	append_the_export(t_parce_node *parce, t_env *temp, char *buff, int *i);
 t_env	*copy_list(t_env *start);
 void	printlist(t_env *node);
 void	swap_node_value(t_env *ptr1, char *temp);
@@ -212,7 +213,9 @@ void	add_new_export(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator);
 
 void	ft_exit(t_parce_node *parce);
+void	exit_error(t_parce_node *parce);
 
+//------------------------------------------execution-------------------------------------//
 void	execute_single(t_parce_node *parce, char **envp);
 void	execute_multi(t_parce_node *parce, char **envp);
 char	**make_env_array(t_env *env);
@@ -243,6 +246,7 @@ char	*ft_my_strchr(const char *s, int c);
 void    ft_handler2();
 //-------------------------------------------HEREDOC--------------------------
 
+void		heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp);
 t_heredoc	*ft_heredoc_lstnew(void *content);
 t_heredoc	*ft_heredoc_lstlast(t_heredoc *lst);
 void	ft_heredoc_lstadd_back(t_heredoc **lst, t_heredoc *new);

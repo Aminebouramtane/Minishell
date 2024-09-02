@@ -14,8 +14,8 @@ SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/count_word.c lexer/uti
 	execution/execution.c execution/builtin1_echo.c execution/builtin2_cd.c \
 	execution/builtin2_cd_utils.c syntax/syntax.c syntax/utils.c quotes/d_quotes.c \
 	execution/builtin3_env.c execution/builtin4_pwd.c execution/builtin5_unset.c execution/heredoc/heredoc.c \
-	execution/builtin6_export.c execution/builtin6_export_utils.c execution/builtin6_export_utils2.c \
-	execution/heredoc/utils.c execution/utils_malloc.c execution/builtin7_exit.c execution/execution_utils.c \
+	execution/builtin6_export.c execution/builtin6_export_utils.c execution/builtin6_export_utils2.c execution/builtin6_export_utils3.c \
+	execution/heredoc/utils.c execution/utils_malloc.c execution/builtin7_exit.c execution/builtin7_exit_utils.c execution/execution_utils.c \
 	execution/execution_utils1.c execution/execution_utils2.c execution/single_cmd.c execution/multi_cmd.c execution/redirection_append.c \
 	execution/heredoc/ex_node.c execution/heredoc/ex.c execution/heredoc/utils_2.c execution/shlvl.c signals.c
 

@@ -16,3 +16,15 @@ void	waiting(pid_t pid, int status)
 	if (WIFEXITED(status))
 		envi->exit_status = WEXITSTATUS(status);
 }
+
+void	keep_in_out(void)
+{
+	dup2(0, 100);
+	dup2(1, 99);
+}
+
+void	return_in_out(void)
+{
+	dup2(100, 0);
+	dup2(99, 1);
+}

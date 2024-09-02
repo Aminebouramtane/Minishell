@@ -4,12 +4,12 @@ void	ft_unset_a_node(t_env *temp)
 {
 	if (!temp)
 		return ;
-  	if (temp->prev)
+	if (temp->prev)
 		temp->prev->next = temp->next;
-  	else
+	else
 		envi = temp->next;
 	if (temp->next)
-  		temp->next->prev = temp->prev;
+		temp->next->prev = temp->prev;
 	ft_env_delone(temp);
 }
 
@@ -24,9 +24,9 @@ void	ft_unset(t_parce_node *parce)
 	{
 		if (!parce || !parce->args || !parce->args[i])
 			return ;
-		while (temp && temp->key 
-		&& ft_strncmp(parce->args[i], temp->key) != 0)
-        temp = temp->next;
+		while (temp && temp->key
+			&& ft_strncmp(parce->args[i], temp->key) != 0)
+			temp = temp->next;
 		ft_unset_a_node(temp);
 		i++;
 		temp = envi;

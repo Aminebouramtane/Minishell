@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:24 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 18:20:48 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:33:36 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	handel_heredoc(t_parce_node *parce)
 	int		f;
 	int		status;
 
-	f = fork();
-	if (f == -1)
-		return ;
-	else if (f == 0)
-		handle_child_process(parce);
-	waitpid(f, &status, 0);
+    f = fork();
+    if (f == -1)
+        return;
+    else if (f == 0)
+	{
+        handle_child_process(parce);
+		ft_env_lstclear(envi);
+	}
+    waitpid(f, &status, 0);
 }
 
 static char	*read_user_input(char *delimiter)
