@@ -21,7 +21,7 @@ void	ft_expand_dolar_long(Datatoken *node)
 		}
 		node->cmd += 1;
 		str = node->cmd;
-		env = getenv(str);
+		env = get_value(str);
 		tmp = my_strdup_two(env);
 		if (tmp)
 			node->cmd = tmp;
@@ -62,7 +62,7 @@ void	ft_expand_home(Datatoken *lst)
 		if (node->cmd[0] == '~' && node->state != 0)
 		{
 			node->cmd += 1;
-			env = my_strdup_two(getenv("HOME"));
+			env = my_strdup_two(get_value("HOME"));
 			tmp = ft_strjoin(env, node->cmd);
 			if (tmp)
 				node->cmd = tmp;

@@ -29,10 +29,10 @@ void	open_files(t_parce_node *temp)
 	}
 }
 
-void	open_and_run(t_parce_node *temp)
+void	open_and_run(t_parce_node *temp, char **env)
 {
 	open_files(temp);
-	run_builtin(temp);
+	run_builtin(temp, env);
 }
 
 char	*get_cmd_path(t_parce_node *temp)

@@ -12,9 +12,11 @@ void	change_pwd(void)
 		temp3 = temp3->next;
 	while (temp2 && ft_strncmp(temp2->key, "OLDPWD") != 0)
 		temp2 = temp2->next;
-	temp2->value = temp3->value;
+	if (temp2 && temp3)
+		temp2->value = temp3->value;
 	buffer = getcwd(NULL, 0);
-	temp3->value = ft_strdup(buffer);
+	if (temp3)
+		temp3->value = ft_strdup(buffer);
 	free(buffer);
 }
 
@@ -56,6 +58,6 @@ void	ft_cd(t_parce_node *parce)
 	}
 	else if (arg_counter > 2)
 		error_cd(parce->args[1], arg_counter);
-	else if (arg_counter == 1)
+	else if (arg_counter == 1 && temp)
 		cd_home(temp);
 }

@@ -173,13 +173,13 @@ char			*ft_here_strcat(char *dest, const char *src);
 void	ft_free(char **s);
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce);
-void	run_builtin(t_parce_node *parce);
+void    ft_execute(t_parce_node *parce, char **env);
+void	run_builtin(t_parce_node *parce, char **env);
 void    ft_cd(t_parce_node *parce);
 char	*ft_mystrjoin(char *s1, char *s2);
 char	*copy_ptr(char const *s1, char const *s2, char *ptr);
 void	error_cd(char *str, int a_counter);
-void    ft_env();
+void	ft_env(char **env_vars);
 void    ft_pwd();
 void	handle_shlvl();
 void	ft_export(t_parce_node *parce);
@@ -216,8 +216,8 @@ void	ft_exit(t_parce_node *parce);
 void	exit_error(t_parce_node *parce);
 
 //------------------------------------------execution-------------------------------------//
-void	execute_single(t_parce_node *parce, char **envp);
-void	execute_multi(t_parce_node *parce, char **envp);
+void	execute_single(t_parce_node *parce, char **envp, char **env);
+void	execute_multi(t_parce_node *parce, char **envp, char **env);
 char	**make_env_array(t_env *env);
 char	*ft_strjoin_path(char const *s1, char const *s2);
 void	open_files_append(t_file *file, int fd_out);
@@ -233,7 +233,7 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd);
 void	keep_in_out(void);
 void	return_in_out(void);
 void	open_files(t_parce_node *temp);
-void	open_and_run(t_parce_node *temp);
+void	open_and_run(t_parce_node *temp, char **env);
 char	*get_cmd_path(t_parce_node *temp);
 void	successful_exit(char *cmd_path, char **envp);
 char	*getpaths(t_parce_node *parce);
@@ -244,7 +244,7 @@ char	*get_value(char *key);
 int		valid_key(char *key);
 char	*ft_my_strchr(const char *s, int c);
 void    ft_handler2();
-//-------------------------------------------HEREDOC--------------------------
+ //-------------------------------------------HEREDOC--------------------------
 
 void		heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp);
 t_heredoc	*ft_heredoc_lstnew(void *content);

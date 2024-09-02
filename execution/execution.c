@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	run_builtin(t_parce_node *parce)
+void	run_builtin(t_parce_node *parce, char **env)
 {
 	if (!parce->args)
 		return ;
@@ -11,7 +11,7 @@ void	run_builtin(t_parce_node *parce)
 	else if (ft_strncmp(parce->args[0], "unset") == 0)
 		ft_unset(parce);
 	else if (ft_strncmp(parce->args[0], "env") == 0)
-		ft_env(envi);
+		ft_env(env);
 	else if (ft_strncmp(parce->args[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strncmp(parce->args[0], "export") == 0)
@@ -44,7 +44,8 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 		if (file->heredoc && file->index == 16)
 		{
 			printf("minishell: maximum here-document count exceeded");
-			envi->exit_status = 2;
+			if (envi)
+				envi->exit_status = 2;
 			exit(2);
 		}
 		file = file->next;
@@ -62,7 +63,7 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 	}
 }
 
-void	ft_execute(t_parce_node *parce)
+void	ft_execute(t_parce_node *parce, char **env)
 {
 	char			**envp;
 	t_parce_node	*tmp;
@@ -74,10 +75,10 @@ void	ft_execute(t_parce_node *parce)
 	heredocing(file, parce, tmp);
 	envp = make_env_array(envi);
 	if (parce->next == NULL)
-		execute_single(parce, envp);
+		execute_single(parce, envp, env);
 	else
 	{
-		execute_multi(parce, envp);
+		execute_multi(parce, envp, env);
 		while (waitpid(-1, NULL, 0) != -1)
 		{
 		}

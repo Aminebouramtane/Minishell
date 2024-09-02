@@ -1,7 +1,6 @@
-
 #include "minishell.h"
-t_env *envi;
 
+t_env *envi;
 
 void initialize_shell(int ac, char **env)
 {
@@ -55,6 +54,7 @@ void cleanup_and_exit(void)
     ft_malloc(0, 1);
 }
 
+
 int main(int ac, char **av, char **env)
 {
     t_vars *data = NULL;
@@ -70,7 +70,7 @@ int main(int ac, char **av, char **env)
             break;
         if (process_input(input, &data, &parce))
             continue;
-        ft_execute(parce);
+        ft_execute(parce, env);
         //  printf("####################PARSING#########################\n");
         //  while (parce) 
 	    //  {

@@ -2,16 +2,19 @@
 
 void handle_child_process(t_parce_node *parce)
 {
-    while (parce->file)
-    {
-        if (parce->file->heredoc == 1)
-            process_heredoc_file(parce);
-        parce->file = parce->file->next;
-    }
-    envi->exit_status = 0;
-    ft_env_lstclear(envi);
+	while (parce->file)
+	{
+		if (parce->file->heredoc == 1)
+			process_heredoc_file(parce);
+		parce->file = parce->file->next;
+	}
+	if (envi)
+	{
+		envi->exit_status = 0;
+		ft_env_lstclear(envi);
+	}
 	ft_malloc(0, 1);
-    exit(0);
+	exit(0);
 }
 
 void process_heredoc_file(t_parce_node *parce)
@@ -25,9 +28,10 @@ void process_heredoc_file(t_parce_node *parce)
     fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
     if (fd < 0)
     {
-        ft_putstr_fd("Error in FD !!\n", 1);
-        envi->exit_status = 1;
-        exit(1);
+		ft_putstr_fd("Error in FD !!\n", 1);
+		if (envi)
+			envi->exit_status = 1;
+		exit(1);
     }
     read_and_write_heredoc(fd, delimiter, parce->file->is_quoted);
     close(fd);

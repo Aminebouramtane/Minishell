@@ -13,7 +13,7 @@ void	successful_exit(char *cmd_path, char **envp)
 void	waiting(pid_t pid, int status)
 {
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
+	if (WIFEXITED(status) && envi)
 		envi->exit_status = WEXITSTATUS(status);
 }
 

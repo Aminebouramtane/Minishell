@@ -57,7 +57,8 @@ void	is_directory_check(char *cmd_path, char **envp)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd_path, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			ft_free(envp);
+			if (envp)
+				ft_free(envp);
 			ft_malloc(0, 1);
 			envi->exit_status = 126;
 			ft_env_lstclear(envi);
@@ -78,6 +79,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	dirs_path = NULL;
 	dirs_path = ft_split(env_path, ':');
 	
+	if (!dirs_path)
+		return NULL;
 	if (parce && parce->args[0] && ft_strchr(parce->args[0], '/'))
 		return (ft_strdup(parce->args[0]));
 	if (parce && parce->args[0])
@@ -122,11 +125,13 @@ char	*getpaths(t_parce_node *parce)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(parce->args[0], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		envi->exit_status = 127;
+		if (envi)
+			envi->exit_status = 127;
 		exit(127);
-		//return (env_paths);
+		return (env_paths);
 	}
-	env_paths = ft_strdup(temp->value);
+	else
+		env_paths = ft_strdup(temp->value);
 	return (env_paths);
 }
 
@@ -179,7 +184,7 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 		successful_exit(cmd_path, envp);
 }
 
-void	execute_single(t_parce_node *parce, char **envp)
+void	execute_single(t_parce_node *parce, char **envp, char **env)
 {
 	t_parce_node	*temp;
 	int				status;
@@ -192,7 +197,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 	cmd_path = NULL;
 	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-		open_and_run(temp);
+		open_and_run(temp, env);
 	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 	{
 		pid = fork();
@@ -202,6 +207,7 @@ void	execute_single(t_parce_node *parce, char **envp)
 				exit(envi->exit_status);
 			open_files(temp);
 			cmd_path = get_cmd_path(temp);
+			//printf("%s\n", cmd_path);
 			is_directory_check(temp->args[0], envp);
 			if (cmd_path && access(cmd_path, X_OK) != 0)
 				check_access(temp->args[0], envp);

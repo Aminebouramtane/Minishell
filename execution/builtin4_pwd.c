@@ -8,5 +8,4 @@ void	ft_pwd(void)
 	ft_putstr_fd(path, 1);
 	ft_putstr_fd("\n", 1);
 	free(path);
-	envi->exit_status = 0;
 }
