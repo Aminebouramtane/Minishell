@@ -2,10 +2,9 @@
 
 int	open_files_heredoc(t_file *file)
 {
-	t_file *temp;
+	t_file	*temp;
 
 	temp = file;
-	
 	temp->heredoc_file_fd = open(temp->file, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (temp->heredoc_file_fd < 0)
 	{
@@ -19,7 +18,6 @@ int	open_files_heredoc(t_file *file)
 	return (temp->heredoc_file_fd);
 }
 
-
 void	open_files_append(t_file *file, int fd_out)
 {
 	t_file	*temp;
@@ -30,7 +28,7 @@ void	open_files_append(t_file *file, int fd_out)
 		if (temp->append)
 		{
 			temp->appended_file_fd = open(temp->file, O_CREAT | O_WRONLY
-					| O_APPEND , 0644);
+					| O_APPEND, 0644);
 			if (temp->appended_file_fd == -1)
 			{
 				write(2, "minishell: ", 11);
@@ -88,8 +86,7 @@ void	open_in_files_redir(t_file *file, int fd_in)
 		if (temp->redir_in)
 		{
 			temp->in_file_fd = open(temp->file, O_RDONLY);
-			
-			if (temp->in_file_fd  == -1)
+			if (temp->in_file_fd == -1)
 			{
 				write(2, "minishell: ", 11);
 				write(2, temp->file, ft_strlen(temp->file));

@@ -23,42 +23,25 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 	int		iterator[2];
 
 	buff = NULL;
-	//my_node = NULL;
 	my_node = malloc(sizeof(t_env));
 	init_node(my_node);
 	iterator[0] = i;
 	iterator[1] = 0;
-	while (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] != '='
+	while (parce->args[i][iterator[1]] != '\0'
+			&& parce->args[i][iterator[1]] != '='
 			&& parce->args[i][iterator[1]] != '+')
 		iterator[1]++;
 	buff = ft_strdup(parce->args[i]);
 	buff[iterator[1]] = '\0';
-	if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '=')
+	if (parce->args[i][iterator[1]] != '\0'
+		&& parce->args[i][iterator[1]] == '=')
 		add_new_export(my_node, parce, buff, iterator);
-	else if (parce->args[i][iterator[1]] != '\0' && parce->args[i][iterator[1]] == '+')
+	else if (parce->args[i][iterator[1]] != '\0'
+			&& parce->args[i][iterator[1]] == '+')
 		add_new_export(my_node, parce, buff, iterator);
 	else
 		exprt_without_value(my_node, parce, buff, iterator);
-
 	return (my_node);
-}
-
-int	ft_strncmp_env(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while ((*s1 != '\0' || *s2 != '\0') && (i < n))
-	{
-		if (*s1 != *s2)
-			return ((unsigned char)*s1 - (unsigned char)*s2);
-		s1++;
-		s2++;
-		i++;
-	}
-	return (0);
 }
 
 t_env	*ft_env_lstnew(void *content)

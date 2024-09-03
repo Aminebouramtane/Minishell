@@ -1,31 +1,24 @@
 #include "../minishell.h"
 
-void	back_to_parent(int *fd)
+void	handle_builtins(t_parce_node *temp, char **envp, char *cmd_path)
 {
-	close(fd[1]);
-	dup2(fd[0], 0);
-	close(fd[0]);
+	run_builtin(temp, envp);
+	successful_exit(cmd_path, envp);
 }
 
-void	execution_single(t_parce_node *temp, char **envp, int *fd)
+void	execution_firsts(t_parce_node *temp, char **envp, int *fd)
 {
 	pid_t	pid;
-	//int		status = 0;
 	char	*cmd_path;
 
 	cmd_path = NULL;
 	pid = fork();
 	if (pid == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		into_child(fd);
 		open_files(temp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-		{
-			run_builtin(temp, envp);
-			successful_exit(cmd_path, envp);
-		}
+			handle_builtins(temp, envp, cmd_path);
 		else
 		{
 			cmd_path = get_cmd_path(temp);
@@ -37,21 +30,7 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 		}
 	}
 	else
-	{
-		// Parent process waits for the child to finish
-		// Parent process waits for the child to finish
-		//waitpid(pid, &status, 0);
-		
-		//// Set the exit status based on the child process
-		//if (WIFEXITED(status))
-		//{
-		//	envi->exit_status = WEXITSTATUS(status);
-		//}
 		back_to_parent(fd);
-		//waiting(pid, status);
-	}
-	//else
-	//	back_to_parent(fd);
 }
 
 void	execution_last(t_parce_node *temp, char **envp, int *fd)
@@ -61,15 +40,11 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 	char	*cmd_path;	
 
 	pid = fork();
-	cmd_path = get_cmd_path(temp);
 	if (pid == 0)
 	{
 		open_files(temp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-		{
 			run_builtin(temp, envp);
-			//successful_exit(cmd_path, envp);
-		}
 		else
 		{
 			cmd_path = get_cmd_path(temp);
@@ -77,25 +52,16 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 			check_access(cmd_path, envp);
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
-			//successful_exit(cmd_path, envp);
 		}
 	}
 	else
 	{
-		// Parent process waits for the child to finish
 		waitpid(pid, &status, 0);
-		
-		// Set the exit status based on the child process
 		if (WIFEXITED(status))
-		{
 			envi->exit_status = WEXITSTATUS(status);
-		}
-
 		close(fd[1]);
 		close(fd[0]);
 	}
-	//close(fd[1]);
-	//close(fd[0]);
 }
 
 void	execute_multi(t_parce_node *parce, char **envp)

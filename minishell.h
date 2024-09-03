@@ -170,11 +170,21 @@ char			*ft_here_strcat(char *dest, const char *src);
 //-=----------------------------------execution_prototypes--------------------------------------//
 
 //-----------------------------------built-ins prototypes------------------------------------//
+void	a_permission_error(char *cmd_path, char **envp);
+void	a_no_such_file(char *cmd_path, char **envp);
+void	a_command_not_found(char *cmd_path, char **envp);
+void	e_permission_denied(t_parce_node *temp, char *cmd_path, char **envp);
+void	e_no_such_file(t_parce_node *temp, char *cmd_path, char **envp);
+void	e_command_not_found(t_parce_node *temp, char *cmd_path, char **envp);
+void    ft_execute(t_parce_node *parce);
+void	single_child(t_parce_node *temp, char *cmd_path, char **envp);
 void	ft_free(char **s);
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce);
+void	into_child(int *fd);
+void	back_to_parent(int *fd);
 void	run_builtin(t_parce_node *parce, char **env);
+void	handle_builtins(t_parce_node *temp, char **envp, char *cmd_path);
 void    ft_cd(t_parce_node *parce);
 char	*ft_mystrjoin(char *s1, char *s2);
 char	*copy_ptr(char const *s1, char const *s2, char *ptr);
@@ -186,7 +196,6 @@ void	ft_export(t_parce_node *parce);
 void	ft_unset_a_node(t_env *temp);
 void	ft_unset(t_parce_node *parce);
 t_env	*get_env_vars(char **env_vars);
-
 t_env	*ft_env_lstnew(void *content);
 void	ft_env_lstadd_back(t_env **lst, t_env *new);
 void	ft_env_delone(t_env *lst);
@@ -211,7 +220,7 @@ void	append_exported(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator);
 void	add_new_export(t_env *my_node, t_parce_node *parce
 						, char *buff, int *iterator);
-
+int		ft_strncmp_env(const char *s1, const char *s2, size_t n);
 void	ft_exit(t_parce_node *parce);
 void	exit_error(t_parce_node *parce);
 
@@ -225,11 +234,12 @@ void	open_out_files_redir(t_file *parce, int fd_out);
 void	open_in_files_redir(t_file *parce, int fd_in);
 int		open_files_heredoc(t_file *file);
 void	free_split(char **command_av);
-char	*getpaths();
 void	check_access(char *cmd_path , char **envp);
+int		is_direcotry(char *cmd_path);
 void	is_directory_check(char *cmd_path, char **envp);
+void	check_dirs(char **dirs_path, int i, char *s, char *command_path);
 char	*dirs_paths(char *env_path, t_parce_node *parce);
-void	execution_single(t_parce_node *temp, char **envp, int *fd);
+void	execution_firsts(t_parce_node *temp, char **envp, int *fd);
 void	keep_in_out(void);
 void	return_in_out(void);
 void	open_files(t_parce_node *temp);
@@ -237,7 +247,6 @@ void	open_and_run(t_parce_node *temp, char **env);
 char	*get_cmd_path(t_parce_node *temp);
 void	successful_exit(char *cmd_path, char **envp);
 char	*getpaths(t_parce_node *parce);
-char	*dirs_paths(char *env_path, t_parce_node *parce);
 void	waiting(pid_t pid, int status);
 void	execve_error(t_parce_node *temp, char **envp, char *cmd_path);
 char	*get_value(char *key);

@@ -26,6 +26,21 @@ void	echo_print(t_parce_node *parce, int i)
 	}
 }
 
+void	echo_flagged(t_parce_node *parce, int i, int j)
+{
+	if (parce->args[i][j] == '\0')
+		echo_without_flag(parce);
+	while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
+		j++;
+	if (parce->args[i][j] == '\0')
+		echo_print(parce, 2);
+	else
+	{
+		echo_print(parce, 1);
+		ft_putstr_fd("\n", 1);
+	}
+}
+
 void	ft_echo(t_parce_node *parce)
 {
 	int	i;
@@ -38,17 +53,7 @@ void	ft_echo(t_parce_node *parce)
 	else if (parce->args[1][j] == '-')
 	{
 		j++;
-		if (parce->args[i][j] == '\0')
-			echo_without_flag(parce);
-		while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
-			j++;
-		if (parce->args[i][j] == '\0')
-			echo_print(parce, 2);
-		else
-		{
-			echo_print(parce, 1);
-			ft_putstr_fd("\n", 1);
-		}
+		echo_flagged(parce, i, j);
 	}
 	else
 		echo_without_flag(parce);

@@ -9,7 +9,7 @@ static int	countlength(long a)
 	{
 		a *= -1;
 		count = 1;
-	}	
+	}
 	while (a >= 10)
 	{
 		count++;
@@ -19,7 +19,7 @@ static int	countlength(long a)
 }
 
 static char	*writeints(long a, int length, char *string)
-{	
+{
 	int	i;
 	int	number;
 
@@ -62,7 +62,7 @@ void	handle_shlvl(void)
 	int		shlvl;
 	int		status;
 	pid_t	pid;
-	
+
 	status = 0;
 	pid = fork();
 	if (pid == 0)
