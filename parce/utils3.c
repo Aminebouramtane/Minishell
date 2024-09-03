@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:01:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 14:02:08 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:11:48 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_file	*ft_file_heredoc_lstnew(char *name, int is_quoted, char *eof, int index)
 	my_node->redir_out = 0;
 	my_node->heredoc = 1;
 	my_node->is_quoted = is_quoted;
+	my_node->append = 0;
 	my_node->eof = eof;
 	my_node->index = index;
 	my_node->next = NULL;

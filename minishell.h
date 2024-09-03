@@ -173,7 +173,7 @@ char			*ft_here_strcat(char *dest, const char *src);
 void	ft_free(char **s);
 int     check_builtins(char *cmd);
 void	ft_echo(t_parce_node *parce);
-void    ft_execute(t_parce_node *parce, char **env);
+void    ft_execute(t_parce_node *parce);
 void	run_builtin(t_parce_node *parce, char **env);
 void    ft_cd(t_parce_node *parce);
 char	*ft_mystrjoin(char *s1, char *s2);
@@ -216,8 +216,8 @@ void	ft_exit(t_parce_node *parce);
 void	exit_error(t_parce_node *parce);
 
 //------------------------------------------execution-------------------------------------//
-void	execute_single(t_parce_node *parce, char **envp, char **env);
-void	execute_multi(t_parce_node *parce, char **envp, char **env);
+void	execute_single(t_parce_node *parce, char **envp);
+void	execute_multi(t_parce_node *parce, char **envp);
 char	**make_env_array(t_env *env);
 char	*ft_strjoin_path(char const *s1, char const *s2);
 void	open_files_append(t_file *file, int fd_out);
@@ -283,7 +283,7 @@ char	*read_main_user_input(void);
 int		process_input(char *input, t_vars **data, t_parce_node **parce);
 void	cleanup_and_exit(void);
 void	process_quotes(char *str);
-int		count_word(char *s, char *delimiters);
+int		ft_count_word(char *s, char *delimiters);
 void	split_quotes(char *target, char delimiter, int *index);
 void	*ft_ft_calloc(size_t count, size_t size);
 void	split_quotes(char *target, char delimiter, int *index);

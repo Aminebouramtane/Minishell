@@ -120,7 +120,7 @@ char	*getpaths(t_parce_node *parce)
 		else
 			temp = temp->next;
 	}
-	if (temp == NULL)
+	if (temp == NULL && parce->args[0][0] != '/')
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(parce->args[0], 2);
@@ -131,7 +131,10 @@ char	*getpaths(t_parce_node *parce)
 		return (env_paths);
 	}
 	else
-		env_paths = ft_strdup(temp->value);
+	{
+		if (temp)
+			env_paths = ft_strdup(temp->value);
+	}
 	return (env_paths);
 }
 
@@ -154,6 +157,7 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 	else if (errno == ENOENT && (temp->args[0][0] == '/' || temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
 			|| (temp->args[0][0] == '.' && temp->args[0][1] == '/')))
 	{
+		ft_putstr_fd(temp->args[0], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_free(envp);		
 		free(cmd_path);
@@ -164,6 +168,7 @@ void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 	}
 	else
 	{
+		ft_putstr_fd(temp->args[0], 2);
 		ft_putendl_fd(": command not found", 2);
 		ft_free(envp);
 		free(cmd_path);
@@ -184,7 +189,7 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 	successful_exit(cmd_path, envp);
 }
 
-void	execute_single(t_parce_node *parce, char **envp, char **env)
+void	execute_single(t_parce_node *parce, char **envp)
 {
 	t_parce_node	*temp;
 	int				status;
@@ -197,7 +202,7 @@ void	execute_single(t_parce_node *parce, char **envp, char **env)
 	cmd_path = NULL;
 	keep_in_out();
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-		open_and_run(temp, env);
+		open_and_run(temp, envp);
 	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 	{
 		pid = fork();
@@ -207,7 +212,6 @@ void	execute_single(t_parce_node *parce, char **envp, char **env)
 				exit(envi->exit_status);
 			open_files(temp);
 			cmd_path = get_cmd_path(temp);
-			//printf("%s\n", cmd_path);
 			is_directory_check(temp->args[0], envp);
 			if (cmd_path && access(cmd_path, X_OK) != 0)
 				check_access(temp->args[0], envp);

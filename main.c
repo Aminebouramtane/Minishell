@@ -39,7 +39,13 @@ int process_input(char *input, t_vars **data, t_parce_node **parce)
     lexer(input, data);
     ft_expand((*data)->ndata);
     if (syntax_err((*data)->ndata))
-        return 1;
+        {return 1;}
+	//while ((*data)->ndata)
+	//    {
+    //       printf("cmd ## %s state ## %d type ## %c\n", (*data)->ndata->cmd, (*data)->ndata->state, (*data)->ndata->type);
+    //        (*data)->ndata = (*data)->ndata->next;
+    //        // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
+	//    }
     *parce = ft_malloc(sizeof(t_parce_node), 0);
     if (!(*parce))
         return 1;
@@ -70,7 +76,7 @@ int main(int ac, char **av, char **env)
             break;
         if (process_input(input, &data, &parce))
             continue;
-        ft_execute(parce, env);
+        ft_execute(parce);
         //  printf("####################PARSING#########################\n");
         //  while (parce) 
 	    //  {
@@ -99,34 +105,7 @@ int main(int ac, char **av, char **env)
         //      parce = parce->next;
         //      // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 	    //  }
-        // printf("####################PARSING#########################\n");
-        // while (parce) 
-	    // {
-        //     printf("cmd ## %s\n", parce->cmd);
-        //     if (parce->args)
-        //     {
-        //         i = 0; 
-        //         while (parce->args[i])
-        //         {
-        //            printf("args ## %s\n", parce->args[i]);
-        //             i++;
-        //         }
-        //     }
-        //     while (parce->file)
-        //     {
-        //         printf("-----------FILE : %s\n", parce->file->file);
-        //         printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
-        //         printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
-        //         printf("-----------HEREDOC : %d\n", parce->file->heredoc);
-        //         printf("-----------IS_QUOTED : %d\n", parce->file->is_quoted);
-        //         printf("-----------EOF : %s\n", parce->file->eof);
-        //         printf("-----------INDEX : %d\n", parce->file->index);
-        //         printf("======================================\n");
-        //         parce->file = parce->file->next;
-        //     }
-        //     parce = parce->next;
-        //     // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
-	    // }
+
         free(input);
         ft_malloc(0, 1);
     }

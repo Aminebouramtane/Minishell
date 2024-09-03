@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:11:52 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 12:18:03 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:10:35 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	should_count_word(char c, char *delimiters, int *flag, int *count)
 	return (0);
 }
 
-int	count_word(char *s, char *delimiters)
+int	ft_count_word(char *s, char *delimiters)
 {
 	int	count;
 	int	flag;

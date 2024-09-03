@@ -63,7 +63,7 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 	}
 }
 
-void	ft_execute(t_parce_node *parce, char **env)
+void	ft_execute(t_parce_node *parce)
 {
 	char			**envp;
 	t_parce_node	*tmp;
@@ -75,10 +75,10 @@ void	ft_execute(t_parce_node *parce, char **env)
 	heredocing(file, parce, tmp);
 	envp = make_env_array(envi);
 	if (parce->next == NULL)
-		execute_single(parce, envp, env);
+		execute_single(parce, envp);
 	else
 	{
-		execute_multi(parce, envp, env);
+		execute_multi(parce, envp);
 		while (waitpid(-1, NULL, 0) != -1)
 		{
 		}

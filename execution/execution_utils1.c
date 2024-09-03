@@ -43,6 +43,8 @@ char	*get_cmd_path(t_parce_node *temp)
 	path_env = NULL;
 	cmd_path = NULL;
 	path_env = getpaths(temp);
+	if (path_env == NULL)
+		return (temp->args[0]);
 	cmd_path = dirs_paths(path_env, temp);
 	if (path_env != NULL)
 		free(path_env);

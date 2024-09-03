@@ -39,8 +39,8 @@ void	add_new_export(t_env *my_node, t_parce_node *parce
 
 void	*init_node(t_env	*my_node)
 {
-	my_node = NULL;
-	my_node = (t_env *)malloc(sizeof(t_env));
+	//my_node = NULL;
+	//my_node = (t_env *)malloc(sizeof(t_env));
 	my_node->env_var = NULL;
 	if (!my_node)
 		return (NULL);

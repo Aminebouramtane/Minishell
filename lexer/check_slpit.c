@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_slpit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:32:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 12:38:14 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:08:20 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**split_lexer(char *s, char *delimiters)
 	if (!s || !delimiters)
 		return (NULL);
 	count = 0;
-	count = count_word(s, delimiters);
+	count = ft_count_word(s, delimiters);
 	dst = ft_ft_calloc(count + 1, sizeof(char *));
 	if (!dst)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:29:20 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 14:29:21 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:55:41 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int handle_final_redirect(Datatoken *node)
             node = node->next;
         if (!node)
             return 0;
-        if (node->cmd[0] == '|' && node->state == 2)
+        if ((node->cmd[0] == '|' || node->cmd[0] == '>') && node->state == 2)
         {
             ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return 1;

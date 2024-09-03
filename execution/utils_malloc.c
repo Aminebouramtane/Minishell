@@ -23,6 +23,7 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 	int		iterator[2];
 
 	buff = NULL;
+	//my_node = NULL;
 	my_node = malloc(sizeof(t_env));
 	init_node(my_node);
 	iterator[0] = i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:31:03 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 13:31:42 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:11:58 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_file	*ft_file_lstnew(char *file, int redir_in, int redir_out)
 	my_node->redir_in = redir_in;
 	my_node->redir_out = redir_out;
 	my_node->heredoc = 0;
+	my_node->append = 0;
 	my_node->eof = NULL;
 	my_node->index = 0;
 	my_node->next = NULL;

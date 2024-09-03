@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 21:34:28 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:28:34 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ void	ft_expand_home(Datatoken *lst)
 
 void	ft_expand(Datatoken *lst)
 {
-	ft_expand_dolar(lst);
 	ft_expand_home(lst);
+	ft_expand_dolar(lst);
 }

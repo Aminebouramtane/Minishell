@@ -23,7 +23,7 @@ void	execution_single(t_parce_node *temp, char **envp, int *fd)
 		open_files(temp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
-			run_builtin(temp);
+			run_builtin(temp, envp);
 			successful_exit(cmd_path, envp);
 		}
 		else
@@ -67,7 +67,7 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 		open_files(temp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
 		{
-			run_builtin(temp);
+			run_builtin(temp, envp);
 			//successful_exit(cmd_path, envp);
 		}
 		else

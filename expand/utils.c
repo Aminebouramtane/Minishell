@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:37 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:52:38 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:45:24 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 		tmp = node->cmd;
 		node->cmd += 1;
 		str = node->cmd;
-		env = getenv(str);
+		env = get_value(str);
 		if (env || str[0] == '?')
 		{
 			if (str[0] == '?')
@@ -43,6 +43,6 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 				node->cmd = my_strdup_two(env);
 		}
 		else
-			node->cmd = tmp;
+			node->cmd = "\0";
 	}
 }
