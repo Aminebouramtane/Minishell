@@ -3,8 +3,8 @@
 static long long	ft_strtol_check(const char *str)
 {
 	long long	i;
-	size_t		sign;
-	size_t		res;
+	long long		sign;
+	long long		res;
 
 	i = 0;
 	sign = 1;

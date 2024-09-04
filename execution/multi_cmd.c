@@ -79,7 +79,7 @@ void	execute_multi(t_parce_node *parce, char **envp)
 		if (temp->next != NULL)
 		{
 			pipe(fd);
-			execution_single(temp, envp, fd);
+			execution_firsts(temp, envp, fd);
 		}
 		else
 		{

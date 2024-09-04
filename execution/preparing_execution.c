@@ -14,7 +14,7 @@ void	back_to_parent(int *fd)
 	close(fd[0]);
 }
 
-void	check_dirs(char **dirs_path, int i, char *s, char *command_path)
+char	*check_dirs(char **dirs_path, int i, char *s, char *command_path)
 {
 	while (dirs_path[i] != NULL)
 	{
@@ -29,6 +29,7 @@ void	check_dirs(char **dirs_path, int i, char *s, char *command_path)
 			free(s);
 		i++;
 	}
+	return (NULL);
 }
 
 char	*dirs_paths(char *env_path, t_parce_node *parce)
@@ -49,7 +50,9 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 		return (ft_strdup(parce->args[0]));
 	if (parce && parce->args[0])
 		command_path = ft_strjoin_path("/", parce->args[0]);
-	check_dirs(dirs_path, i, s, command_path);
+	s = check_dirs(dirs_path, i, s, command_path);
+	if (s != NULL)
+		return (s);
 	if (dirs_path)
 		ft_free(dirs_path);
 	if (command_path)

@@ -237,7 +237,7 @@ void	free_split(char **command_av);
 void	check_access(char *cmd_path , char **envp);
 int		is_direcotry(char *cmd_path);
 void	is_directory_check(char *cmd_path, char **envp);
-void	check_dirs(char **dirs_path, int i, char *s, char *command_path);
+char	*check_dirs(char **dirs_path, int i, char *s, char *command_path);
 char	*dirs_paths(char *env_path, t_parce_node *parce);
 void	execution_firsts(t_parce_node *temp, char **envp, int *fd);
 void	keep_in_out(void);
