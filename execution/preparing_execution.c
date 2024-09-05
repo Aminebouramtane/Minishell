@@ -14,7 +14,7 @@ void	back_to_parent(int *fd)
 	close(fd[0]);
 }
 
-void	check_dirs(char **dirs_path, int i, char *s, char *command_path)
+char	*check_dirs(char **dirs_path, int i, char *s, char *command_path)
 {
 	while (dirs_path[i] != NULL)
 	{
