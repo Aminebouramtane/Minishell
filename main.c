@@ -21,7 +21,12 @@ char *read_main_user_input(void)
     signal(SIGQUIT, SIG_IGN);
     input = readline("minishell$ ");
     if (input == NULL)
+	{
+		ft_malloc(1, 0);
+		ft_env_lstclear(envi);
+		envi = NULL;
         ft_putstr_fd("exit\n", 1);
+	}
     else
         add_history(input);
     return input;
@@ -56,7 +61,8 @@ int process_input(char *input, t_vars **data, t_parce_node **parce)
 
 void cleanup_and_exit(void)
 {
-    ft_env_lstclear(envi);
+    if (envi)
+		ft_env_lstclear(envi);
     ft_malloc(0, 1);
 }
 
@@ -76,36 +82,8 @@ int main(int ac, char **av, char **env)
             break;
         if (process_input(input, &data, &parce))
             continue;
+		last_com_var(parce);
         ft_execute(parce);
-        //  printf("####################PARSING#########################\n");
-        //  while (parce) 
-	    //  {
-        //      printf("cmd ## %s\n", parce->cmd);
-        //      if (parce->args)
-        //      {
-        //          int i = 0; 
-        //          while (parce->args[i])
-        //          {
-        //             printf("args ## %s\n", parce->args[i]);
-        //              i++;
-        //          }
-        //      }
-        //      while (parce->file)
-        //      {
-        //          printf("-----------FILE : %s\n", parce->file->file);
-        //          printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
-        //          printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
-        //          printf("-----------HEREDOC : %d\n", parce->file->heredoc);
-        //          printf("-----------IS_QUOTED : %d\n", parce->file->is_quoted);
-        //          printf("-----------EOF : %s\n", parce->file->eof);
-        //          printf("-----------INDEX : %d\n", parce->file->index);
-        //          printf("======================================\n");
-        //          parce->file = parce->file->next;
-        //      }
-        //      parce = parce->next;
-        //      // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
-	    //  }
-
         free(input);
         ft_malloc(0, 1);
     }

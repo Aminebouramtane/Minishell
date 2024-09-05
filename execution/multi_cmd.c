@@ -33,6 +33,12 @@ void	execution_firsts(t_parce_node *temp, char **envp, int *fd)
 		back_to_parent(fd);
 }
 
+void	checks(char *cmd_path, char **envp)
+{
+	is_directory_check(cmd_path, envp);
+	check_access(cmd_path, envp);
+}
+
 void	execution_last(t_parce_node *temp, char **envp, int *fd)
 {
 	pid_t	pid;
@@ -40,18 +46,16 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 	char	*cmd_path;	
 
 	pid = fork();
+	cmd_path = NULL;
 	if (pid == 0)
 	{
 		open_files(temp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-			run_builtin(temp, envp);
+			handle_builtins(temp, envp, cmd_path);
 		else
 		{
 			cmd_path = get_cmd_path(temp);
-			is_directory_check(cmd_path, envp);
-			check_access(cmd_path, envp);
-			if (execve(cmd_path, temp->args, envp) == -1)
-				execve_error(temp, envp, cmd_path);
+			(checks(cmd_path, envp) ,execution_execve(cmd_path, temp, envp));
 		}
 	}
 	else

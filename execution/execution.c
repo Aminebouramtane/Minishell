@@ -57,6 +57,7 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 			if (tmp->file)
 			{
 				handel_heredoc(tmp);
+				exit(0);
 			}
 			tmp = tmp->next;
 		}

@@ -22,7 +22,7 @@ char	*check_dirs(char **dirs_path, int i, char *s, char *command_path)
 		if (!access(s, X_OK))
 		{
 			free(command_path);
-			free_split(dirs_path);
+			ft_free(dirs_path);
 			return (s);
 		}
 		else
@@ -51,12 +51,12 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	if (parce && parce->args[0])
 		command_path = ft_strjoin_path("/", parce->args[0]);
 	s = check_dirs(dirs_path, i, s, command_path);
-	if (s != NULL)
-		return (s);
 	if (dirs_path)
 		ft_free(dirs_path);
 	if (command_path)
 		free(command_path);
+	if (s != NULL)
+		return (s);
 	return (NULL);
 }
 

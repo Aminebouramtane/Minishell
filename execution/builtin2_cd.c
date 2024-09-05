@@ -32,6 +32,16 @@ void	cd_home(t_env *temp)
 		envi->exit_status = 1;
 	}
 }
+void	pwd_ing(t_env *temp)
+{
+	while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)
+		temp = temp->next;
+	if (temp)
+	{
+		chdir(temp->value);
+		change_pwd();
+	}
+}
 
 void	ft_cd(t_parce_node *parce)
 {
@@ -45,13 +55,8 @@ void	ft_cd(t_parce_node *parce)
 	if (arg_counter == 2)
 	{
 		if (parce && ft_strncmp(parce->args[1], "-") == 0)
-		{
-			while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)
-				temp = temp->next;
-			chdir(temp->value);
-			change_pwd();
-		}
-		else if (chdir(parce->args[1]) != 0)
+			pwd_ing(temp);
+		if (chdir(parce->args[1]) != 0)
 			error_cd(parce->args[1], arg_counter);
 		else
 			change_pwd();
