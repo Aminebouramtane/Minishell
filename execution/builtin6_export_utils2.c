@@ -21,6 +21,8 @@ void	printlist(t_env *node)
 	t_env	*temp;
 
 	temp = node;
+	if (temp && temp->key && ft_strncmp(temp->key, "PATH") == 0)
+		temp = temp->next;
 	while (temp != NULL)
 	{
 		ft_putstr_fd("declare -x ", 1);

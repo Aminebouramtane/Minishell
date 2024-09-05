@@ -22,7 +22,7 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 {
 	char	*str;
 	char	*env;
-	char	*tmp;
+	//char	*tmp;
 
 	if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 2)
 	{
@@ -31,7 +31,7 @@ void	ft_expand_dolar_two_chars(Datatoken *node)
 			node->cmd = "\0";
 			return ;
 		}
-		tmp = node->cmd;
+		//tmp = node->cmd;
 		node->cmd += 1;
 		str = node->cmd;
 		env = get_value(str);

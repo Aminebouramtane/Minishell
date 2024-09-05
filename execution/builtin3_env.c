@@ -7,11 +7,11 @@ t_env	*get_env_vars(char **env_vars)
 	i = 0;
 	if (env_vars && !env_vars[i])
 	{
+		ft_env_lstadd_back(&envi, ft_env_lstnew("PATH=/nfs/homes/yimizare/bin:/usr/local/sbin:/usr/local/bin:\
+/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
 		ft_env_lstadd_back(&envi, ft_env_lstnew("PWD=/nfs/homes/yimizare"));
 		ft_env_lstadd_back(&envi, ft_env_lstnew("SHLVL=1"));
 		ft_env_lstadd_back(&envi, ft_env_lstnew("_=/usr/bin/env"));
-		ft_env_lstadd_back(&envi, ft_env_lstnew("PATH=/nfs/homes/yimizare/bin:/usr/local/sbin:/usr/local/bin:\
-		/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
 	}
 	else
 	{
