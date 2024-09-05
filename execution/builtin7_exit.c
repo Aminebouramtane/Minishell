@@ -2,7 +2,7 @@
 
 static long long	ft_strtol_check(const char *str)
 {
-	long long	i;
+	long long		i;
 	long long		sign;
 	long long		res;
 
