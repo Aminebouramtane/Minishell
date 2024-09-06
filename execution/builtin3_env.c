@@ -12,6 +12,58 @@
 
 #include "../minishell.h"
 
+char	*last_arg(t_parce_node *parce)
+{
+	int		i;
+	char	*last_var;
+
+	last_var = NULL;
+	i = 0;
+	while (parce && parce->next != NULL)
+	{
+		i = 0;
+		while (parce && parce->args[i])
+		{
+			if (parce->args[i] && parce->args[i + 1] == NULL)
+				break ;
+			i++;
+		}
+		parce = parce->next;
+	}
+	if (parce && parce->args[i])
+		last_var = ft_strjoin("_=", parce->args[i]);
+	return (last_var);
+}
+
+void	last_com_var(t_parce_node *parce)
+{
+	t_env	*temp;
+	char	*arg;
+	int		i;
+
+	i = 0;
+	temp = envi;
+	arg = NULL;
+	if (parce->args)
+		arg = last_arg(parce);
+	else
+		arg = ft_strdup("]");
+	while (temp && ft_strncmp(temp->key, "_") != 0)
+	{
+		temp = temp->next;
+	}
+	if (parce && parce->args && temp && arg)
+	{
+		ft_unset_a_node(temp);
+		ft_env_lstadd_back(&envi, ft_env_lstnew(arg));
+	}
+	if (arg)
+	{
+		free(arg);
+		arg = NULL;
+	}
+}
+
 t_env	*get_env_vars(char **env_vars)
 {
 	int	i;
@@ -23,13 +75,13 @@ t_env	*get_env_vars(char **env_vars)
 /usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
 		ft_env_lstadd_back(&envi, ft_env_lstnew("PWD=/nfs/homes/yimizare"));
 		ft_env_lstadd_back(&envi, ft_env_lstnew("SHLVL=1"));
-		ft_env_lstadd_back(&envi, ft_env_lstnew("_=/usr/bin/env"));
+		ft_env_lstadd_back(&envi, ft_env_lstnew("_=]"));
 	}
 	else
 	{
 		while (env_vars && env_vars[i] != NULL)
 		{
-			ft_env_lstadd_back(&envi, ft_env_lstnew(env_vars[i]));
+			ft_env_lstadd_back(&envi, first_env_lstnew(env_vars[i]));
 			i++;
 		}
 	}

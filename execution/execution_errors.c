@@ -71,6 +71,8 @@ void	is_directory_check(char *cmd_path, char **envp)
 			ft_putstr_fd(": Is a directory\n", 2);
 			if (envp)
 				ft_free(envp);
+			free(cmd_path);
+			cmd_path = NULL;
 			ft_malloc(0, 1);
 			envi->exit_status = 126;
 			ft_env_lstclear(envi);

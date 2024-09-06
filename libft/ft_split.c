@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 03:30:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/08/15 18:33:26 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:44:47 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_free(char **s)
 	while (s[i])
 	{
 		free(s[i]);
+		s[i] = NULL;
 		i++;
 	}
 	free(s);

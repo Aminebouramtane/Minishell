@@ -14,7 +14,7 @@
 
 void	execve_error(t_parce_node *temp, char **envp, char *cmd_path)
 {
-	if (!temp->args[0])
+	if (!temp->args[0] || temp->args[0][0] == '\0')
 		return ;
 	if (errno == EACCES && (temp->args[0][0] == '/'
 		|| temp->args[0][ft_strlen(temp->args[0]) - 1] == '/'
@@ -40,16 +40,19 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 		execve_error(temp, envp, cmd_path);
 	else if (execve(cmd_path, temp->args, envp) == -1)
 		execve_error(temp, envp, cmd_path);
-	successful_exit(cmd_path, envp);
+	//successful_exit(cmd_path, envp);
 }
 
 void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 {
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
+	{
+		ft_free(envp);
 		exit(envi->exit_status);
+	}
 	open_files(temp);
 	cmd_path = get_cmd_path(temp);
-	is_directory_check(temp->args[0], envp);
+	is_directory_check(cmd_path, envp);
 	if (cmd_path && access(cmd_path, X_OK) != 0)
 		check_access(temp->args[0], envp);
 	if (temp->args)
@@ -74,9 +77,30 @@ void	execute_single(t_parce_node *parce, char **envp)
 	{
 		pid = fork();
 		if (pid == 0)
-			single_child(temp, cmd_path, envp);
+		{
+			if (temp && temp->args && check_builtins(temp->args[0]) == 1)
+			{
+				ft_free(envp);
+				exit(envi->exit_status);
+			}
+			open_files(temp);
+			cmd_path = get_cmd_path(temp);
+			is_directory_check(cmd_path, envp);
+			if (cmd_path && access(cmd_path, X_OK) != 0)
+				check_access(temp->args[0], envp);
+			if (temp->args)
+				execution_execve(cmd_path, temp, envp);
+			if (cmd_path != NULL)
+			{
+				free(cmd_path);
+			}
+		}
 		else
+		{
 			waiting(pid, status);
+			if (cmd_path)
+				free(cmd_path);
+		}
 	}
 	if (envp)
 		free_split(envp);
