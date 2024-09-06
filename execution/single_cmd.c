@@ -72,10 +72,11 @@ void	execute_single(t_parce_node *parce, char **envp)
 				exit(envi->exit_status);
 			}
 			open_files(temp);
+			printf("hehe\n");
 			cmd_path = get_cmd_path(temp);
-			is_directory_check(cmd_path, envp);
 			if (cmd_path && access(cmd_path, X_OK) != 0)
 				check_access(temp->args[0], envp);
+			is_directory_check(cmd_path, envp);
 			if (temp->args)
 				execution_execve(cmd_path, temp, envp);
 			if (cmd_path != NULL)
