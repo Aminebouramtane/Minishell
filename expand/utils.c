@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:37 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:56:16 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:12:57 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,6 @@ void	handle_home_case(t_datatoken *node)
 	char	*env;
 
 	env = my_strdup_two(get_value("HOME"));
-	if (env)
-		node->cmd = ft_my_strjoin(env, node->cmd);
-	else
-		node->cmd = "\0";
-}
-
-void	handle_underscore_case(t_datatoken *node)
-{
-	char	*env;
-
-	env = my_strdup_two(get_value("_"));
 	if (env)
 		node->cmd = ft_my_strjoin(env, node->cmd);
 	else
@@ -70,11 +59,6 @@ void	ft_expand_dolar_two_chars(t_datatoken *node)
 		else if (node->cmd[1] == '~' && node->e_state != 0)
 		{
 			handle_home_case(node);
-			return ;
-		}
-		else if (node->cmd[1] == '_' && node->e_state != 0)
-		{
-			handle_underscore_case(node);
 			return ;
 		}
 		node->cmd += 1;

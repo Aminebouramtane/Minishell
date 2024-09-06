@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparing_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 13:06:59 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:16:36 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	s = check_dirs(dirs_path, i, s, command_path);
 	if (s)
 		return (s);
-	if (dirs_path)
-		ft_free(dirs_path);
-	if (command_path)
-		free(command_path);
+	if (dirs_path && command_path)
+		(ft_free(dirs_path), free(command_path));
 	return (NULL);
 }
 

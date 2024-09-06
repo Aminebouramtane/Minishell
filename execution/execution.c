@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:47 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 00:57:09 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:51:20 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 			if (tmp->file)
 			{
 				handel_heredoc(tmp);
-				exit(0);
 			}
 			tmp = tmp->next;
 		}

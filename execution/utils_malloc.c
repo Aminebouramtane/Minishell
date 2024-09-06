@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:12 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:45:13 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:55:16 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_env	*ft_export_lstnew(t_parce_node *parce, int i)
 	return (my_node);
 }
 
-t_env	*first_env_lstnew(void *content)
+t_env	*ft_env_lstnew(void *content)
 {
 	t_env	*my_node;
 	char	**variable;
@@ -72,27 +72,6 @@ t_env	*first_env_lstnew(void *content)
 		my_node->value = ft_strdup("]");
 	else
 		my_node->value = ft_strdup(ft_strstr(content, "=") + 1);
-	my_node->exit_status = 0;
-	my_node->next = NULL;
-	my_node->prev = NULL;
-	ft_free(variable);
-	variable = NULL;
-	return (my_node);
-}
-
-t_env	*ft_env_lstnew(void *content)
-{
-	t_env	*my_node;
-	char	**variable;
-
-	variable = NULL;
-	my_node = (t_env *)malloc(sizeof(t_env));
-	if (my_node == NULL)
-		return (NULL);
-	my_node->env_var = ft_strdup(content);
-	variable = ft_split(my_node->env_var, '=');
-	my_node->key = ft_strdup(variable[0]);
-	my_node->value = ft_strdup(ft_strstr(content, "=") + 1);
 	my_node->exit_status = 0;
 	my_node->next = NULL;
 	my_node->prev = NULL;

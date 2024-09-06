@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:56:25 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:47:19 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:03:41 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (process_input(input, &data, &parce))
 			continue ;
+		last_com_var(parce);
 		ft_execute(parce);
 		free(input);
 		ft_malloc(0, 1);

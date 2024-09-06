@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:43:54 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 00:49:05 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:40:54 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	a_no_such_file(char *cmd_path, char **envp)
 {
 	ft_putstr_fd(cmd_path, 2);
 	ft_putendl_fd(": No such file or directory", 2);
-	ft_malloc(0, 1);
 	if (cmd_path)
 		free(cmd_path);
 	ft_free(envp);
+	ft_malloc(0, 1);
 	g_envi->exit_status = 127;
 	ft_env_lstclear(g_envi);
 	exit(127);

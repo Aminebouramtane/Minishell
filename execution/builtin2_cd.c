@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:05 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 00:51:08 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:56:14 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	cd_home(t_env *temp)
 		g_envi->exit_status = 1;
 	}
 }
+
 void	pwd_ing(t_env *temp)
 {
 	while (temp && ft_strncmp(temp->key, "OLDPWD") != 0)

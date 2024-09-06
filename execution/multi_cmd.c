@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:44:21 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:55:57 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 		else
 		{
 			cmd_path = get_cmd_path(temp);
-			(checks(cmd_path, envp) ,execution_execve(cmd_path, temp, envp));
+			(checks(cmd_path, envp), execution_execve(cmd_path, temp, envp));
 		}
 	}
 	else

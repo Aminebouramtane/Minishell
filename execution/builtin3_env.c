@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin3_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 12:04:41 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:10:42 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	last_com_var(t_parce_node *parce)
 	if (parce && parce->args && temp && arg)
 	{
 		ft_unset_a_node(temp);
-		ft_env_lstadd_back(&g_envi, ft_env_lstnew(arg));
+		ft_env_lstadd_back(&g_envi, first_env_lstnew(arg));
 	}
 	if (arg)
 	{
@@ -79,7 +79,7 @@ t_env	*get_env_vars(char **env_vars)
 	{
 		while (env_vars && env_vars[i] != NULL)
 		{
-			ft_env_lstadd_back(&g_envi, first_env_lstnew(env_vars[i]));
+			ft_env_lstadd_back(&g_envi, ft_env_lstnew(env_vars[i]));
 			i++;
 		}
 	}

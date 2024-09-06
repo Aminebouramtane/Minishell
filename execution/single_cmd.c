@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 15:20:36 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:41:23 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 	cmd_path = get_cmd_path(temp);
 	is_directory_check(cmd_path, envp);
 	if (cmd_path && access(cmd_path, X_OK) != 0)
-		check_access(temp->args[0], envp);	
+		check_access(cmd_path, envp);
 	if (temp->args)
 		execution_execve(cmd_path, temp, envp);
 }
