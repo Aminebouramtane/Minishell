@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 17:16:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 17:18:17 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:32:59 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	extract_quoted(char *str, size_t start, char **tmp)
 
 void	create_node(char *tmp, size_t *i, size_t end, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 
 	if (!check_quotes(tmp) || data->f_qoute == 1)
 	{

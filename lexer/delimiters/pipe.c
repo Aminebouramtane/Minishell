@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:55:59 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:56:00 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:32:38 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_pipe_in_node(size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 
 	if (data->flag)
 		node = ft_my_lstnew("|", '|', IN_DOUBLE_COTE);

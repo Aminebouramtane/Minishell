@@ -6,39 +6,40 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:11:15 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 14:16:40 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:02:37 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_redirection(Datatoken **node,
+void	handle_redirection(t_datatoken **node,
 	t_parce_node **parce_node, t_file **file)
 {
 	if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '<'
-		&& (*node)->type == '<' && (*node)->state == 2)
+		&& (*node)->e_type == '<' && (*node)->e_state == 2)
 		ft_input(node, parce_node, file);
 	else if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '>'
-		&& (*node)->type == 'a' && (*node)->state == 2)
+		&& (*node)->e_type == 'a' && (*node)->e_state == 2)
 		ft_append(node, parce_node, file);
 	else if (*node && (*node)->cmd[0] && (*node)->cmd[0] == '>'
-		&& (*node)->type == '>' && (*node)->state == 2)
+		&& (*node)->e_type == '>' && (*node)->e_state == 2)
 		ft_output(node, parce_node, file);
 	ft_cmd(node, parce_node);
 }
 
-void	handle_special_cases(Datatoken **node, t_parce_node **parce_node,
+void	handle_special_cases(t_datatoken **node, t_parce_node **parce_node,
 	t_file **file, t_parce_node **parce)
 {
 	int		flag;
 
 	flag = -1;
-	if ((*node)->cmd[0] == '<' && (*node)->type == 'h' && (*node)->state == 2)
+	if ((*node)->cmd[0] == '<' && (*node)->e_type == 'h'
+		&& (*node)->e_state == 2)
 	{
 		flag++;
 		ft_heredoc(node, parce_node, file, &flag);
 	}
-	else if ((*node)->type == '|' && (*node)->state == 2)
+	else if ((*node)->e_type == '|' && (*node)->e_state == 2)
 	{
 		(*parce_node)->args = split_lexer((*parce_node)->cmd, " \t\n\r\f\v");
 		(*parce_node)->first = my_strdup_two((*parce)->args[0]);
@@ -51,7 +52,7 @@ void	handle_special_cases(Datatoken **node, t_parce_node **parce_node,
 
 void	ft_parce(t_parce_node **parce, t_vars *data)
 {
-	Datatoken		*node;
+	t_datatoken		*node;
 	t_parce_node	*parce_node;
 	t_file			*file;
 

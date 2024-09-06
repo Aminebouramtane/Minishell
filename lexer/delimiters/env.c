@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:55:40 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:55:41 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:31:52 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_env_in_node(char *str, size_t *i, t_vars *data, char *delimiters)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	char		*tmp;
 	size_t		start;
 	size_t		end;
