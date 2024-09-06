@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparing_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:56 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:06:59 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,19 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 	if (!dirs_path)
 		return (NULL);
 	if (parce && parce->args[0] && ft_strchr(parce->args[0], '/'))
+	{
+		ft_free(dirs_path);
 		return (ft_strdup(parce->args[0]));
+	}
 	if (parce && parce->args[0])
 		command_path = ft_strjoin_path("/", parce->args[0]);
 	s = check_dirs(dirs_path, i, s, command_path);
+	if (s)
+		return (s);
 	if (dirs_path)
 		ft_free(dirs_path);
 	if (command_path)
 		free(command_path);
-	if (s != NULL)
-		return (s);
 	return (NULL);
 }
 
@@ -77,7 +80,7 @@ char	*getpaths(t_parce_node *parce)
 	char	*env_paths;
 	t_env	*temp;
 
-	temp = envi;
+	temp = g_envi;
 	env_paths = NULL;
 	while (temp)
 	{
@@ -91,8 +94,8 @@ char	*getpaths(t_parce_node *parce)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(parce->args[0], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		if (envi)
-			envi->exit_status = 127;
+		if (g_envi)
+			g_envi->exit_status = 127;
 		exit(127);
 		return (env_paths);
 	}

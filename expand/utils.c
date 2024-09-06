@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:37 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:28:52 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:56:16 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_env_variable_case(t_datatoken *node, char *str)
 	if (env || str[0] == '?')
 	{
 		if (str[0] == '?')
-			node->cmd = ft_itoa(envi->exit_status);
+			node->cmd = ft_itoa(g_envi->exit_status);
 		else
 			node->cmd = my_strdup_two(env);
 	}

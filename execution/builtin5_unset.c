@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin5_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:15 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 00:52:43 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_unset_a_node(t_env *temp)
 	if (temp->prev)
 		temp->prev->next = temp->next;
 	else
-		envi = temp->next;
+		g_envi = temp->next;
 	if (temp->next)
 		temp->next->prev = temp->prev;
 	ft_env_delone(temp);
@@ -31,7 +31,7 @@ void	ft_unset(t_parce_node *parce)
 	t_env	*temp;
 
 	i = 1;
-	temp = envi;
+	temp = g_envi;
 	while (parce->args[i])
 	{
 		if (!parce || !parce->args || !parce->args[i])
@@ -41,7 +41,7 @@ void	ft_unset(t_parce_node *parce)
 			temp = temp->next;
 		ft_unset_a_node(temp);
 		i++;
-		temp = envi;
+		temp = g_envi;
 	}
-	envi->exit_status = 0;
+	g_envi->exit_status = 0;
 }

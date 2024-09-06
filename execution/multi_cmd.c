@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:51 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:44:21 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			envi->exit_status = WEXITSTATUS(status);
+			g_envi->exit_status = WEXITSTATUS(status);
 		close(fd[1]);
 		close(fd[0]);
 	}

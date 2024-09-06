@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2_cd_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:01 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:02 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 00:50:48 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	error_cd(char *str, int a_counter)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": No such file or directory", 2);
 		ft_putstr_fd("\n", 2);
-		if (envi)
-			envi->exit_status = 1;
+		if (g_envi)
+			g_envi->exit_status = 1;
 	}
 	else
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-		if (envi)
-			envi->exit_status = 1;
+		if (g_envi)
+			g_envi->exit_status = 1;
 	}
 }

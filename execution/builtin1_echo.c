@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin1_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:43:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:43:59 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 00:50:14 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	ft_echo(t_parce_node *parce)
 	}
 	else
 		echo_without_flag(parce);
-	if (envi)
-		envi->exit_status = 0;
+	if (g_envi)
+		g_envi->exit_status = 0;
 }

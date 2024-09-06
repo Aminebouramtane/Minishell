@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:28:41 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:55:09 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_expand_dolar_long(t_datatoken *node)
 		}
 		if (node->cmd[1] == '?')
 		{
-			node->cmd = ft_my_strjoin(ft_itoa(envi->exit_status), \
+			node->cmd = ft_my_strjoin(ft_itoa(g_envi->exit_status), \
 			node->cmd + 2);
 			return ;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:49:46 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:07:26 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_env
 
 }	t_env;
 
-extern t_env	*envi;
+extern t_env	*g_envi;
 
 typedef struct s_data
 {
@@ -203,6 +203,7 @@ void			ft_unset_a_node(t_env *temp);
 void			ft_unset(t_parce_node *parce);
 t_env			*get_env_vars(char **env_vars);
 t_env			*ft_env_lstnew(void *content);
+t_env	*first_env_lstnew(void *content);
 void			ft_env_lstadd_back(t_env **lst, t_env *new);
 void			ft_env_delone(t_env *lst);
 void			bubblesort(t_env *start);
@@ -255,6 +256,7 @@ void			successful_exit(char *cmd_path, char **envp);
 char			*getpaths(t_parce_node *parce);
 void			waiting(pid_t pid, int status);
 void			execve_error(t_parce_node *temp, char **envp, char *cmd_path);
+void			execution_execve(char *cmd_path, t_parce_node *temp, char **envp);
 char			*get_value(char *key);
 int				valid_key(char *key);
 char			*ft_my_strchr(const char *s, int c);
@@ -283,7 +285,7 @@ void			ft_output(t_datatoken **node, t_parce_node **parce,
 void			ft_heredoc(t_datatoken **node, t_parce_node **parce,
 					t_file **file, int *flag);
 void			ft_cmd(t_datatoken **node, t_parce_node **parce);
-void			ft_handler(void);
+void			ft_handler(int sig);
 void			ft_handler2(void);
 void			ft_handler3(void);
 void			handle_child_process(t_parce_node *parce);

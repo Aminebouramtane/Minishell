@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_append.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:59 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:45:23 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	open_files_heredoc(t_file *file)
 		ft_putstr_fd(file->eof, 2);
 		perror(" ");
 		ft_putstr_fd("", 2);
-		envi->exit_status = 1;
+		g_envi->exit_status = 1;
 		exit(1);
 	}
 	return (temp->heredoc_file_fd);
@@ -47,7 +47,7 @@ void	open_files_append(t_file *file, int fd_out)
 				write(2, temp->file, ft_strlen(temp->file));
 				perror(" ");
 				ft_putstr_fd("", 2);
-				envi->exit_status = 1;
+				g_envi->exit_status = 1;
 				exit(1);
 			}
 			else if (temp->next == NULL)
@@ -76,7 +76,7 @@ void	open_out_files_redir(t_file *file, int fd_out)
 				write(2, temp->file, ft_strlen(temp->file));
 				perror(" ");
 				ft_putstr_fd("", 2);
-				envi->exit_status = 1;
+				g_envi->exit_status = 1;
 				exit(1);
 			}
 			if (temp->next)
@@ -104,7 +104,7 @@ void	open_in_files_redir(t_file *file, int fd_in)
 				write(2, temp->file, ft_strlen(temp->file));
 				perror(" ");
 				ft_putstr_fd("", 2);
-				envi->exit_status = 1;
+				g_envi->exit_status = 1;
 				exit(1);
 			}
 			dup2(temp->in_file_fd, fd_in);

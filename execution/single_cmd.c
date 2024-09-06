@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:45:07 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:05:28 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,11 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 
 void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 {
-	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-	{
-		ft_free(envp);
-		exit(envi->exit_status);
-	}
 	open_files(temp);
 	cmd_path = get_cmd_path(temp);
 	is_directory_check(cmd_path, envp);
 	if (cmd_path && access(cmd_path, X_OK) != 0)
-		check_access(temp->args[0], envp);
+		check_access(temp->args[0], envp);	
 	if (temp->args)
 		execution_execve(cmd_path, temp, envp);
 }
@@ -77,30 +72,9 @@ void	execute_single(t_parce_node *parce, char **envp)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-			{
-				ft_free(envp);
-				exit(envi->exit_status);
-			}
-			open_files(temp);
-			cmd_path = get_cmd_path(temp);
-			is_directory_check(cmd_path, envp);
-			if (cmd_path && access(cmd_path, X_OK) != 0)
-				check_access(temp->args[0], envp);
-			if (temp->args)
-				execution_execve(cmd_path, temp, envp);
-			if (cmd_path != NULL)
-			{
-				free(cmd_path);
-			}
-		}
+			single_child(temp, cmd_path, envp);
 		else
-		{
 			waiting(pid, status);
-			if (cmd_path)
-				free(cmd_path);
-		}
 	}
 	if (envp)
 		free_split(envp);

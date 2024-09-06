@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin7_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:33 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:34 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 00:55:17 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	exiting(t_parce_node *parce, int status)
 {
 	ft_putstr_fd("exit\n", 1);
 	status = ft_strtol(parce->args[1]);
-	envi->exit_status = (int)status;
+	g_envi->exit_status = (int)status;
 	ft_malloc(0, 1);
 	exit((char)status);
 }
@@ -107,7 +107,7 @@ void	ft_exit(t_parce_node *parce)
 	if (!parce->args[1])
 	{
 		ft_putstr_fd("exit\n", 1);
-		envi->exit_status = 0;
+		g_envi->exit_status = 0;
 		ft_malloc(0, 1);
 		exit(0);
 	}
@@ -115,7 +115,7 @@ void	ft_exit(t_parce_node *parce)
 	{
 		ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		envi->exit_status = 1;
+		g_envi->exit_status = 1;
 	}
 	else
 	{

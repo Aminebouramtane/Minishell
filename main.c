@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:56:25 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 10:01:15 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:47:19 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*envi;
+t_env	*g_envi;
 
 void	initialize_shell(int ac, char **env)
 {
 	if (ac != 1)
 	{
 		ft_putstr_fd("Error in Args !!\n", 2);
-		envi->exit_status = 1;
+		g_envi->exit_status = 1;
 		exit(1);
 	}
 	signal(SIGINT, ft_handler);
-	envi = get_env_vars(env);
+	g_envi = get_env_vars(env);
 }
 
 char	*read_main_user_input(void)
@@ -62,7 +62,7 @@ int	process_input(char *input, t_vars **data, t_parce_node **parce)
 
 void	cleanup_and_exit(void)
 {
-	ft_env_lstclear(envi);
+	ft_env_lstclear(g_envi);
 	ft_malloc(0, 1);
 }
 

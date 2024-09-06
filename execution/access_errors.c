@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:43:54 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:43:55 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 00:49:05 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	a_permission_error(char *cmd_path, char **envp)
 	if (cmd_path)
 		free(cmd_path);
 	ft_malloc(0, 1);
-	envi->exit_status = 126;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 126;
+	ft_env_lstclear(g_envi);
 	exit(126);
 }
 
@@ -33,8 +33,8 @@ void	a_no_such_file(char *cmd_path, char **envp)
 	if (cmd_path)
 		free(cmd_path);
 	ft_free(envp);
-	envi->exit_status = 127;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 127;
+	ft_env_lstclear(g_envi);
 	exit(127);
 }
 
@@ -45,8 +45,8 @@ void	a_command_not_found(char *cmd_path, char **envp)
 	ft_free(envp);
 	if (cmd_path)
 		free(cmd_path);
-	envi->exit_status = 127;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 127;
+	ft_env_lstclear(g_envi);
 	ft_malloc(0, 1);
 	exit(127);
 }

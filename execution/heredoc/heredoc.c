@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:24 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:53:12 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:05:27 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_handler_heredoc(int sigint)
 {
 	(void) sigint;
 	ft_malloc(0, 1);
-	ft_env_lstclear(envi);
+	ft_env_lstclear(g_envi);
 	exit(130);
 }
 
