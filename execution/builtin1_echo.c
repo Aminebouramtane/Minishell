@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin1_echo.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:43:58 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:50:14 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	echo_without_flag(t_parce_node *parce)
@@ -57,6 +69,6 @@ void	ft_echo(t_parce_node *parce)
 	}
 	else
 		echo_without_flag(parce);
-	if (envi)
-		envi->exit_status = 0;
+	if (g_envi)
+		g_envi->exit_status = 0;
 }

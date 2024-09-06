@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:56:09 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:57:56 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:33:10 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	fill_string_in_node(char *str, size_t *i,
 	t_vars *data, char *delimiters)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	char		*tmp;
 	int			start;
 	int			end;

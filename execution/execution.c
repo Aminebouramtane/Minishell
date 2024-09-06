@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:47 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:57:09 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	run_builtin(t_parce_node *parce, char **env)
@@ -44,8 +56,8 @@ void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
 		if (file->heredoc && file->index == 16)
 		{
 			printf("minishell: maximum here-document count exceeded");
-			if (envi)
-				envi->exit_status = 2;
+			if (g_envi)
+				g_envi->exit_status = 2;
 			exit(2);
 		}
 		file = file->next;
@@ -74,7 +86,7 @@ void	ft_execute(t_parce_node *parce)
 	envp = NULL;
 	file = parce->file;
 	heredocing(file, parce, tmp);
-	envp = make_env_array(envi);
+	envp = make_env_array(g_envi);
 	if (parce->next == NULL)
 		execute_single(parce, envp);
 	else

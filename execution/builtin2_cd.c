@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin2_cd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:05 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:51:08 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	change_pwd(void)
@@ -6,8 +18,8 @@ void	change_pwd(void)
 	t_env	*temp3;
 	char	*buffer;
 
-	temp2 = envi;
-	temp3 = envi;
+	temp2 = g_envi;
+	temp3 = g_envi;
 	while (temp3 && ft_strncmp(temp3->key, "PWD") != 0)
 		temp3 = temp3->next;
 	while (temp2 && ft_strncmp(temp2->key, "OLDPWD") != 0)
@@ -29,7 +41,7 @@ void	cd_home(t_env *temp)
 	else
 	{
 		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
-		envi->exit_status = 1;
+		g_envi->exit_status = 1;
 	}
 }
 void	pwd_ing(t_env *temp)
@@ -49,7 +61,7 @@ void	ft_cd(t_parce_node *parce)
 	int		arg_counter;
 
 	arg_counter = 0;
-	temp = envi;
+	temp = g_envi;
 	while (parce->args[arg_counter] != NULL)
 		arg_counter++;
 	if (arg_counter == 2)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shlvl.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:45:01 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 11:45:47 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	countlength(long a)
@@ -68,7 +80,7 @@ void	handle_shlvl(void)
 	if (pid == 0)
 	{
 		value = get_value("SHLVL");
-		temp = envi;
+		temp = g_envi;
 		while (temp && ft_strncmp(temp->key, "SHLVL") != 0)
 			temp = temp->next;
 		if (value != NULL)

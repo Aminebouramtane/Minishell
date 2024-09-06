@@ -6,28 +6,28 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:20:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 12:21:13 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:29:10 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-Datatoken	*ft_my_lstnew(void *content, char type, char state)
+t_datatoken	*ft_my_lstnew(void *content, char type, char state)
 {
-	Datatoken	*my_node;
+	t_datatoken	*my_node;
 
-	my_node = (Datatoken *) ft_malloc(sizeof(Datatoken), 0);
+	my_node = (t_datatoken *) ft_malloc(sizeof(t_datatoken), 0);
 	if (my_node == NULL)
 		return (NULL);
 	my_node->cmd = content;
-	my_node->type = type;
-	my_node->state = state;
+	my_node->e_type = type;
+	my_node->e_state = state;
 	my_node->prev = NULL;
 	my_node->next = NULL;
 	return (my_node);
 }
 
-Datatoken	*ft_my_lstlast(Datatoken *lst)
+t_datatoken	*ft_my_lstlast(t_datatoken *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -38,9 +38,9 @@ Datatoken	*ft_my_lstlast(Datatoken *lst)
 	return (lst);
 }
 
-void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
+void	ft_my_lstadd_back(t_datatoken **lst, t_datatoken *new)
 {
-	Datatoken	*last;
+	t_datatoken	*last;
 
 	if (!*lst)
 	{
@@ -55,10 +55,10 @@ void	ft_my_lstadd_back(Datatoken **lst, Datatoken *new)
 	new->next = NULL;
 }
 
-void	ft_my_lstclear(Datatoken **lst)
+void	ft_my_lstclear(t_datatoken **lst)
 {
-	Datatoken	*c;
-	Datatoken	*n;
+	t_datatoken	*c;
+	t_datatoken	*n;
 
 	if (lst && *lst)
 	{
@@ -74,7 +74,7 @@ void	ft_my_lstclear(Datatoken **lst)
 	}
 }
 
-void	ft_my_lstdelone(Datatoken *lst)
+void	ft_my_lstdelone(t_datatoken *lst)
 {
 	if (!lst)
 		return ;

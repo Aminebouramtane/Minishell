@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:03:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 14:09:49 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:26:18 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char	*ft_remove_qoutes(char *lst)
 	return (str);
 }
 
-void	ft_remove_dqoutes(Datatoken **lst)
+void	ft_remove_dqoutes(t_datatoken **lst)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	int			flag;
 
 	node = *lst;
@@ -53,7 +53,7 @@ void	ft_remove_dqoutes(Datatoken **lst)
 	}
 }
 
-void	ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
+void	ft_input(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
 
@@ -61,11 +61,11 @@ void	ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
 	(*node) = (*node)->next;
 	while (*node)
 	{
-		if (((*node)->type == '<' && (*node)->state == 2)
-			|| ((*node)->type == '>' && (*node)->state == 2)
-			|| ((*node)->type == 'h' && (*node)->state == 2)
-			|| ((*node)->type == 'w' && (*node)->state == 2)
-			|| ((*node)->type == '|' && (*node)->state == 2))
+		if (((*node)->e_type == '<' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
 			break ;
 		else
 			str = ft_my_strjoin(str, (*node)->cmd);
@@ -78,7 +78,7 @@ void	ft_input(Datatoken **node, t_parce_node **parce, t_file **file)
 		(*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
 }
 
-void	ft_append(Datatoken **node, t_parce_node **parce, t_file **file)
+void	ft_append(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
 
@@ -86,11 +86,11 @@ void	ft_append(Datatoken **node, t_parce_node **parce, t_file **file)
 	(*node) = (*node)->next;
 	while (*node)
 	{
-		if (((*node)->type == '<' && (*node)->state == 2)
-			|| ((*node)->type == '>' && (*node)->state == 2)
-			|| ((*node)->type == 'h' && (*node)->state == 2)
-			|| ((*node)->type == 'w' && (*node)->state == 2)
-			|| ((*node)->type == '|' && (*node)->state == 2))
+		if (((*node)->e_type == '<' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
 			break ;
 		else
 			str = ft_my_strjoin(str, (*node)->cmd);
@@ -103,7 +103,7 @@ void	ft_append(Datatoken **node, t_parce_node **parce, t_file **file)
 		(*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
 }
 
-void	ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
+void	ft_output(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
 
@@ -111,11 +111,11 @@ void	ft_output(Datatoken **node, t_parce_node **parce, t_file **file)
 	(*node) = (*node)->next;
 	while ((*node))
 	{
-		if (((*node)->type == '<' && (*node)->state == 2)
-			|| ((*node)->type == '>' && (*node)->state == 2)
-			|| ((*node)->type == 'h' && (*node)->state == 2)
-			|| ((*node)->type == 'w' && (*node)->state == 2)
-			|| ((*node)->type == '|' && (*node)->state == 2))
+		if (((*node)->e_type == '<' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
+			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
+			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
 			break ;
 		else
 			str = ft_my_strjoin(str, (*node)->cmd);

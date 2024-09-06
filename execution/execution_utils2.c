@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_utils2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:44 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 11:43:48 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	successful_exit(char *cmd_path, char **envp)
 {
-	envi->exit_status = 0;
+	g_envi->exit_status = 0;
 	if (cmd_path)
 		free(cmd_path);
 	ft_free(envp);
@@ -13,8 +25,8 @@ void	successful_exit(char *cmd_path, char **envp)
 void	waiting(pid_t pid, int status)
 {
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && envi)
-		envi->exit_status = WEXITSTATUS(status);
+	if (WIFEXITED(status) && g_envi)
+		g_envi->exit_status = WEXITSTATUS(status);
 }
 
 void	keep_in_out(void)

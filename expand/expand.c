@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/03 15:28:34 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:55:09 by user007          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_expand_dolar_long(Datatoken *node)
+void	ft_expand_dolar_long(t_datatoken *node)
 {
 	char	*str;
 	char	*env;
@@ -26,7 +26,7 @@ void	ft_expand_dolar_long(Datatoken *node)
 		}
 		if (node->cmd[1] == '?')
 		{
-			node->cmd = ft_my_strjoin(ft_itoa(envi->exit_status), \
+			node->cmd = ft_my_strjoin(ft_itoa(g_envi->exit_status), \
 			node->cmd + 2);
 			return ;
 		}
@@ -40,51 +40,27 @@ void	ft_expand_dolar_long(Datatoken *node)
 	}
 }
 
-void	ft_expand_dolar_single(Datatoken *node)
+void	ft_expand_dolar_single(t_datatoken *node)
 {
 	ft_expand_dolar_single_char(node);
 	ft_expand_dolar_long(node);
 	ft_expand_dolar_two_chars(node);
 }
 
-void	ft_expand_dolar(Datatoken *lst)
+void	ft_expand_dolar(t_datatoken *lst)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 
 	node = lst;
 	while (node)
 	{
-		if (node->cmd && node->cmd[0] == '$' && node->state != 0)
+		if (node->cmd && node->cmd[0] == '$' && node->e_state != 0)
 			ft_expand_dolar_single(node);
 		node = node->next;
 	}
 }
 
-void	ft_expand_home(Datatoken *lst)
+void	ft_expand(t_datatoken *lst)
 {
-	Datatoken	*node;
-	char		*tmp;
-	char		*env;
-
-	node = lst;
-	while (node)
-	{
-		if (node->cmd[0] == '~' && node->state != 0)
-		{
-			node->cmd += 1;
-			env = my_strdup_two(get_value("HOME"));
-			tmp = ft_strjoin(env, node->cmd);
-			if (tmp)
-				node->cmd = tmp;
-			else
-				node->cmd--;
-		}
-		node = node->next;
-	}
-}
-
-void	ft_expand(Datatoken *lst)
-{
-	ft_expand_home(lst);
 	ft_expand_dolar(lst);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:39 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:55:57 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	free_split(char **command_av)
@@ -85,7 +97,7 @@ char	*get_value(char *key)
 {
 	t_env	*temp;
 
-	temp = envi;
+	temp = g_envi;
 	while (temp && ft_strncmp(temp->key, key) != 0)
 		temp = temp->next;
 	if (temp == NULL)

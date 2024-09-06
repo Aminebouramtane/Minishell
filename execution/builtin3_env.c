@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin3_env.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:08 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 12:04:41 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*last_arg(t_parce_node *parce)
@@ -27,10 +39,8 @@ void	last_com_var(t_parce_node *parce)
 {
 	t_env	*temp;
 	char	*arg;
-	int		i;
 
-	i = 0;
-	temp = envi;
+	temp = g_envi;
 	arg = NULL;
 	if (parce->args)
 		arg = last_arg(parce);
@@ -43,7 +53,7 @@ void	last_com_var(t_parce_node *parce)
 	if (parce && parce->args && temp && arg)
 	{
 		ft_unset_a_node(temp);
-		ft_env_lstadd_back(&envi, ft_env_lstnew(arg));
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew(arg));
 	}
 	if (arg)
 	{
@@ -59,21 +69,21 @@ t_env	*get_env_vars(char **env_vars)
 	i = 0;
 	if (env_vars && !env_vars[i])
 	{
-		ft_env_lstadd_back(&envi, ft_env_lstnew("PATH=/nfs/homes/yimizare/bin:/usr/local/sbin:/usr/local/bin:\
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew("PATH=/nfs/homes/yimizare/bin:/usr/local/sbin:/usr/local/bin:\
 /usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
-		ft_env_lstadd_back(&envi, ft_env_lstnew("PWD=/nfs/homes/yimizare"));
-		ft_env_lstadd_back(&envi, ft_env_lstnew("SHLVL=1"));
-		ft_env_lstadd_back(&envi, ft_env_lstnew("_=]"));
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew("PWD=/nfs/homes/yimizare"));
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew("SHLVL=1"));
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew("_=]"));
 	}
 	else
 	{
 		while (env_vars && env_vars[i] != NULL)
 		{
-			ft_env_lstadd_back(&envi, first_env_lstnew(env_vars[i]));
+			ft_env_lstadd_back(&g_envi, first_env_lstnew(env_vars[i]));
 			i++;
 		}
 	}
-	return (envi);
+	return (g_envi);
 }
 
 void	print_env(t_env *temp)
@@ -97,7 +107,7 @@ void	ft_env(char **env_vars)
 	int		i;
 
 	i = 0;
-	temp = envi;
+	temp = g_envi;
 	if (env_vars && !env_vars[i])
 	{
 		while (temp)
@@ -116,5 +126,5 @@ void	ft_env(char **env_vars)
 	{
 		print_env(temp);
 	}
-	envi->exit_status = 0;
+	g_envi->exit_status = 0;
 }

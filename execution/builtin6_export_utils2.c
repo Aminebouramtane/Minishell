@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin6_export_utils2.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:20 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:53:34 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 t_env	*copy_list(t_env *start)
@@ -87,7 +99,7 @@ int	valid_key(char *key)
 {
 	t_env	*temp;
 
-	temp = envi;
+	temp = g_envi;
 	while (temp != NULL)
 	{
 		if (ft_strncmp(temp->key, key) != 0)

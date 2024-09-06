@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multi_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:50 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 11:44:21 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	handle_builtins(t_parce_node *temp, char **envp, char *cmd_path)
@@ -62,7 +74,7 @@ void	execution_last(t_parce_node *temp, char **envp, int *fd)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			envi->exit_status = WEXITSTATUS(status);
+			g_envi->exit_status = WEXITSTATUS(status);
 		close(fd[1]);
 		close(fd[0]);
 	}

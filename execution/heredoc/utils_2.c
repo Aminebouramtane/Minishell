@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 12:25:13 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 12:08:27 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	handle_child_process(t_parce_node *parce)
@@ -8,11 +20,8 @@ void	handle_child_process(t_parce_node *parce)
 			process_heredoc_file(parce);
 		parce->file = parce->file->next;
 	}
-	if (envi)
-	{
-		envi->exit_status = 0;
-		ft_env_lstclear(envi);
-	}
+	g_envi->exit_status = 0;
+	ft_env_lstclear(g_envi);
 	ft_malloc(0, 1);
 	exit(0);
 }
@@ -23,18 +32,19 @@ void	process_heredoc_file(t_parce_node *parce)
 	char	*myfile;
 	char	*delimiter;
 
-    myfile = parce->file->file;
-    delimiter = parce->file->eof;
-    fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
-    if (fd < 0)
-    {
+	myfile = parce->file->file;
+	delimiter = parce->file->eof;
+	fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	if (fd < 0)
+	{
 		ft_putstr_fd("Error in FD !!\n", 1);
-		if (envi)
-			envi->exit_status = 1;
+		g_envi->exit_status = 1;
+		ft_malloc(0, 1);
+		ft_env_lstclear(g_envi);
 		exit(1);
-    }
-    read_and_write_heredoc(fd, delimiter, parce->file->is_quoted);
-    close(fd);
+	}
+	read_and_write_heredoc(fd, delimiter, parce->file->is_quoted);
+	close(fd);
 }
 
 void	ft_expand_h_dolar_single_char(t_heredoc *node)
@@ -60,7 +70,7 @@ void	ft_expand_h_dolar_two_chars(t_heredoc *node)
 			if (str[0] == '_')
 				node->input = my_strdup_two(env);
 			else if (str[0] == '?')
-				node->input = ft_itoa(envi->exit_status);
+				node->input = ft_itoa(g_envi->exit_status);
 			else
 				node->input = "\0";
 		}

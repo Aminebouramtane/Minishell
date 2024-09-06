@@ -4,11 +4,11 @@ CC = cc
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror  -g3 #-fsanitize=address  
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 SRC = main.c lexer/main_lexer.c lexer/check_slpit.c lexer/count_word.c lexer/utils.c lexer/utils2.c lexer/utils3.c lexer/delimiters/qoutes.c lexer/delimiters/quotes_utils.c lexer/delimiters/parentheses.c lexer/delimiters/input_output.c \
 	lexer/delimiters/string.c lexer/delimiters/pipe.c lexer/delimiters/env.c\
-	lexer/delimiters/white_spaces.c free_functions/ft_malloc.c \
+	lexer/delimiters/white_spaces.c free_functions/ft_malloc.c free_functions/ft_malloc_utils.c\
 	expand/expand.c expand/utils.c\
 	parce/check_quotes.c parce/parcing.c parce/helpers.c parce/helpers_2.c parce/utils.c parce/utils2.c parce/utils3.c parce/utils4.c\
 	execution/execution.c execution/preparing_execution.c execution/access_errors.c execution/execution_errors.c execution/builtin1_echo.c execution/builtin2_cd.c \

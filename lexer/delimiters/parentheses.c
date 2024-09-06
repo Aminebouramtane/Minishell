@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:55:56 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:55:57 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:32:27 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_open_in_node(size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 
 	if (data->flag)
 		node = ft_my_lstnew("(", '(', IN_DOUBLE_COTE);
@@ -26,7 +26,7 @@ void	fill_open_in_node(size_t *i, t_vars *data)
 
 void	fill_close_in_node(size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 
 	if (data->flag)
 		node = ft_my_lstnew(")", ')', IN_DOUBLE_COTE);

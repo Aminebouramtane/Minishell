@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_errors.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:36 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/06 00:55:36 by user007          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	e_permission_denied(t_parce_node *temp, char *cmd_path, char **envp)
@@ -8,8 +20,8 @@ void	e_permission_denied(t_parce_node *temp, char *cmd_path, char **envp)
 	if (cmd_path)
 		free(cmd_path);
 	ft_malloc(0, 1);
-	envi->exit_status = 126;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 126;
+	ft_env_lstclear(g_envi);
 	exit(126);
 }
 
@@ -21,8 +33,8 @@ void	e_no_such_file(t_parce_node *temp, char *cmd_path, char **envp)
 	if (cmd_path)
 		free(cmd_path);
 	ft_malloc(0, 1);
-	envi->exit_status = 127;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 127;
+	ft_env_lstclear(g_envi);
 	exit(127);
 }
 
@@ -34,8 +46,8 @@ void	e_command_not_found(t_parce_node *temp, char *cmd_path, char **envp)
 	if (cmd_path)
 		free(cmd_path);
 	ft_malloc(0, 1);
-	envi->exit_status = 127;
-	ft_env_lstclear(envi);
+	g_envi->exit_status = 127;
+	ft_env_lstclear(g_envi);
 	exit(127);
 }
 
@@ -62,8 +74,8 @@ void	is_directory_check(char *cmd_path, char **envp)
 			free(cmd_path);
 			cmd_path = NULL;
 			ft_malloc(0, 1);
-			envi->exit_status = 126;
-			ft_env_lstclear(envi);
+			g_envi->exit_status = 126;
+			ft_env_lstclear(g_envi);
 			exit(126);
 		}
 	}
