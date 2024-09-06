@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:24 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/02 14:33:36 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:53:12 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	ft_handler_heredoc(int sigint)
 {
 	(void) sigint;
+	ft_malloc(0, 1);
+	ft_env_lstclear(envi);
 	exit(130);
 }
 
@@ -23,16 +25,12 @@ void	handel_heredoc(t_parce_node *parce)
 	int		f;
 	int		status;
 
-    f = fork();
-    if (f == -1)
-        return;
-    else if (f == 0)
-	{
-        handle_child_process(parce);
-		if (envi)
-			ft_env_lstclear(envi);
-	}
-    waitpid(f, &status, 0);
+	f = fork();
+	if (f == -1)
+		return ;
+	else if (f == 0)
+		handle_child_process(parce);
+	waitpid(f, &status, 0);
 }
 
 static char	*read_user_input(char *delimiter)
@@ -44,7 +42,7 @@ static char	*read_user_input(char *delimiter)
 	if (input == NULL)
 	{
 		printf("Minishell: warning: here-document at line \
-		1 delimited by end-of-file (wanted `%s')\n", delimiter);
+1 delimited by end-of-file (wanted `%s')\n", delimiter);
 	}
 	return (input);
 }

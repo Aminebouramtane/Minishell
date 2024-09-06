@@ -6,13 +6,13 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:55:52 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:55:53 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:32:09 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_check_here_one(Datatoken **node, t_vars *data)
+void	ft_check_here_one(t_datatoken **node, t_vars *data)
 {
 	if (data->flag)
 		*node = ft_my_lstnew("<<", 'h', IN_DOUBLE_COTE);
@@ -20,7 +20,7 @@ void	ft_check_here_one(Datatoken **node, t_vars *data)
 		*node = ft_my_lstnew("<<", 'h', GENERAL);
 }
 
-void	ft_check_here_two(Datatoken **node, t_vars *data)
+void	ft_check_here_two(t_datatoken **node, t_vars *data)
 {
 	if (data->flag)
 		*node = ft_my_lstnew(">>", 'a', IN_DOUBLE_COTE);
@@ -30,7 +30,7 @@ void	ft_check_here_two(Datatoken **node, t_vars *data)
 
 void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	size_t		a;
 
 	a = *i;
@@ -58,7 +58,7 @@ void	fill_input_in_node(char *str, size_t *i, t_vars *data)
 
 void	fill_output_in_node(char *str, size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	size_t		a;
 
 	a = *i;

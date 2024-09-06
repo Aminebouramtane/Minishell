@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:56:12 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 17:02:42 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:33:20 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_white_spaces_in_node(char *str, size_t *i, t_vars *data)
 {
-	Datatoken	*node;
+	t_datatoken	*node;
 	char		*tmp;
 	int			start;
 	int			end;

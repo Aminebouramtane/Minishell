@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin6_export_utils3.c                           :+:      :+:    :+:   */
+/*   ft_malloc_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 09:44:24 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:25 by abouramt         ###   ########.fr       */
+/*   Created: 2024/09/05 12:23:16 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/05 12:28:35 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	append_the_export(t_parce_node *parce, t_env *temp, char *buff, int *i)
+int	free_lstsize(t_leaks *lst)
 {
-	if (parce->args[i[0]][i[1]] == '+')
+	int	count;
+
+	if (!lst)
+		return (0);
+	count = 0;
+	while (lst)
 	{
-		while (temp && ft_strncmp(temp->key, buff) != 0)
-			temp = temp->next;
-		temp->env_var = ft_strdup(parce->args[i[0]]);
-		temp->key = ft_substr(parce->args[i[0]], 0, i[1]);
-		temp->value = ft_strjoin_path(get_value(buff),
-				ft_my_strchr(parce->args[i[0]], '='));
+		count++;
+		lst = lst->next;
 	}
+	return (count);
+}
+
+t_leaks	*free_lstlast(t_leaks *lst)
+{
+	int	last;
+
+	last = free_lstsize(lst);
+	while (last-- > 1)
+		lst = lst->next;
+	return (lst);
 }
