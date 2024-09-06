@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 17:41:23 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 19:05:03 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,5 @@ void	execute_single(t_parce_node *parce, char **envp)
 		else
 			waiting(pid, status);
 	}
-	if (envp)
-		free_split(envp);
 	return_in_out();
 }

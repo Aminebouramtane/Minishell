@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:47 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 17:51:20 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 19:48:01 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	ft_execute(t_parce_node *parce)
 		{
 		}
 	}
+	ft_free(envp);
 }
