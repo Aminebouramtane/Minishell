@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 19:05:03 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 23:24:56 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 
 void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 {
-	open_files(temp);
+	open_files(temp, envp);
 	cmd_path = get_cmd_path(temp);
 	is_directory_check(cmd_path, envp);
 	if (cmd_path && access(cmd_path, X_OK) != 0)

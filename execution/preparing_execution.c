@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparing_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 17:16:36 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 22:43:38 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*getpaths(t_parce_node *parce)
 		ft_putstr_fd(": No such file or directory\n", 2);
 		if (g_envi)
 			g_envi->exit_status = 127;
+		ft_malloc(0, 1);
 		exit(127);
 		return (env_paths);
 	}

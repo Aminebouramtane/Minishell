@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_append.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:45:23 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 23:20:47 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ int	open_files_heredoc(t_file *file)
 		perror(" ");
 		ft_putstr_fd("", 2);
 		g_envi->exit_status = 1;
+		ft_malloc(0, 1);
+		ft_env_lstclear(g_envi);
+		//ft_free(envp);
 		exit(1);
 	}
 	return (temp->heredoc_file_fd);
 }
 
-void	open_files_append(t_file *file, int fd_out)
+void	open_files_append(t_file *file, int fd_out, char **envp)
 {
 	t_file	*temp;
 
@@ -48,6 +51,9 @@ void	open_files_append(t_file *file, int fd_out)
 				perror(" ");
 				ft_putstr_fd("", 2);
 				g_envi->exit_status = 1;
+				ft_malloc(0, 1);
+				ft_env_lstclear(g_envi);
+				ft_free(envp);
 				exit(1);
 			}
 			else if (temp->next == NULL)
@@ -59,7 +65,7 @@ void	open_files_append(t_file *file, int fd_out)
 	}
 }
 
-void	open_out_files_redir(t_file *file, int fd_out)
+void	open_out_files_redir(t_file *file, int fd_out, char **envp)
 {
 	t_file	*temp;
 
@@ -77,6 +83,9 @@ void	open_out_files_redir(t_file *file, int fd_out)
 				perror(" ");
 				ft_putstr_fd("", 2);
 				g_envi->exit_status = 1;
+				ft_malloc(0, 1);
+				ft_env_lstclear(g_envi);
+				ft_free(envp);
 				exit(1);
 			}
 			if (temp->next)
@@ -88,7 +97,7 @@ void	open_out_files_redir(t_file *file, int fd_out)
 	}
 }
 
-void	open_in_files_redir(t_file *file, int fd_in)
+void	open_in_files_redir(t_file *file, int fd_in, char **envp)
 {
 	t_file	*temp;
 
@@ -105,6 +114,10 @@ void	open_in_files_redir(t_file *file, int fd_in)
 				perror(" ");
 				ft_putstr_fd("", 2);
 				g_envi->exit_status = 1;
+				ft_malloc(0, 1);
+				ft_env_lstclear(g_envi);
+				if (envp)
+					ft_free(envp);
 				exit(1);
 			}
 			dup2(temp->in_file_fd, fd_in);

@@ -1,0 +1,5 @@
+NAME = minishell
+$(NAME) : $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -lreadline -o $(NAME)
+all : $(NAME)
+	rm -f $(OBJ) $(NAME)

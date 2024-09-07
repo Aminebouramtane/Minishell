@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:41 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 13:04:00 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/06 22:52:09 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ void	open_files_heredocc(t_file *file, int fd_in)
 	}
 }
 
-void	open_files(t_parce_node *temp)
+void	open_files(t_parce_node *temp, char **envp)
 {
 	while (temp->file)
 	{
 		if (temp->file->redir_in == 1)
-			open_in_files_redir(temp->file, 0);
+			open_in_files_redir(temp->file, 0, envp);
 		if (temp->file->heredoc == 1)
 			open_files_heredocc(temp->file, 0);
 		if (temp->file->redir_out == 1)
-			open_out_files_redir(temp->file, 1);
+			open_out_files_redir(temp->file, 1, envp);
 		if (temp->file->append == 1)
-			open_files_append(temp->file, 1);
+			open_files_append(temp->file, 1, envp);
 		temp->file = temp->file->next;
 	}
 }
 
 void	open_and_run(t_parce_node *temp, char **env)
 {
-	open_files(temp);
+	open_files(temp, env);
 	run_builtin(temp, env);
 }
 

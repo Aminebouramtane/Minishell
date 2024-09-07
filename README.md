@@ -133,3 +133,9 @@ cd [directory]
 #         //     parce = parce->next;
 #         //     // <Makefile cat | echo "$PWD 'hola'" ~/src | 'tr' -d  / >outfile
 # 	    // } 
+
+#leaks:
+
+    #export | grep PWD
+    #pwd | ls
+    #export _

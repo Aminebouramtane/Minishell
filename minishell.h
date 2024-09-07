@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 16:03:37 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/06 22:57:31 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,9 +236,9 @@ void			execute_single(t_parce_node *parce, char **envp);
 void			execute_multi(t_parce_node *parce, char **envp);
 char			**make_env_array(t_env *env);
 char			*ft_strjoin_path(char const *s1, char const *s2);
-void			open_files_append(t_file *file, int fd_out);
-void			open_out_files_redir(t_file *parce, int fd_out);
-void			open_in_files_redir(t_file *parce, int fd_in);
+void			open_files_append(t_file *file, int fd_out, char **envp);
+void			open_out_files_redir(t_file *parce, int fd_out, char **envp);
+void			open_in_files_redir(t_file *parce, int fd_in, char **envp);
 int				open_files_heredoc(t_file *file);
 void			free_split(char **command_av);
 void			check_access(char *cmd_path, char **envp);
@@ -250,7 +250,7 @@ char			*dirs_paths(char *env_path, t_parce_node *parce);
 void			execution_firsts(t_parce_node *temp, char **envp, int *fd);
 void			keep_in_out(void);
 void			return_in_out(void);
-void			open_files(t_parce_node *temp);
+void			open_files(t_parce_node *temp, char **env);
 void			open_and_run(t_parce_node *temp, char **env);
 char			*get_cmd_path(t_parce_node *temp);
 void			successful_exit(char *cmd_path, char **envp);
