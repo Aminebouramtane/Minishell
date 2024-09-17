@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:05 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/15 19:06:09 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:02:11 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,33 @@
 
 void	change_pwd(void)
 {
-	t_env	*temp2;
-	t_env	*temp3;
+	t_env	*old_pwd_env;
+	t_env	*pwd_env;
 	char	*buffer;
 
-	temp2 = g_envi;
-	temp3 = g_envi;
-	while (temp3 && ft_strncmp(temp3->key, "PWD") != 0)
-		temp3 = temp3->next;
-	while (temp2 && ft_strncmp(temp2->key, "OLDPWD") != 0)
-		temp2 = temp2->next;
+	old_pwd_env = g_envi;
+	pwd_env = g_envi;
+	while (pwd_env && ft_strncmp(pwd_env->key, "PWD") != 0)
+		pwd_env = pwd_env->next;
+	while (old_pwd_env && ft_strncmp(old_pwd_env->key, "OLDPWD") != 0)
+		old_pwd_env = old_pwd_env->next;
 	buffer = getcwd(NULL, 0);
-	swapping_pwd(temp2, temp3);
-	if (temp3)
+	if (buffer == NULL)
 	{
-		if (temp3 && temp3->value)
+		if (pwd_env && pwd_env->value)
+			buffer = ft_strdup(pwd_env->value);
+		else
+			buffer = ft_strdup("Unknown path");
+	}
+	swapping_pwd(old_pwd_env, pwd_env);
+	if (pwd_env)
+	{
+		if (pwd_env->value)
 		{
-			free(temp3->value);
-			temp3->value = NULL;
-			temp3->value = ft_strdup(buffer);
+			free(pwd_env->value);
+			pwd_env->value = NULL;
 		}
+		pwd_env->value = ft_strdup(buffer);
 	}
 	free(buffer);
 }
@@ -59,8 +66,18 @@ void	unsetted_pwd(void)
 
 	temp1 = g_envi;
 	current = getcwd(NULL, 0);
+	if (current == NULL)
+	{
+		while (temp1 && ft_strncmp(temp1->key, "PWD") != 0)
+			temp1 = temp1->next;
+		if (temp1 && temp1->value)
+			current = ft_strdup(temp1->value);
+		else
+			current = ft_strdup("Unknown path");
+	}
 	pwd = ft_strjoin_path("PWD=", current);
 	free(current);
+	temp1 = g_envi;
 	while (temp1 && ft_strncmp(temp1->key, "PWD") != 0)
 		temp1 = temp1->next;
 	if (temp1 != NULL)

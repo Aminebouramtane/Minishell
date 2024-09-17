@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:11:02 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/14 18:50:41 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:39:29 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	empty_exit(void)
 void	preparing_child(int *fd, t_parce_node *temp, char **envp)
 {
 	(void)fd;
-	invalid_expand(temp, envp);
 	open_files_child(temp, envp);
+	invalid_expand(temp, envp);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 }

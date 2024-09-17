@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:20:58 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/15 18:24:41 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/17 22:03:40 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,33 @@ int	open_files_parent(t_parce_node *temp, char **envp)
 	while (temp->file)
 	{
 		if (temp->file->redir_in == 1)
-			infile_redir_parent(temp, envp, flag);
+		{
+			flag = open_in_files_redirp(temp->file, 0);
+			if (flag == 1)
+			{
+				file_error(temp->file, envp);
+				return (flag);
+			}
+		}
 		if (temp->file->heredoc == 1)
 			open_files_heredocc(temp->file, 0);
 		if (temp->file->redir_out == 1)
 		{
 			flag = open_out_files_redirp(temp->file, 1);
 			if (flag == 1)
+			{
 				file_error(temp->file, envp);
+				return (flag);
+			}
 		}
 		if (temp->file->append == 1)
 		{
 			flag = open_files_appendp(temp->file, 1);
 			if (flag == 1)
+			{
 				file_error(temp->file, envp);
+				return (flag);
+			}
 		}
 		temp->file = temp->file->next;
 	}
