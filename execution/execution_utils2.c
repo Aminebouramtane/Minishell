@@ -6,27 +6,50 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:44 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 18:39:26 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:05:48 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	successful_exit(char *cmd_path, char **envp)
+void	sig_handler(int sig)
 {
-	g_envi->exit_status = 0;
-	if (cmd_path)
-		free(cmd_path);
-	ft_free(envp);
+	(void)sig;
+	ft_putstr_fd("Quit (core dumped)\n", 2);
 	ft_malloc(0, 1);
-	exit(0);
+	ft_env_lstclear(g_envi);
+	exit(131);
 }
 
-void	waiting(pid_t pid, int status)
+void	sig_handler2(int sig)
 {
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && g_envi)
-		g_envi->exit_status = WEXITSTATUS(status);
+	(void)sig;
+	write(1, "\n", 1);
+	g_envi->exit_status = 130;
+}
+
+void	waiting(pid_t pid, int *status)
+{
+	int	term_signal;
+
+	term_signal = 0;
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status))
+	{
+		if (g_envi)
+			g_envi->exit_status = WEXITSTATUS(*status);
+	}
+	if (WIFSIGNALED(*status))
+	{
+		signal(SIGQUIT, sig_handler);
+		term_signal = WTERMSIG(*status);
+		if (g_envi)
+			g_envi->exit_status = 128 + term_signal;
+		if (term_signal == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", 2);
+		if (term_signal == SIGINT)
+			ft_putstr_fd("\n", 1);
+	}
 }
 
 void	keep_in_out(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:03:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:26:18 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:41:51 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,24 @@ void	ft_remove_dqoutes(t_datatoken **lst)
 void	ft_input(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
+	int		a;
 
 	str = NULL;
+	a = 0;
 	(*node) = (*node)->next;
 	while (*node)
 	{
-		if (((*node)->e_type == '<' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
+		if (ft_break(node))
 			break ;
 		else
+		{
+			if (*node && ((*node)->e_state == 0 || (*node)->e_state == 1))
+				a = 1;
 			str = ft_my_strjoin(str, (*node)->cmd);
+		}
 		(*node) = (*node)->next;
 	}
-	process_quotes(str);
-	ft_file_lstadd_back(file, ft_file_lstnew(str, 1, 0));
+	input_file(file, str, a);
 	(*parce)->file = *file;
 	if (!*node)
 		(*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
@@ -81,23 +82,24 @@ void	ft_input(t_datatoken **node, t_parce_node **parce, t_file **file)
 void	ft_append(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
+	int		a;
 
 	str = NULL;
+	a = 0;
 	(*node) = (*node)->next;
 	while (*node)
 	{
-		if (((*node)->e_type == '<' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
+		if (ft_break(node))
 			break ;
 		else
+		{
+			if (*node && ((*node)->e_state == 0 || (*node)->e_state == 1))
+				a = 1;
 			str = ft_my_strjoin(str, (*node)->cmd);
+		}
 		(*node) = (*node)->next;
 	}
-	process_quotes(str);
-	ft_file_lstadd_back(file, ft_file_append_lstnew(str, 1));
+	append_file(file, str, a);
 	(*parce)->file = *file;
 	if (!*node)
 		(*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");
@@ -106,23 +108,24 @@ void	ft_append(t_datatoken **node, t_parce_node **parce, t_file **file)
 void	ft_output(t_datatoken **node, t_parce_node **parce, t_file **file)
 {
 	char	*str;
+	int		a;
 
 	str = NULL;
+	a = 0;
 	(*node) = (*node)->next;
 	while ((*node))
 	{
-		if (((*node)->e_type == '<' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '>' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
-			|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
+		if (ft_break(node))
 			break ;
 		else
+		{
+			if (*node && ((*node)->e_state == 0 || (*node)->e_state == 1))
+				a = 1;
 			str = ft_my_strjoin(str, (*node)->cmd);
+		}
 		(*node) = (*node)->next;
 	}
-	process_quotes(str);
-	ft_file_lstadd_back(file, ft_file_lstnew(str, 0, 1));
+	output_file(file, str, a);
 	(*parce)->file = *file;
 	if (!*node)
 		(*parce)->args = split_lexer((*parce)->cmd, " \t\n\r\f\v");

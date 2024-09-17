@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2_cd_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:01 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 22:43:29 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:40:34 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,18 @@ void	error_cd(char *str, int a_counter)
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		if (g_envi)
 			g_envi->exit_status = 1;
+	}
+}
+
+void	swapping_pwd(t_env *temp2, t_env *temp3)
+{
+	if (temp2 && temp3)
+	{
+		if (temp2 && temp2->value)
+		{
+			free(temp2->value);
+			temp2->value = NULL;
+			temp2->value = ft_strdup(temp3->value);
+		}
 	}
 }

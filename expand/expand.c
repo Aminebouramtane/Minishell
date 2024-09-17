@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:55:09 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/17 08:35:38 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_expand_dolar_long(t_datatoken *node)
 	char	*str;
 	char	*env;
 
-	if (node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
+	if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
 	{
 		if (ft_isdigit(node->cmd[1]))
 		{
@@ -47,6 +47,40 @@ void	ft_expand_dolar_single(t_datatoken *node)
 	ft_expand_dolar_two_chars(node);
 }
 
+void	ft_skip_heredoc(t_datatoken **node)
+{
+	if ((*node)->cmd && (*node)->cmd[0] == '<'
+		&& (*node)->e_state == 2 && (*node)->e_type == 'h')
+	{
+		*node = (*node)->next;
+		while (*node)
+		{
+			if (*node && (*node)->e_type == 'w')
+				*node = (*node)->next;
+			else
+				break ;
+		}
+		if (!*node)
+			return ;
+		else if ((*node)->cmd && (*node)->cmd[0] == '"')
+		{
+			*node = (*node)->next;
+			if (*node && (*node)->cmd && (*node)->e_type == '"')
+				*node = (*node)->next;
+			while (*node && (*node)->cmd && (*node)->e_state == 2)
+				*node = (*node)->next;
+			while (*node && (*node)->cmd && ((*node)->e_type == 's' || (*node)->e_type == '$'))
+				*node = (*node)->next;
+		}
+		else if ((*node)->cmd && (*node)->cmd[0] == '\'' && (*node)->e_state == 0)
+		{
+			*node = (*node)->next;
+			while (*node && (*node)->cmd && ((*node)->e_type == 's' || (*node)->e_type == '$'))
+				*node = (*node)->next;
+		}
+	}
+}
+
 void	ft_expand_dolar(t_datatoken *lst)
 {
 	t_datatoken	*node;
@@ -54,7 +88,10 @@ void	ft_expand_dolar(t_datatoken *lst)
 	node = lst;
 	while (node)
 	{
-		if (node->cmd && node->cmd[0] == '$' && node->e_state != 0)
+		ft_skip_heredoc(&node);
+		if (!node)
+			break ;
+		else if (node->cmd && node->cmd[0] == '$' && node->e_state != 0)
 			ft_expand_dolar_single(node);
 		node = node->next;
 	}

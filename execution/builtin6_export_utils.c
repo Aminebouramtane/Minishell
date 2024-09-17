@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin6_export_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:17 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:18 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:06:32 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ void	add_new_export(t_env *my_node, t_parce_node *parce
 
 void	*init_node(t_env	*my_node)
 {
-	my_node->env_var = NULL;
 	if (!my_node)
 		return (NULL);
+	my_node->env_var = NULL;
 	my_node->key = NULL;
 	my_node->value = NULL;
+	my_node->exit_status = 0;
 	return (NULL);
 }
 

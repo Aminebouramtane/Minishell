@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:47 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 19:48:01 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:15:22 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	run_builtin(t_parce_node *parce, char **env)
+void	run_builtin(t_parce_node *parce, char **envp)
+{
+	if (!parce->args)
+		return ;
+	if (ft_strncmp(parce->args[0], "echo") == 0)
+		ft_echo(parce);
+	else if (ft_strncmp(parce->args[0], "cd") == 0)
+		ft_cd(parce);
+	else if (ft_strncmp(parce->args[0], "unset") == 0)
+		ft_unset(parce);
+	else if (ft_strncmp(parce->args[0], "env") == 0)
+		ft_env(envp);
+	else if (ft_strncmp(parce->args[0], "pwd") == 0)
+		ft_pwd();
+	else if (ft_strncmp(parce->args[0], "export") == 0)
+		ft_export(parce, envp);
+	else if (ft_strncmp(parce->args[0], "exit") == 0)
+		ft_exit(parce, envp);
+	else if (ft_strncmp(parce->args[0], "./minishell") == 0)
+		handle_shlvl();
+}
+
+void	run_builtin1(t_parce_node *parce, char **envp, char **env)
 {
 	if (!parce->args)
 		return ;
@@ -27,9 +49,9 @@ void	run_builtin(t_parce_node *parce, char **env)
 	else if (ft_strncmp(parce->args[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strncmp(parce->args[0], "export") == 0)
-		ft_export(parce);
+		ft_export(parce, env);
 	else if (ft_strncmp(parce->args[0], "exit") == 0)
-		ft_exit(parce);
+		ft_exit(parce, envp);
 	else if (ft_strncmp(parce->args[0], "./minishell") == 0)
 		handle_shlvl();
 }
@@ -49,33 +71,7 @@ int	check_builtins(char *command)
 		return (0);
 }
 
-void	heredocing(t_file *file, t_parce_node *parce, t_parce_node *tmp)
-{
-	while (file)
-	{
-		if (file->heredoc && file->index == 16)
-		{
-			printf("minishell: maximum here-document count exceeded");
-			if (g_envi)
-				g_envi->exit_status = 2;
-			exit(2);
-		}
-		file = file->next;
-	}
-	if (parce)
-	{
-		while (tmp)
-		{
-			if (tmp->file)
-			{
-				handel_heredoc(tmp);
-			}
-			tmp = tmp->next;
-		}
-	}
-}
-
-void	ft_execute(t_parce_node *parce)
+void	ft_execute(t_parce_node *parce, char **env)
 {
 	char			**envp;
 	t_parce_node	*tmp;
@@ -84,13 +80,14 @@ void	ft_execute(t_parce_node *parce)
 	tmp = parce;
 	envp = NULL;
 	file = parce->file;
-	heredocing(file, parce, tmp);
+	if (!heredocing(file, parce, tmp))
+		return ;
 	envp = make_env_array(g_envi);
-	if (parce->next == NULL)
-		execute_single(parce, envp);
+	if (parce && parce->next == NULL)
+		execute_single(parce, envp, env);
 	else
 	{
-		execute_multi(parce, envp);
+		execute_multi(parce, envp, env);
 		while (waitpid(-1, NULL, 0) != -1)
 		{
 		}

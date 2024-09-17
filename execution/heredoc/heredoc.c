@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:24 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 12:05:27 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:54:03 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,7 @@ void	ft_handler_heredoc(int sigint)
 
 void	handel_heredoc(t_parce_node *parce)
 {
-	int		f;
-	int		status;
-
-	f = fork();
-	if (f == -1)
-		return ;
-	else if (f == 0)
-		handle_child_process(parce);
-	waitpid(f, &status, 0);
+	handle_child_process(parce);
 }
 
 static char	*read_user_input(char *delimiter)
@@ -53,7 +45,7 @@ static void	process_input_line(int fd, char *input,
 	char	*line;
 
 	if (is_quoted)
-		line = ft_my_strjoin(input, "\n");
+		line = ft_my_strjoin(input, "\0");
 	else
 		line = expande_heredoc(input);
 	write(fd, line, ft_strlen(line));

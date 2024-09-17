@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:40:17 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:42:06 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/12 09:56:31 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,7 @@ static void	ft_heredoc_expand_dolar(t_heredoc *lst)
 	}
 }
 
-static void	ft_heredoc_expand_home(t_heredoc *lst)
-{
-	t_heredoc	*node;
-	char		*tmp;
-	char		*env;
-
-	node = lst;
-	while (node)
-	{
-		if (node->input[0] == '~')
-		{
-			node->input += 1;
-			env = my_strdup_two(getenv("HOME"));
-			tmp = ft_strjoin(env, node->input);
-			if (tmp)
-				node->input = tmp;
-			else
-				node->input--;
-		}
-		node = node->next;
-	}
-}
-
 void	ft_heredoc_expand(t_heredoc *lst)
 {
 	ft_heredoc_expand_dolar(lst);
-	ft_heredoc_expand_home(lst);
 }

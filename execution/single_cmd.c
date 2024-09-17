@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 23:24:56 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/15 17:57:21 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,33 @@ void	execution_execve(char *cmd_path, t_parce_node *temp, char **envp)
 		execve_error(temp, envp, cmd_path);
 }
 
+void	parent_wait(pid_t pid, int status)
+{
+	signal(SIGINT, SIG_IGN);
+	waiting(pid, &status);
+}
+
 void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 {
-	open_files(temp, envp);
+	if (!ft_strncmp(temp->args[0], "") || (!temp->args[0] && !temp->next))
+	{
+		ft_malloc(0, 1);
+		ft_env_lstclear(g_envi);
+		ft_free(envp);
+		exit(0);
+	}
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	open_files_child(temp, envp);
 	cmd_path = get_cmd_path(temp);
-	is_directory_check(cmd_path, envp);
+	is_directory_check(temp, cmd_path, envp);
 	if (cmd_path && access(cmd_path, X_OK) != 0)
-		check_access(cmd_path, envp);
+		check_access(temp, cmd_path, envp);
 	if (temp->args)
 		execution_execve(cmd_path, temp, envp);
 }
 
-void	execute_single(t_parce_node *parce, char **envp)
+void	execute_single(t_parce_node *parce, char **envp, char **env)
 {
 	t_parce_node	*temp;
 	int				status;
@@ -65,15 +80,19 @@ void	execute_single(t_parce_node *parce, char **envp)
 	status = 0;
 	cmd_path = NULL;
 	keep_in_out();
+	if (temp && temp->file && !temp->args)
+		open_files_parent(temp, envp);
 	if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-		open_and_run(temp, envp);
+		open_and_run(temp, envp, env);
 	else if (temp && temp->args && check_builtins(temp->args[0]) != 1)
 	{
 		pid = fork();
 		if (pid == 0)
 			single_child(temp, cmd_path, envp);
 		else
-			waiting(pid, status);
+		{
+			parent_wait(pid, status);
+		}
 	}
 	return_in_out();
 }

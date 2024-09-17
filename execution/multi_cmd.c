@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 20:03:17 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:18:32 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_builtins(t_parce_node *temp, char **envp, char *cmd_path)
+void	handle_builtins(t_parce_node *temp, char **envp, char *cmd_path,
+						char **env)
 {
-	run_builtin(temp, envp);
+	run_builtin1(temp, envp, env);
 	successful_exit(cmd_path, envp);
 }
 
-void	execution_firsts(t_parce_node *temp, char **envp, int *fd)
+void	execution_firsts(t_parce_node *temp, char **envp, int *fd, char **env)
 {
 	pid_t	pid;
 	char	*cmd_path;
@@ -28,14 +29,14 @@ void	execution_firsts(t_parce_node *temp, char **envp, int *fd)
 	if (pid == 0)
 	{
 		into_child(fd);
-		open_files(temp);
+		open_files_child(temp, envp);
 		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-			handle_builtins(temp, envp, cmd_path);
+			handle_builtins(temp, envp, cmd_path, env);
 		else
 		{
 			cmd_path = get_cmd_path(temp);
-			is_directory_check(cmd_path, envp);
-			check_access(cmd_path, envp);
+			is_directory_check(temp, cmd_path, envp);
+			check_access(temp, cmd_path, envp);
 			if (execve(cmd_path, temp->args, envp) == -1)
 				execve_error(temp, envp, cmd_path);
 			successful_exit(cmd_path, envp);
@@ -45,42 +46,33 @@ void	execution_firsts(t_parce_node *temp, char **envp, int *fd)
 		back_to_parent(fd);
 }
 
-void	checks(char *cmd_path, char **envp)
-{
-	is_directory_check(cmd_path, envp);
-	check_access(cmd_path, envp);
-}
-
-void	execution_last(t_parce_node *temp, char **envp, int *fd)
+void	execution_last(t_parce_node *temp, char **envp,
+						int *fd, char **env)
 {
 	pid_t	pid;
 	int		status;
 	char	*cmd_path;	
 
-	pid = fork();
 	cmd_path = NULL;
+	status = 0;
+	pid = fork();
+	fork_check(pid);
 	if (pid == 0)
 	{
-		open_files(temp);
-		if (temp && temp->args && check_builtins(temp->args[0]) == 1)
-			handle_builtins(temp, envp, cmd_path);
+		preparing_child(fd, temp, envp);
+		if (temp && temp->args)
+			child_process(temp, envp, env, cmd_path);
 		else
-		{
-			cmd_path = get_cmd_path(temp);
-			(checks(cmd_path, envp), execution_execve(cmd_path, temp, envp));
-		}
+			empty_exit();
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_envi->exit_status = WEXITSTATUS(status);
-		close(fd[1]);
-		close(fd[0]);
+		(close(fd[1]), dup2(fd[0], 0), close(fd[0]));
+		waiting_signals(pid, status);
 	}
 }
 
-void	execute_multi(t_parce_node *parce, char **envp)
+void	execute_multi(t_parce_node *parce, char **envp, char **env)
 {
 	t_parce_node	*temp;
 	int				fd[2];
@@ -95,11 +87,11 @@ void	execute_multi(t_parce_node *parce, char **envp)
 		if (temp->next != NULL)
 		{
 			pipe(fd);
-			execution_firsts(temp, envp, fd);
+			execution_firsts(temp, envp, fd, env);
 		}
 		else
 		{
-			execution_last(temp, envp, fd);
+			execution_last(temp, envp, fd, env);
 			if (input_fd != STDIN_FILENO)
 				close(input_fd);
 		}

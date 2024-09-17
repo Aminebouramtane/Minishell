@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:01 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:45:47 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/09 18:40:08 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,35 @@ char	*ft_my_itoa(int n)
 	return (itoaed);
 }
 
+void	child_shlvl(char *value, t_env *temp, pid_t pid, int shlvl)
+{
+	if (pid == 0)
+	{
+		value = get_value("SHLVL");
+		while (temp && ft_strncmp(temp->key, "SHLVL") != 0)
+			temp = temp->next;
+		if (value != NULL)
+		{
+			shlvl = ft_atoi(temp->value) + 1;
+			if (temp && temp->value)
+			{
+				free(temp->value);
+				temp->value = NULL;
+				temp->value = ft_my_itoa(shlvl);
+			}
+		}
+		else
+		{
+			if (temp && temp->value)
+			{
+				free(temp->value);
+				temp->value = NULL;
+				temp->value = ft_itoa(1);
+			}
+		}
+	}
+}
+
 void	handle_shlvl(void)
 {
 	t_env	*temp;
@@ -75,23 +104,12 @@ void	handle_shlvl(void)
 	int		status;
 	pid_t	pid;
 
+	shlvl = 0;
 	status = 0;
+	value = NULL;
+	temp = g_envi;
 	pid = fork();
-	if (pid == 0)
-	{
-		value = get_value("SHLVL");
-		temp = g_envi;
-		while (temp && ft_strncmp(temp->key, "SHLVL") != 0)
-			temp = temp->next;
-		if (value != NULL)
-		{
-			shlvl = ft_atoi(temp->value) + 1;
-			temp->value = ft_my_itoa(shlvl);
-		}
-		else
-		{
-			temp->value = ft_itoa(1);
-		}
-	}
-	waitpid(pid, &status, 0);
+	child_shlvl(value, temp, pid, shlvl);
+	signal(SIGINT, SIG_IGN);
+	waiting(pid, &status);
 }

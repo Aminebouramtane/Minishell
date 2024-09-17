@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin7_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:33 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 00:55:17 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/15 19:11:18 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,28 +88,34 @@ int	valid_estatus(char *status)
 	return (1);
 }
 
-void	exiting(t_parce_node *parce, int status)
+void	exiting(t_parce_node *parce, int status, char **envp)
 {
-	ft_putstr_fd("exit\n", 1);
+	if (!parce->next && !parce->prev)
+		ft_putstr_fd("exit\n", 1);
 	status = ft_strtol(parce->args[1]);
-	g_envi->exit_status = (int)status;
+	g_envi->exit_status = status;
 	ft_malloc(0, 1);
-	exit((char)status);
+	ft_free(envp);
+	ft_env_lstclear(g_envi);
+	exit(status);
 }
 
-void	ft_exit(t_parce_node *parce)
+void	ft_exit(t_parce_node *parce, char **envp)
 {
 	long long	status;
 
 	status = 0;
 	if (parce->args[1] && !valid_estatus(parce->args[1]))
-		exit_error(parce);
-	if (!parce->args[1])
+		exit_error(parce, envp);
+	if (parce && !parce->args[1])
 	{
-		ft_putstr_fd("exit\n", 1);
-		g_envi->exit_status = 0;
+		if (!parce->next && !parce->prev)
+			ft_putstr_fd("exit\n", 1);
+		status = g_envi->exit_status;
 		ft_malloc(0, 1);
-		exit(0);
+		ft_free(envp);
+		ft_env_lstclear(g_envi);
+		exit(status);
 	}
 	if (parce->args[1] && parce->args[2])
 	{
@@ -119,6 +125,6 @@ void	ft_exit(t_parce_node *parce)
 	}
 	else
 	{
-		exiting(parce, status);
+		exiting(parce, status, envp);
 	}
 }

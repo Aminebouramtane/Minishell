@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:25:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 12:08:27 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/17 08:19:01 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 void	handle_child_process(t_parce_node *parce)
 {
-	while (parce->file)
+	while (parce)
 	{
-		if (parce->file->heredoc == 1)
-			process_heredoc_file(parce);
-		parce->file = parce->file->next;
+		while (parce->file)
+		{
+			if (parce->file->heredoc == 1)
+				process_heredoc_file(parce);
+			parce->file = parce->file->next;
+		}
+		parce = parce->next;
 	}
 	g_envi->exit_status = 0;
 	ft_env_lstclear(g_envi);
@@ -34,6 +38,7 @@ void	process_heredoc_file(t_parce_node *parce)
 
 	myfile = parce->file->file;
 	delimiter = parce->file->eof;
+	printf("--------------------  %s\n", delimiter);
 	fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (fd < 0)
 	{
@@ -53,52 +58,29 @@ void	ft_expand_h_dolar_single_char(t_heredoc *node)
 		node->input = "$";
 }
 
-void	ft_expand_h_dolar_two_chars(t_heredoc *node)
+void	handle_h_home_case(t_heredoc *node)
 {
-	char	*str;
 	char	*env;
-	char	*tmp;
 
-	if (node->input[0] == '$' && ft_strlen(node->input) == 2)
-	{
-		tmp = node->input;
-		node->input += 1;
-		str = node->input;
-		env = getenv("_");
-		if (str[0] == '_' || str[0] == '?')
-		{
-			if (str[0] == '_')
-				node->input = my_strdup_two(env);
-			else if (str[0] == '?')
-				node->input = ft_itoa(g_envi->exit_status);
-			else
-				node->input = "\0";
-		}
-		else
-			node->input = tmp;
-	}
+	env = my_strdup_two(get_value("HOME"));
+	if (env)
+		node->input = ft_my_strjoin(env, node->input);
+	else
+		node->input = "\0";
 }
 
-void	ft_expand_h_dolar_long(t_heredoc *node)
+void	handle_h_env_variable_case(t_heredoc *node, char *str)
 {
-	char	*str;
-	char	*tmp;
 	char	*env;
 
-	if (node->input[0] == '$' && ft_strlen(node->input) > 2)
+	env = get_value(str);
+	if (env || str[0] == '?')
 	{
-		if (ft_isdigit(node->input[1]))
-		{
-			node->input = node->input + 2;
-			return ;
-		}
-		node->input += 1;
-		str = node->input;
-		env = getenv(str);
-		tmp = my_strdup_two(env);
-		if (tmp)
-			node->input = tmp;
+		if (str[0] == '?')
+			node->input = ft_itoa(g_envi->exit_status);
 		else
-			node->input = "\0";
+			node->input = my_strdup_two(env);
 	}
+	else
+		node->input = "\0";
 }

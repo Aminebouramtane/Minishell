@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:45:07 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 09:25:11 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:19:48 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	ft_cmd(t_datatoken **node, t_parce_node **parce)
 {
 	while (*node)
 	{
-		if (((*node)->cmd[0] == '<' && (*node)->e_type == '<'
-				&& (*node)->e_state == 2) || ((*node)->cmd[0] == '>'
-				&& (*node)->e_type == '>' && (*node)->e_state == 2)
-			|| ((*node)->cmd[0] == '>' && (*node)->e_type == 'a'
-				&& (*node)->e_state == 2) || ((*node)->cmd[0] == '<'
-				&& (*node)->e_type == 'h' && (*node)->e_state == 2)
-			|| ((*node)->e_type == '|' && (*node)->e_state == 2))
+		if ((*node)->cmd && (((*node)->cmd[0] == '<' && (*node)->e_type == '<'
+					&& (*node)->e_state == 2) || ((*node)->cmd[0] == '>'
+					&& (*node)->e_type == '>' && (*node)->e_state == 2)
+				|| ((*node)->cmd[0] == '>' && (*node)->e_type == 'a'
+					&& (*node)->e_state == 2) || ((*node)->cmd[0] == '<'
+					&& (*node)->e_type == 'h' && (*node)->e_state == 2)
+				|| ((*node)->e_type == '|' && (*node)->e_state == 2)))
 			break ;
 		else
 			(*parce)->cmd = ft_my_strjoin((*parce)->cmd, (*node)->cmd);
@@ -67,11 +67,13 @@ void	handle_file(t_file **file, int *flag, char *str, size_t a)
 {
 	char	*name;
 
-	name = "./tmp/heredoc";
+	name = "/tmp/heredocc.txt";
 	if (a)
 		ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 1, str, *flag));
 	else
 		ft_file_lstadd_back(file, ft_file_heredoc_lstnew(name, 0, str, *flag));
+	if (*file)
+		(*file)->index = *flag;
 }
 
 void	final_updates(t_datatoken **node, t_parce_node **parce, t_file **file)

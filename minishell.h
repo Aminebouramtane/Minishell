@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 22:57:31 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/15 18:38:51 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,14 @@ typedef struct s_quote_state
 	int		inside_d_quotes;
 }	t_quote_state;
 
+typedef struct s_special_cases
+{
+	t_parce_node		**parce_node;
+	t_parce_node		**parce;
+	t_file				**file;
+	int					flag;
+}	t_special_cases;
+
 int				lexer(char *str, t_vars **data);
 int				in_delimiters(char a, char *delimiters);
 int				end_of_cmd(char *str, char *delimiter);
@@ -155,14 +163,14 @@ void			ft_parce(t_parce_node **parce, t_vars *data);
 t_parce_node	*ft_parce_lstnew(void *cmd, t_file *file);
 t_parce_node	*ft_parce_lstlast(t_parce_node *lst);
 void			ft_parce_lstadd_back(t_parce_node **lst, t_parce_node *new);
-t_file			*ft_file_lstnew(char *file, int redir_in, int redir_out);
+t_file			*ft_file_lstnew(char *file, int redir_in, int redir_out, int q);
 t_file			*ft_file_lstlast(t_file *lst);
 void			ft_file_lstadd_back(t_file **lst, t_file *new);
 t_file			*ft_file_heredoc_lstnew(char *name, int is_quoted,
 					char *eof, int index);
 t_file			*ft_file_heredoc_lstlast(t_file *lst);
 void			ft_file_heredoc_lstadd_back(t_file **lst, t_file *new);
-t_file			*ft_file_append_lstnew(char *file, int append);
+t_file			*ft_file_append_lstnew(char *file, int append, int q);
 t_file			*ft_file_append_lstlast(t_file *lst);
 void			ft_file_append_lstadd_back(t_file **lst, t_file *new);
 char			**split_lexer(char *s, char *delimiters);
@@ -172,33 +180,40 @@ void			rem_double_quotes(t_parce_node **node);
 int				in_delimiters(char a, char *delimiters);
 char			*ft_my_strjoin(char *s1, char *s2);
 void			handel_heredoc(t_parce_node *parce);
-void			a_permission_error(char *cmd_path, char **envp);
-void			a_no_such_file(char *cmd_path, char **envp);
-void			a_command_not_found(char *cmd_path, char **envp);
+void			a_permission_error(t_parce_node *temp, char *cmd_path,
+					char **envp);
+void			a_no_such_file(t_parce_node *temp, char *cmd_path, char **envp);
+void			a_command_not_found(t_parce_node *temp, char *cmd_path,
+					char **envp);
 void			e_permission_denied(t_parce_node *temp,
 					char *cmd_path, char **envp);
 void			e_no_such_file(t_parce_node *temp,
 					char *cmd_path, char **envp);
 void			e_command_not_found(t_parce_node *temp,
 					char *cmd_path, char **envp);
-void			ft_execute(t_parce_node *parce);
+void			ft_execute(t_parce_node *parce, char **env);
 void			single_child(t_parce_node *temp, char *cmd_path, char **envp);
 void			ft_free(char **s);
 int				check_builtins(char *cmd);
 void			ft_echo(t_parce_node *parce);
 void			into_child(int *fd);
 void			back_to_parent(int *fd);
+void			run_builtin1(t_parce_node *parce, char **envp, char **env);
 void			run_builtin(t_parce_node *parce, char **env);
 void			handle_builtins(t_parce_node *temp,
-					char **envp, char *cmd_path);
+					char **envp, char *cmd_path, char **env);
 void			ft_cd(t_parce_node *parce);
+void			swapping_pwd(t_env *temp2, t_env *temp3);
 char			*ft_mystrjoin(char *s1, char *s2);
 char			*copy_ptr(char const *s1, char const *s2, char *ptr);
 void			error_cd(char *str, int a_counter);
 void			ft_env(char **env_vars);
 void			ft_pwd(void);
+void			unsetted_pwd(void);
+void			print_env(t_env *temp);
 void			handle_shlvl(void);
-void			ft_export(t_parce_node *parce);
+void			ft_export(t_parce_node *parce, char **env);
+int				skip_underscore(t_env	*temp);
 void			ft_unset_a_node(t_env *temp);
 void			ft_unset(t_parce_node *parce);
 t_env			*get_env_vars(char **env_vars);
@@ -220,42 +235,70 @@ void			append_the_export(t_parce_node *parce, t_env *temp,
 					char *buff, int *i);
 t_env			*copy_list(t_env *start);
 void			printlist(t_env *node);
+void			error_exported(char *args);
+int				valid_export(char *args);
 void			swap_node_value(t_env *ptr1, char *temp);
+void			process_arg(t_parce_node *parce, int *i, t_env *temp);
 void			bubblesort(t_env *start);
 int				valid_key(char *key);
 void			show_exported(t_env	*copy);
+void			copy_and_sort(t_env *copy);
 void			*init_node(t_env	*my_node);
 void			append_exported(t_env *my_node, t_parce_node *parce,
 					char *buff, int *iterator);
 void			add_new_export(t_env *my_node, t_parce_node *parce,
 					char *buff, int *iterator);
 int				ft_strncmp_env(const char *s1, const char *s2, size_t n);
-void			ft_exit(t_parce_node *parce);
-void			exit_error(t_parce_node *parce);
-void			execute_single(t_parce_node *parce, char **envp);
-void			execute_multi(t_parce_node *parce, char **envp);
+void			ft_exit(t_parce_node *parce, char **envp);
+void			exit_error(t_parce_node *parce, char **envp);
+void			execute_single(t_parce_node *parce, char **envp, char **env);
+void			execute_multi(t_parce_node *parce, char **envp, char **env);
 char			**make_env_array(t_env *env);
 char			*ft_strjoin_path(char const *s1, char const *s2);
-void			open_files_append(t_file *file, int fd_out, char **envp);
-void			open_out_files_redir(t_file *parce, int fd_out, char **envp);
-void			open_in_files_redir(t_file *parce, int fd_in, char **envp);
-int				open_files_heredoc(t_file *file);
+int				open_files_append(t_file *file, int fd_out, char **envp);
+int				open_out_files_redir(t_file *parce, int fd_out, char **envp);
+int				open_in_files_redir(t_file *parce, int fd_in, char **envp);
+int				open_files_heredoc(t_file *file, char **envp, int fd);
+void			infile_redir_child(t_parce_node *temp, int flag, char **envp);
+void			ambiguous_check(int is_quote, char **envp, char *key);
+int				ambiguous_check_parent(int is_quote, char *key);
+int				open_files_appendp(t_file *file, int fd_out);
+int				open_out_files_redirp(t_file *file, int fd_out);
+int				open_in_files_redirp(t_file *file, int fd_in);
+int				open_files_heredocp(t_file *file, char **envp, int fd);
+void			file_error(t_file *temp, char **envp);
 void			free_split(char **command_av);
-void			check_access(char *cmd_path, char **envp);
-int				is_direcotry(char *cmd_path);
-void			is_directory_check(char *cmd_path, char **envp);
+void			invalid_expand(t_parce_node *temp, char **envp);
+void			check_access(t_parce_node *temp, char *cmd_path, char **envp);
+int				is_direcotry(t_parce_node *temp);
+void			is_directory_check(t_parce_node *temp, char *cmd_path,
+					char **envp);
 char			*check_dirs(char **dirs_path, int i, char *s,
 					char *command_path);
 char			*dirs_paths(char *env_path, t_parce_node *parce);
-void			execution_firsts(t_parce_node *temp, char **envp, int *fd);
+void			checks(t_parce_node *parce, char *cmd_path, char **envp);
+void			pipe_check(int *fd);
+void			fork_check(pid_t pid);
+void			empty_exit(void);
+void			waiting_signals(pid_t pid, int status);
+void			execution_firsts(t_parce_node *temp, char **envp, int *fd,
+					char **env);
+void			execution_last(t_parce_node *temp, char **envp, int *fd,
+					char **env);
 void			keep_in_out(void);
 void			return_in_out(void);
-void			open_files(t_parce_node *temp, char **env);
-void			open_and_run(t_parce_node *temp, char **env);
+void			free_file(t_parce_node *temp, char **envp);
+void			open_files_child(t_parce_node *temp, char **envp);
+int				open_files_parent(t_parce_node *temp, char **envp);
+void			open_and_run(t_parce_node *temp, char **envp, char **env);
 char			*get_cmd_path(t_parce_node *temp);
 void			successful_exit(char *cmd_path, char **envp);
+void			infile_redir_parent(t_parce_node *temp, char **envp, int flag);
 char			*getpaths(t_parce_node *parce);
-void			waiting(pid_t pid, int status);
+void			parent_wait(pid_t pid, int status);
+void			sig_handler(int sig);
+void			sig_handler2(int sig);
+void			waiting(pid_t pid, int *status);
 void			execve_error(t_parce_node *temp, char **envp, char *cmd_path);
 void			execution_execve(char *cmd_path,
 					t_parce_node *temp, char **envp);
@@ -263,7 +306,10 @@ char			*get_value(char *key);
 int				valid_key(char *key);
 char			*ft_my_strchr(const char *s, int c);
 void			ft_handler2(void);
-void			heredocing(t_file *file, t_parce_node *parce,
+int				max_herdoc(t_datatoken *node);
+void			child_heredoc(t_parce_node *tmp);
+void			open_files_heredocc(t_file *file, int fd_in);
+int				heredocing(t_file *file, t_parce_node *parce,
 					t_parce_node *tmp);
 t_heredoc		*ft_heredoc_lstnew(void *content);
 t_heredoc		*ft_heredoc_lstlast(t_heredoc *lst);
@@ -290,6 +336,10 @@ void			ft_cmd(t_datatoken **node, t_parce_node **parce);
 void			ft_handler(int sig);
 void			ft_handler2(void);
 void			ft_handler3(void);
+void			child_process(t_parce_node *temp, char **envp,
+					char **env, char *cmd_path);
+void			preparing_child(int *fd, t_parce_node *temp, char **envp);
+void			exec_com(t_parce_node *temp, char **envp, char *cmd_path);
 void			handle_child_process(t_parce_node *parce);
 void			process_heredoc_file(t_parce_node *parce);
 void			ft_expand_h_dolar_single_char(t_heredoc *node);
@@ -308,5 +358,13 @@ void			split_quotes(char *target, char delimiter, int *index);
 int				skip_delimiters(char *s, char *delimiters, int i);
 int				free_lstsize(t_leaks *lst);
 t_leaks			*free_lstlast(t_leaks *lst);
+int				ft_break(t_datatoken **node);
+void			append_file(t_file **file, char *str, int a);
+void			output_file(t_file **file, char *str, int a);
+void			input_file(t_file **file, char *str, int a);
+int				handle_final_pipe(t_datatoken *node);
+void			handle_h_home_case(t_heredoc *node);
+void			handle_h_env_variable_case(t_heredoc *node, char *str);
+int				just_quote(t_datatoken *data);
 
 #endif

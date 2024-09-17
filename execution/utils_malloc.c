@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:12 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 17:55:16 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:07:58 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ t_env	*ft_env_lstnew(void *content)
 	my_node->key = ft_strdup(variable[0]);
 	if (ft_strncmp_env(my_node->key, "_", 1) == 0)
 		my_node->value = ft_strdup("]");
+	else if (!ft_strncmp(my_node->env_var, "OLDPWD"))
+		my_node->value = NULL;
 	else
 		my_node->value = ft_strdup(ft_strstr(content, "=") + 1);
 	my_node->exit_status = 0;

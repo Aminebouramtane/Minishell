@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:41 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 22:52:09 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/15 18:44:39 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,53 @@ void	open_files_heredocc(t_file *file, int fd_in)
 	}
 }
 
-void	open_files(t_parce_node *temp, char **envp)
+void	infile_redir_child(t_parce_node *temp, int flag, char **envp)
 {
-	while (temp->file)
+	flag = open_in_files_redir(temp->file, 0, envp);
+	if (flag == 1)
 	{
-		if (temp->file->redir_in == 1)
-			open_in_files_redir(temp->file, 0, envp);
-		if (temp->file->heredoc == 1)
-			open_files_heredocc(temp->file, 0);
-		if (temp->file->redir_out == 1)
-			open_out_files_redir(temp->file, 1, envp);
-		if (temp->file->append == 1)
-			open_files_append(temp->file, 1, envp);
-		temp->file = temp->file->next;
+		free_file(temp, envp);
 	}
 }
 
-void	open_and_run(t_parce_node *temp, char **env)
+void	open_files_child(t_parce_node *temp, char **envp)
 {
-	open_files(temp, env);
-	run_builtin(temp, env);
+	int				flag;
+	t_parce_node	*temp1;
+
+	flag = 0;
+	temp1 = temp;
+	while (temp1->file)
+	{
+		if (temp1->file->redir_in == 1)
+			infile_redir_child(temp1, flag, envp);
+		if (temp1->file->heredoc == 1)
+			open_files_heredocc(temp1->file, 0);
+		if (temp1->file->redir_out == 1)
+		{
+			flag = open_out_files_redir(temp1->file, 1, envp);
+			if (flag == 1)
+				free_file(temp1, envp);
+		}
+		if (temp1->file->append == 1)
+		{
+			flag = open_files_append(temp1->file, 1, envp);
+			if (flag == 1)
+				free_file(temp1, envp);
+		}
+		temp1->file = temp1->file->next;
+	}
+}
+
+void	open_and_run(t_parce_node *temp, char **envp, char **env)
+{
+	int	flag;
+
+	flag = open_files_parent(temp, envp);
+	if (flag == 0)
+	{
+		run_builtin1(temp, envp, env);
+	}
 }
 
 char	*get_cmd_path(t_parce_node *temp)

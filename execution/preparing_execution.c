@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 22:43:38 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/14 18:33:57 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	into_child(int *fd)
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	back_to_parent(int *fd)
@@ -38,7 +39,10 @@ char	*check_dirs(char **dirs_path, int i, char *s, char *command_path)
 			return (s);
 		}
 		else
+		{
 			free(s);
+			s = NULL;
+		}
 		i++;
 	}
 	return (NULL);
@@ -63,7 +67,7 @@ char	*dirs_paths(char *env_path, t_parce_node *parce)
 		ft_free(dirs_path);
 		return (ft_strdup(parce->args[0]));
 	}
-	if (parce && parce->args[0])
+	if (parce && parce->args[0] && parce->args[0][0] != '\0')
 		command_path = ft_strjoin_path("/", parce->args[0]);
 	s = check_dirs(dirs_path, i, s, command_path);
 	if (s)
@@ -94,7 +98,6 @@ char	*getpaths(t_parce_node *parce)
 		ft_putstr_fd(": No such file or directory\n", 2);
 		if (g_envi)
 			g_envi->exit_status = 127;
-		ft_malloc(0, 1);
 		exit(127);
 		return (env_paths);
 	}

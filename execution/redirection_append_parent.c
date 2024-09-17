@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_append.c                               :+:      :+:    :+:   */
+/*   redirection_append_parent.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 09:44:58 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/15 18:20:42 by yimizare         ###   ########.fr       */
+/*   Created: 2024/09/15 18:09:25 by yimizare          #+#    #+#             */
+/*   Updated: 2024/09/15 18:41:12 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	open_files_heredoc(t_file *file, char **envp, int fd)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection_append.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:44:58 by abouramt          #+#    #+#             */
+/*   Updated: 2024/09/15 18:08:43 by yimizare         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+int	open_files_heredocp(t_file *file, char **envp, int fd)
 {
 	t_file	*temp;
 
@@ -36,7 +50,7 @@ int	open_files_heredoc(t_file *file, char **envp, int fd)
 	return (temp->heredoc_file_fd);
 }
 
-int	open_files_append(t_file *file, int fd_out, char **envp)
+int	open_files_appendp(t_file *file, int fd_out)
 {
 	t_file	*temp;
 	int		flag;
@@ -47,13 +61,13 @@ int	open_files_append(t_file *file, int fd_out, char **envp)
 	{
 		if (temp->append)
 		{
-			ambiguous_check(temp->is_quoted, envp, temp->file);
+			if (ambiguous_check_parent(temp->is_quoted, temp->file))
+				return (0);
 			temp->appended_file_fd = open(temp->file, O_CREAT | O_WRONLY
 					| O_APPEND, 0644);
 			if (temp->appended_file_fd == -1)
 			{
-				flag = 1;
-				return (flag);
+				return (1);
 			}
 			else if (temp->next == NULL)
 			{
@@ -62,10 +76,10 @@ int	open_files_append(t_file *file, int fd_out, char **envp)
 		}
 		temp = temp->next;
 	}
-	return (0);
+	return (flag);
 }
 
-int	open_out_files_redir(t_file *file, int fd_out, char **envp)
+int	open_out_files_redirp(t_file *file, int fd_out)
 {
 	t_file	*temp;
 	int		flag;
@@ -76,13 +90,13 @@ int	open_out_files_redir(t_file *file, int fd_out, char **envp)
 	{
 		if (temp->redir_out)
 		{
-			ambiguous_check(temp->is_quoted, envp, temp->file);
+			if (ambiguous_check_parent(temp->is_quoted, temp->file))
+				return (0);
 			temp->out_file_fd = open(temp->file, O_WRONLY
 					| O_TRUNC | O_CREAT, 0644);
 			if (temp->out_file_fd == -1)
 			{
-				flag = 1;
-				return (flag);
+				return (1);
 			}
 			if (temp->next)
 				close(temp->out_file_fd);
@@ -91,10 +105,10 @@ int	open_out_files_redir(t_file *file, int fd_out, char **envp)
 		}
 		temp = temp->next;
 	}
-	return (0);
+	return (flag);
 }
 
-int	open_in_files_redir(t_file *file, int fd_in, char **envp)
+int	open_in_files_redirp(t_file *file, int fd_in)
 {
 	t_file	*temp;
 	int		flag;
@@ -105,7 +119,9 @@ int	open_in_files_redir(t_file *file, int fd_in, char **envp)
 	{
 		if (temp->redir_in)
 		{
-			ambiguous_check(temp->is_quoted, envp, temp->file);
+			flag = ambiguous_check_parent(temp->is_quoted, temp->file);
+			if (flag)
+				return (0);
 			temp->in_file_fd = open(temp->file, O_RDONLY);
 			if (temp->in_file_fd == -1)
 			{
@@ -116,5 +132,5 @@ int	open_in_files_redir(t_file *file, int fd_in, char **envp)
 		}
 		temp = temp->next;
 	}
-	return (0);
+	return (flag);
 }

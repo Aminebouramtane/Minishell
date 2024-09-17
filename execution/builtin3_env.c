@@ -3,54 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   builtin3_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 17:10:42 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/17 08:15:57 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*last_arg(t_parce_node *parce)
+char	*last_arg(t_parce_node *parce1)
 {
-	int		i;
-	char	*last_var;
+	t_parce_node	*current;
+	char			*last_var;
+	int				i;
 
 	last_var = NULL;
+	current = parce1;
 	i = 0;
-	while (parce && parce->next != NULL)
-	{
-		i = 0;
-		while (parce && parce->args[i])
-		{
-			if (parce->args[i] && parce->args[i + 1] == NULL)
-				break ;
-			i++;
-		}
-		parce = parce->next;
-	}
-	if (parce && parce->args[i])
-		last_var = ft_strjoin("_=", parce->args[i]);
+	while (current && current->next)
+		current = current->next;
+	while (current && current->args && current->args[i])
+		i++;
+	if (i > 0)
+		last_var = ft_strjoin("_=", current->args[i - 1]);
 	return (last_var);
 }
 
 void	last_com_var(t_parce_node *parce)
 {
-	t_env	*temp;
-	char	*arg;
+	t_env			*temp;
+	t_parce_node	*parce1;
+	char			*arg;
 
+	parce1 = parce;
 	temp = g_envi;
 	arg = NULL;
-	if (parce->args)
-		arg = last_arg(parce);
+	if (parce1->args)
+		arg = last_arg(parce1);
 	else
 		arg = ft_strdup("]");
 	while (temp && ft_strncmp(temp->key, "_") != 0)
 	{
 		temp = temp->next;
 	}
-	if (parce && parce->args && temp && arg)
+	if (parce1 && parce1->args && temp && arg)
 	{
 		ft_unset_a_node(temp);
 		ft_env_lstadd_back(&g_envi, first_env_lstnew(arg));
@@ -69,6 +66,7 @@ t_env	*get_env_vars(char **env_vars)
 	i = 0;
 	if (env_vars && !env_vars[i])
 	{
+		ft_env_lstadd_back(&g_envi, ft_env_lstnew("OLDPWD"));
 		ft_env_lstadd_back(&g_envi, ft_env_lstnew("PATH=/nfs/homes/yimizare/bin:/usr/local/sbin:/usr/local/bin:\
 /usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
 		ft_env_lstadd_back(&g_envi, ft_env_lstnew("PWD=/nfs/homes/yimizare"));

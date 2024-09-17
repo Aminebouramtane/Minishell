@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:56:25 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 19:46:32 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:39:01 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	initialize_shell(int ac, char **env)
 		g_envi->exit_status = 1;
 		exit(1);
 	}
-	signal(SIGINT, ft_handler);
 	g_envi = get_env_vars(env);
 }
 
@@ -31,10 +30,13 @@ char	*read_main_user_input(void)
 	char	*input;
 
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_handler);
 	input = readline("minishell$ ");
 	if (input == NULL)
+	{
 		ft_putstr_fd("exit\n", 1);
-	else
+	}
+	else if (*input != '\0')
 		add_history(input);
 	return (input);
 }
@@ -50,7 +52,14 @@ int	process_input(char *input, t_vars **data, t_parce_node **parce)
 	}
 	lexer(input, data);
 	ft_expand((*data)->ndata);
-	if (syntax_err((*data)->ndata))
+	if (just_quote((*data)->ndata))
+		return (1);
+	if ((*data)->ndata && max_herdoc((*data)->ndata))
+	{
+		ft_putstr_fd("Minishell: maximum here-document count exceeded\n", 2);
+		return (1);
+	}
+	if ((*data)->ndata && syntax_err((*data)->ndata))
 		return (1);
 	*parce = ft_malloc(sizeof(t_parce_node), 0);
 	if (!(*parce))
@@ -83,8 +92,8 @@ int	main(int ac, char **av, char **env)
 			break ;
 		if (process_input(input, &data, &parce))
 			continue ;
+		ft_execute(parce, env);
 		last_com_var(parce);
-		ft_execute(parce);
 		free(input);
 		ft_malloc(0, 1);
 	}

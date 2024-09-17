@@ -3,110 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   builtin6_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user007 <user007@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:27 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/06 00:54:00 by user007          ###   ########.fr       */
+/*   Updated: 2024/09/08 17:29:11 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	show_exported(t_env	*copy)
+void	print_value_export(t_env *temp)
+{
+	if (temp->value != NULL && *temp->value != '\0')
+	{
+		ft_putstr_fd("=\"", 1);
+		ft_putstr_fd(temp->value, 1);
+		ft_putstr_fd("\"\n", 1);
+	}
+	else if (ft_strncmp(temp->value, "\0") == 0)
+	{
+		ft_putstr_fd("=\"\"\n", 1);
+	}
+	else
+		ft_putstr_fd("\n", 1);
+}
+
+void	print_copy(t_env *node)
+{
+	t_env	*temp;
+
+	temp = node;
+	while (temp != NULL)
+	{
+		if (temp && temp->key && ft_strncmp(temp->key, "PATH") == 0)
+		{
+			temp = temp->next;
+			continue ;
+		}
+		if (skip_underscore(temp) == 1)
+		{
+			temp = temp->next;
+			continue ;
+		}
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(temp->key, 1);
+		print_value_export(temp);
+		temp = temp->next;
+	}
+}
+
+void	export_envless(t_env *copy)
 {
 	copy = copy_list(g_envi);
 	bubblesort(copy);
-	printlist(copy);
+	print_copy(copy);
 	ft_env_lstclear(copy);
 }
 
-void	copy_and_sort(t_env *copy)
+void	exporting(t_parce_node *parce, int *i, t_env *temp)
 {
-	copy = copy_list(g_envi);
-	bubblesort(copy);
-	ft_env_lstclear(copy);
+	while (parce && parce->args[i[0]] != NULL)
+	{
+		if (valid_export(parce->args[i[0]]) == 0)
+			process_arg(parce, i, temp);
+		i[0]++;
+		i[1] = 0;
+		temp = g_envi;
+	}
 }
 
-void	process_arg(t_parce_node *parce, int *i, t_env *temp)
-{
-	char	*buff;
-	t_env	*temp2;
-
-	temp2 = g_envi;
-	buff = ft_strdup(parce->args[i[0]]);
-	while (parce->args[i[0]][i[1]] != '\0'
-		&& parce->args[i[0]][i[1]] != '='
-		&& parce->args[i[0]][i[1]] != '+')
-		i[1]++;
-	buff[i[1]] = '\0';
-	if (valid_key(buff) == 0 || (parce->args[i[0]][i[1]] == '+'
-		&& valid_key(buff) == 0))
-		ft_env_lstadd_back(&g_envi, ft_export_lstnew(parce, i[0]));
-	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '+')
-		append_the_export(parce, temp, buff, i);
-	else if (valid_key(buff) == 1 && parce->args[i[0]][i[1]] == '=')
-	{
-		while (temp2 && ft_strncmp(temp2->key, buff) != 0)
-			temp2 = temp2->next;
-		ft_unset_a_node(temp2);
-		ft_env_lstadd_back(&g_envi, ft_export_lstnew(parce, i[0]));
-	}
-	free(buff);
-}
-
-int	valid_export(char *args)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isalpha(args[0]))
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(args, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		g_envi->exit_status = 1;
-		return (1);
-	}
-	while (args[i] != '=' && args[i] != '\0' && ft_isalnum(args[i]))
-		i++;
-	if (args[i] == '=' || args[i] == '\0'
-		|| (args[i] == '+' && args[i + 1] != '\0' && args[i + 1] != '+'))
-		return (0);
-	if (ft_isalnum(args[i]) == 0)
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(args, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		g_envi->exit_status = 1;
-		return (1);
-	}
-	return (0);
-}
-
-void	ft_export(t_parce_node *parce)
+void	ft_export(t_parce_node *parce, char **env)
 {
 	t_env	*copy;
 	t_env	*temp;
+	int		j;
 	int		i[2];
 
 	copy = NULL;
+	j = 0;
 	i[0] = 1;
 	i[1] = 0;
 	temp = g_envi;
 	if (parce->args && parce->args[1] != NULL)
 	{
-		while (parce && parce->args[i[0]] != NULL)
-		{
-			if (valid_export(parce->args[i[0]]) == 0)
-				process_arg(parce, i, temp);
-			i[0]++;
-			i[1] = 0;
-			temp = g_envi;
-		}
-		copy_and_sort(copy);
+		exporting(parce, i, temp);
 	}
 	else
 	{
-		show_exported(copy);
+		if (env && !env[j])
+			export_envless(copy);
+		else
+			show_exported(copy);
 	}
 }

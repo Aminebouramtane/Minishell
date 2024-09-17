@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:01:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/03 15:11:48 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:50:53 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,22 @@ void	ft_file_heredoc_lstadd_back(t_file **lst, t_file *new)
 	last->next = new;
 	new->prev = last;
 	new->next = NULL;
+}
+
+int	ft_break(t_datatoken **node)
+{
+	return (((*node)->e_type == '<' && (*node)->e_state == 2)
+		|| ((*node)->e_type == '>' && (*node)->e_state == 2)
+		|| ((*node)->e_type == 'h' && (*node)->e_state == 2)
+		|| ((*node)->e_type == 'w' && (*node)->e_state == 2)
+		|| ((*node)->e_type == '|' && (*node)->e_state == 2));
+}
+
+void	append_file(t_file **file, char *str, int a)
+{
+	process_quotes(str);
+	if (a == 1)
+		ft_file_lstadd_back(file, ft_file_append_lstnew(str, 1, 1));
+	else
+		ft_file_lstadd_back(file, ft_file_append_lstnew(str, 1, 0));
 }
