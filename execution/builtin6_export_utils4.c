@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:23:29 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/12 20:47:02 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:43:52 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,22 @@ int	valid_export(char *args)
 	int	i;
 
 	i = 0;
-	if (args[0] == '=')
-	{
-		error_exported(args);
-		return (1);
-	}
-	if (!ft_isalpha(args[0]))
-	{
-		error_exported(args);
-		return (1);
-	}
-	while (args[i] != '=' && args[i] != '\0' && ft_isalnum(args[i]))
+	if (args[0] == '=' || (args[0] != '_' && !ft_isalpha(args[0])))
+    {
+        error_exported(args);
+        return (1);
+    }
+	if (args[0] == '_' && args[1] == '\0')
+        return (0);
+	i = 1;
+	while (args[i] != '=' && args[i] != '\0' && (ft_isalnum(args[i]) || args[i] == '_'))
 		i++;
-	if (args[i] == '=' || args[i] == '\0'
+	if (args[i] == '=' || args[i] == '_' || args[i] == '\0'
 		|| (args[i] == '+' && args[i + 1] != '\0' && args[i + 1] != '+'))
 		return (0);
-	if (ft_isalnum(args[i]) == 0)
-	{
-		error_exported(args);
-		return (1);
-	}
-	return (0);
+	if (args[i] == '=' || args[i] == '\0' || 
+        (args[i] == '+' && args[i + 1] == '='))
+        return (0);
+	error_exported(args);
+	return (1);
 }

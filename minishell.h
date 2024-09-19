@@ -6,7 +6,7 @@
 /*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/15 18:38:51 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:22:48 by yimizare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void			swapping_pwd(t_env *temp2, t_env *temp3);
 char			*ft_mystrjoin(char *s1, char *s2);
 char			*copy_ptr(char const *s1, char const *s2, char *ptr);
 void			error_cd(char *str, int a_counter);
+t_env			*find_env(const char *key);
 void			ft_env(char **env_vars);
 void			ft_pwd(void);
 void			unsetted_pwd(void);
