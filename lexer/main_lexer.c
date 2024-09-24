@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:18:35 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/08 13:45:49 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:40:53 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	process_character(char *str, size_t *i, t_vars *data)
 	if (str[*i] == '>')
 		fill_output_in_node(str, i, data);
 	if (str[*i] == '$')
-		fill_env_in_node(str, i, data, "|<>$+-/%%#@!*= \t\'\"");
+		fill_env_in_node(str, i, data, "!@#$%%^&*()-_=+[]{}|;:',.<>?/\\\"`~ \t\'\"");
 	if (str[*i] == '|')
 		fill_pipe_in_node(i, data);
 	if (str[*i] == '(')

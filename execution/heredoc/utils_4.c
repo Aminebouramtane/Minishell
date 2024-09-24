@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 11:17:31 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/19 13:20:02 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:03:32 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ void	ft_advance_node(t_datatoken **node)
 	while (*node)
 	{
 		if (*node && (*node)->e_type == 'w')
+			*node = (*node)->next;
+		else
+			break ;
+	}
+	while (*node)
+	{
+		printf("here\n");
+		if (*node && (*node)->e_type == '$')
 			*node = (*node)->next;
 		else
 			break ;
