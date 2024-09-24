@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin4_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:11 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/17 22:02:40 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:46:22 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pwd(void)
 		if (pwd_env && pwd_env->value)
 			ft_putstr_fd(pwd_env->value, 1);
 		else
-			ft_putstr_fd("Error: PWD not found\n", 2);
+			ft_putstr_fd("\n", 2);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:29:44 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/05 09:34:35 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:50:22 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	process_quotes(char *str)
 	state.j = 0;
 	state.inside_d_quotes = 0;
 	state.inside_s_quotes = 0;
-	while (str[++state.i])
+	while (str && str[++state.i])
 	{
 		if (str[state.i] == '\'')
 			handle_s_quote(str, &state);
@@ -49,7 +49,8 @@ void	process_quotes(char *str)
 		else
 			str[state.j++] = str[state.i];
 	}
-	str[state.j] = '\0';
+	if (str && str[state.j])
+		str[state.j] = '\0';
 }
 
 void	rem_double_quotes(t_parce_node **node)

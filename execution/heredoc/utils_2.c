@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 12:25:13 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/17 08:19:01 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/21 12:53:07 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	process_heredoc_file(t_parce_node *parce)
 
 	myfile = parce->file->file;
 	delimiter = parce->file->eof;
-	printf("--------------------  %s\n", delimiter);
 	fd = open(myfile, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (fd < 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:18:35 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/22 16:40:53 by amine            ###   ########.fr       */
+/*   Updated: 2024/09/24 18:32:19 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	process_character(char *str, size_t *i, t_vars *data)
 {
+	char	*sp_str;
+
+	sp_str = "!@#$%%^&*()-=+[]{}|;:',.<>/\\\"` \t\'\"";
 	if (!in_delimiters(str[*i], "|<>$() \t\'\""))
 		fill_string_in_node(str, i, data, "|<>$() \t\'\"");
 	if (str[*i] == '\'')
@@ -25,7 +28,7 @@ void	process_character(char *str, size_t *i, t_vars *data)
 	if (str[*i] == '>')
 		fill_output_in_node(str, i, data);
 	if (str[*i] == '$')
-		fill_env_in_node(str, i, data, "!@#$%%^&*()-_=+[]{}|;:',.<>?/\\\"`~ \t\'\"");
+		fill_env_in_node(str, i, data, sp_str);
 	if (str[*i] == '|')
 		fill_pipe_in_node(i, data);
 	if (str[*i] == '(')

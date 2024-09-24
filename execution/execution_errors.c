@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:36 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/20 20:52:24 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:14:19 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	e_permission_denied(t_parce_node *temp, char *cmd_path, char **envp)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(temp->args[0], 2);
 	ft_putendl_fd(": Permission denied", 2);
 	ft_free(envp);
@@ -27,6 +28,7 @@ void	e_permission_denied(t_parce_node *temp, char *cmd_path, char **envp)
 
 void	e_no_such_file(t_parce_node *temp, char *cmd_path, char **envp)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(temp->args[0], 2);
 	ft_putendl_fd(": No such file or directory", 2);
 	ft_free(envp);
@@ -42,6 +44,7 @@ void	e_command_not_found(t_parce_node *temp, char *cmd_path, char **envp)
 {
 	if (temp && temp->args)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(temp->args[0], 2);
 		ft_putendl_fd(": command not found", 2);
 		ft_free(envp);
@@ -69,21 +72,21 @@ int	handle_command(t_parce_node *temp, char *cmd_path, char **envp)
 		return (0);
 	if (strcmp(temp->args[0], ".") == 0)
 	{
-		(void)cmd_path;
-		(void)envp;
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		free(cmd_path);
+		ft_free(envp);
 		g_envi->exit_status = 2;
 		ft_malloc(0, 1);
 		ft_env_lstclear(g_envi);
 		exit(2);
 	}
-    if (is_directory(temp->args[0]))
-    {
-		(void)cmd_path;
-		(void)envp;
+	if (is_directory(temp->args[0]))
+	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(temp->args[0], 2);
 		ft_putstr_fd(": Is a directory\n", 2);
+		free(cmd_path);
+		ft_free(envp);
 		g_envi->exit_status = 126;
 		ft_malloc(0, 1);
 		ft_env_lstclear(g_envi);

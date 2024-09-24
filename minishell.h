@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/20 20:48:42 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:03:06 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ char			*dirs_paths(char *env_path, t_parce_node *parce);
 void			checks(t_parce_node *parce, char *cmd_path, char **envp);
 void			pipe_check(int *fd);
 void			fork_check(pid_t pid);
-void			empty_exit(void);
+void			empty_exit(char **envp);
 void			waiting_signals(pid_t pid, int status);
 void			execution_firsts(t_parce_node *temp, char **envp, int *fd,
 					char **env);

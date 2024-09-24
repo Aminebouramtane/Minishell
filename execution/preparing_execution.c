@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparing_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/20 19:39:42 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:16:37 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ char	*getpaths(t_parce_node *parce, char **envp)
 {
 	char	*env_paths;
 	t_env	*temp;
+	char	*cmd_path;
 
 	temp = g_envi;
+	cmd_path = NULL;
 	env_paths = NULL;
 	while (temp)
 	{
@@ -92,17 +94,7 @@ char	*getpaths(t_parce_node *parce, char **envp)
 	if (temp == NULL && parce && parce->args
 		&& parce->args[0] && parce->args[0][0] != '/')
 	{
-		printf("haha\n");
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(parce->args[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		if (g_envi)
-			g_envi->exit_status = 127;
-		ft_malloc(0, 1);
-		ft_env_lstclear(g_envi);
-		if (envp)
-			ft_free(envp);
-		exit(127);
+		e_no_such_file(parce, cmd_path, envp);
 	}
 	if (temp)
 		env_paths = ft_strdup(temp->value);

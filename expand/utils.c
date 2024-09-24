@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:37 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/19 13:22:42 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:41:21 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	ft_expand_dolar_single_char(t_datatoken *node)
 {
-	if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 1)
+	if (node && node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 1
+		&& node->next && (node->next->e_state == 0 || node->next->e_state == 1))
+		node->cmd = "\0";
+	else if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 1)
 		node->cmd = "$";
 }
 

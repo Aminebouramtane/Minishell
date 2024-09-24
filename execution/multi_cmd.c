@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:50 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/20 18:58:28 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:02:09 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	alone_quotes(t_parce_node *temp, char **envp)
 		&& ft_strncmp(temp->args[0], "\0") == 0)
 	{
 		ft_putendl_fd("Command '' not found", 2);
-		ft_free(envp);
+		if (envp)
+			ft_free(envp);
 		ft_malloc(0, 1);
 		g_envi->exit_status = 127;
 		ft_env_lstclear(g_envi);
@@ -79,7 +80,7 @@ void	execution_last(t_parce_node *temp, char **envp,
 		if (temp && temp->args)
 			child_process(temp, envp, env, cmd_path);
 		else
-			empty_exit();
+			empty_exit(envp);
 	}
 	else
 	{

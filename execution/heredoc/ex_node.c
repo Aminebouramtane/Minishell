@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:39:55 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/01 16:39:56 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:32:39 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,16 @@ char	*expande_heredoc(char *str)
 	size_t			i;
 	t_heredoc		*here;
 	char			*res;
+	char			*sp_str;
 
+	sp_str = "!@#$%%^&*()-=+[]{}|;:',.<>/\\\"` \t\'\"";
 	i = 0;
 	here = NULL;
 	res = NULL;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			fill_env_in_heredoc(str, &here, &i, "|<>$+-/%%#@!* \t\'\"");
+			fill_env_in_heredoc(str, &here, &i, sp_str);
 		else
 			fill_in_heredoc(str, &here, &i, "$");
 	}

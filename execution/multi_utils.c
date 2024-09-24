@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multi_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:57:20 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/20 18:57:46 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:46:07 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	waiting_signals(pid_t pid, int status)
 			if (g_envi)
 				g_envi->exit_status = 128 + term_signal;
 			if (term_signal == SIGQUIT)
-				ft_putstr_fd("\n", 2);
+				ft_putstr_fd("Quit (core dumped)\n", 2);
 			if (term_signal == SIGINT)
 				ft_putstr_fd("\n", 1);
 		}
