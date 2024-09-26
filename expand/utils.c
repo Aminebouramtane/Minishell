@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:37 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/24 18:41:21 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:49:31 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	ft_expand_dolar_single_char(t_datatoken *node)
 {
-	if (node && node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 1
+	if (node && node->cmd && node->cmd[0] == '$' && (node->e_state == 0 || node->e_state == 1)  && ft_strlen(node->cmd) == 1
 		&& node->next && (node->next->e_state == 0 || node->next->e_state == 1))
-		node->cmd = "\0";
+		node->cmd = "$";
+	else if (node && node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) == 1
+		&& node->next && (node->next->e_state == 0 || node->next->e_state == 1))
+			node->cmd = "\0";
 	else if (node->cmd[0] == '$' && ft_strlen(node->cmd) == 1)
 		node->cmd = "$";
 }
@@ -72,21 +75,10 @@ void	ft_expand_dolar_two_chars(t_datatoken *node)
 
 void	ft_handle_node_types(t_datatoken **node)
 {
-	if (*node && (*node)->cmd && (*node)->cmd[0] == '"')
+	while (*node && (*node)->e_type != 'w')
 	{
+		if ((*node)->e_type == '|' && (*node)->e_state == 2)
+			break ;
 		*node = (*node)->next;
-		if (*node && (*node)->cmd && (*node)->e_type == '"')
-			*node = (*node)->next;
-		while (*node && (*node)->cmd && ((*node)->e_type == 's'
-				|| (*node)->e_type == '$'))
-			*node = (*node)->next;
-	}
-	else if (*node && (*node)->cmd && (*node)->cmd[0] == '\''
-		&& (*node)->e_state == 0 && ft_strlen((*node)->cmd) == 2)
-	{
-		*node = (*node)->next;
-		while (*node && (*node)->cmd && ((*node)->e_type == 's'
-				|| (*node)->e_type == '$'))
-			*node = (*node)->next;
 	}
 }

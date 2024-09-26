@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:29:20 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/24 18:43:29 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:49:08 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ int	handle_final_redirect(t_datatoken *node)
 			node = node->next;
 		if (!node)
 			return (0);
-		// if (node->cmd && (node->cmd[0] == '|' || node->cmd[0] == '>')
-		// 	&& node->e_state == 2 && !node->next)
-		// {
-		// 	ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-		// 	return (1);
-		// }
+		if (node->cmd && (node->cmd[0] == '|' || node->cmd[0] == '>')
+			&& node->e_state == 2 && !node->next)
+		{
+			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+			return (1);
+		}
 	}
 	return (0);
 }
