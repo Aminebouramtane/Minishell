@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:45:06 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/20 20:49:08 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:46:54 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ void	parent_wait(pid_t pid, int status)
 
 void	single_child(t_parce_node *temp, char *cmd_path, char **envp)
 {
-	if (!ft_strncmp(temp->args[0], "") || (!temp->args[0] && !temp->next))
-	{
-		ft_malloc(0, 1);
-		ft_env_lstclear(g_envi);
-		ft_free(envp);
-		exit(0);
-	}
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	open_files_child(temp, envp);

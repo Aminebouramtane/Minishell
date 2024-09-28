@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:20:58 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/19 15:45:39 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:02:33 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,22 @@ int	open_files_parent(t_parce_node *temp, char **envp)
 	while (temp->file)
 	{
 		if (temp->file->redir_in == 1 && handle_in_files(temp, envp))
+		{
+			file_error(temp->file, envp);
 			return (1);
+		}
 		if (temp->file->heredoc == 1)
 			open_files_heredocc(temp->file, 0);
 		if (temp->file->redir_out == 1 && handle_out_files(temp, envp))
+		{
+			file_error(temp->file, envp);
 			return (1);
+		}
 		if (temp->file->append == 1 && handle_append_files(temp, envp))
+		{
+			file_error(temp->file, envp);
 			return (1);
+		}
 		temp->file = temp->file->next;
 	}
 	return (flag);

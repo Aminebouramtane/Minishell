@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:29:44 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/24 18:50:22 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/28 15:07:59 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,16 @@ void	process_quotes(char *str)
 	state.inside_s_quotes = 0;
 	while (str && str[++state.i])
 	{
-		if (str[state.i] == '\'')
+		if ((str[state.i] && str[state.i] == '\'' && state.i == 0) || ((str[state.i] && str[state.i] == '\'') && (str[state.i - 1] && str[state.i - 1] != 1)))
 			handle_s_quote(str, &state);
-		else if (str[state.i] == '\"')
+		else if ((str[state.i] && str[state.i] == '\"' && state.i == 0) || ((str[state.i] && str[state.i] == '\"') && (str[state.i - 1] && str[state.i - 1] != 1)))
 			handle_d_quote(str, &state);
 		else
+		{
 			str[state.j++] = str[state.i];
+			if (state.j &&  str[state.j - 1] && str[state.j - 1] == 1)
+				state.j--;
+		}
 	}
 	if (str && str[state.j])
 		str[state.j] = '\0';

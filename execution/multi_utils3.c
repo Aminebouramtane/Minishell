@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:11:02 by yimizare          #+#    #+#             */
-/*   Updated: 2024/09/21 13:33:28 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:45:20 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	alone_quotesp(t_parce_node *temp)
 	if (temp && temp->args && temp->args[0]
 		&& ft_strncmp(temp->args[0], "\0") == 0)
 	{
-		ft_putendl_fd("Command '' not found haha", 2);
+		ft_putendl_fd("Command '' not found", 2);
 		g_envi->exit_status = 127;
 		return (1);
 	}

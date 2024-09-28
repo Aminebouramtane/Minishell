@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 16:52:28 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/26 13:14:35 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:47:00 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_expand_dolar_long(t_datatoken *node)
 {
 	char	*str;
-	char	*env;
+	char	*env[2];
 
 	if (node->cmd && node->cmd[0] == '$' && ft_strlen(node->cmd) > 2)
 	{
@@ -32,9 +32,10 @@ void	ft_expand_dolar_long(t_datatoken *node)
 		}
 		node->cmd += 1;
 		str = node->cmd;
-		env = get_value(str);
-		if (my_strdup_two(env))
-			node->cmd = my_strdup_two(env);
+		env[0] = get_value(str);
+		env[1] = ft_parse_value(env[0]);
+		if (env[1] || my_strdup_two(env[0]))
+			node->cmd = my_strdup_two(env[1]);
 		else
 			node->cmd = "\0";
 	}

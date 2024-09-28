@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:56:25 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/26 11:54:47 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/28 14:38:39 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,29 +92,29 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		last_com_var(parce);
 		ft_execute(parce, env);
-	    //     printf("####################PARSING#########################\n");
+	    //     // printf("####################PARSING#########################\n");
         // while (parce) 
 	    // {
-        //     printf("cmd ## %s\n", parce->cmd);
+        //     // printf("cmd ## %s\n", parce->cmd);
         //     if (parce->args)
         //     {
         //         int i = 0; 
         //         while (parce->args[i])
         //         {
-        //            printf("args ## %s\n", parce->args[i]);
+        //         //    printf("args ## %s\n", parce->args[i]);
         //             i++;
         //         }
         //     }
         //     while (parce->file)
         //     {
-        //         printf("-----------FILE : %s\n", parce->file->file);
-        //         printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
-        //         printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
-        //         printf("-----------HEREDOC : %d\n", parce->file->heredoc);
-        //         printf("-----------IS_QUOTED : %d\n", parce->file->is_quoted);
-        //         printf("-----------EOF : %s\n", parce->file->eof);
-        //         printf("-----------INDEX : %d\n", parce->file->index);
-        //         printf("======================================\n");
+        //         // printf("-----------FILE : %s\n", parce->file->file);
+        //         // printf("-----------REDIRECTION IN : %d\n", parce->file->redir_in);
+        //         // printf("-----------REDIRECTION OUT : %d\n", parce->file->redir_out);
+        //         // printf("-----------HEREDOC : %d\n", parce->file->heredoc);
+        //         // printf("-----------IS_QUOTED : %d\n", parce->file->is_quoted);
+        //         // printf("-----------EOF : %s\n", parce->file->eof);
+        //         // printf("-----------INDEX : %d\n", parce->file->index);
+        //         // printf("======================================\n");
         //         parce->file = parce->file->next;
         //     }
         //     parce = parce->next;
