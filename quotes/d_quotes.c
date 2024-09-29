@@ -6,11 +6,33 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:29:44 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/28 15:07:59 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:07:24 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_parse_value(char *env)
+{
+	int				i;
+	char			*tmp[2];
+	static char		np[2] = {1, 0};
+
+	i = 0;
+	while (env && env[i])
+	{
+		if (env[i] == '\'' || env[i] == '\"')
+		{
+			tmp[0] = ft_my_substr(env, 0, i);
+			tmp[1] = ft_my_strjoin(tmp[0], np);
+			tmp[0] = ft_my_strjoin(tmp[1], env + i);
+			env = tmp[0];
+			i++;
+		}
+		i++;
+	}
+	return (env);
+}
 
 static void	handle_s_quote(char *str, t_quote_state *state)
 {
@@ -42,14 +64,18 @@ void	process_quotes(char *str)
 	state.inside_s_quotes = 0;
 	while (str && str[++state.i])
 	{
-		if ((str[state.i] && str[state.i] == '\'' && state.i == 0) || ((str[state.i] && str[state.i] == '\'') && (str[state.i - 1] && str[state.i - 1] != 1)))
+		if ((str[state.i] && str[state.i] == '\'' && state.i == 0)
+			|| ((str[state.i] && str[state.i] == '\'')
+				&& (str[state.i - 1] && str[state.i - 1] != 1)))
 			handle_s_quote(str, &state);
-		else if ((str[state.i] && str[state.i] == '\"' && state.i == 0) || ((str[state.i] && str[state.i] == '\"') && (str[state.i - 1] && str[state.i - 1] != 1)))
+		else if ((str[state.i] && str[state.i] == '\"' && state.i == 0)
+			|| ((str[state.i] && str[state.i] == '\"')
+				&& (str[state.i - 1] && str[state.i - 1] != 1)))
 			handle_d_quote(str, &state);
 		else
 		{
 			str[state.j++] = str[state.i];
-			if (state.j &&  str[state.j - 1] && str[state.j - 1] == 1)
+			if (state.j && str[state.j - 1] && str[state.j - 1] == 1)
 				state.j--;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 09:56:25 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/28 14:38:39 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 14:02:51 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	initialize_shell(int ac, char **env)
 	if (ac != 1)
 	{
 		ft_putstr_fd("Error in Args !!\n", 2);
-		g_envi->exit_status = 1;
 		exit(1);
 	}
 	g_envi = get_env_vars(env);
@@ -92,7 +91,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		last_com_var(parce);
 		ft_execute(parce, env);
-	    //     // printf("####################PARSING#########################\n");
+	    // printf("####################PARSING#########################\n");
         // while (parce) 
 	    // {
         //     // printf("cmd ## %s\n", parce->cmd);
@@ -101,7 +100,7 @@ int	main(int ac, char **av, char **env)
         //         int i = 0; 
         //         while (parce->args[i])
         //         {
-        //         //    printf("args ## %s\n", parce->args[i]);
+        //            printf("args ## %s\n", parce->args[i]);
         //             i++;
         //         }
         //     }

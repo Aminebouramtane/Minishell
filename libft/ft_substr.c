@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:54:10 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/28 13:49:57 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:07:53 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ptr[j] = '\0';
 	return (ptr);
 }
+
 char	*ft_my_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;

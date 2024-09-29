@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin5_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/10 20:30:42 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:23:18 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	ft_unset(t_parce_node *parce)
 		i++;
 		temp = g_envi;
 	}
-	g_envi->exit_status = 0;
+	if (g_envi)
+		g_envi->exit_status = 0;
 }

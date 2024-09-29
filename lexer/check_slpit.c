@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   check_slpit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yimizare <yimizare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:32:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/03 14:08:20 by yimizare         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:17:52 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	check_if(int *flag, char c, char *delimiters)
+{
+	if (in_delimiters(c, delimiters))
+		*flag = 1;
+}
 
 static void	process_non_quoted_string(char *src, int *i, char *delimiters)
 {

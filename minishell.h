@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 08:44:14 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/28 13:44:20 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:18:17 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,8 +375,7 @@ void			handle_h_env_variable_case(t_heredoc *node, char *str);
 int				just_quote(t_datatoken *data);
 void			ft_handle_node_types(t_datatoken **node);
 void			ft_advance_node(t_datatoken **node);
-int				count_quotes(t_datatoken *data, char quote_char);
-int				check_for_unmatched_quotes(int quote_count, char quote_char);
 char			*ft_parse_value(char *env);
+void			check_if(int *flag, char c, char *delimiters);
 
 #endif
