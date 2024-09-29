@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:29:20 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/27 15:53:54 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 14:30:23 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_pipe_redirect(t_datatoken **node)
 		&& (*node)->e_state == 2)
 	{
 		*node = (*node)->next;
-		while ((*node)->cmd && (*node)->cmd[0] == ' ' && (*node)->e_state == 2)
+		while ((*node) && (*node)->cmd && (*node)->cmd[0] && (*node)->cmd[0] == ' ' && (*node)->e_state == 2)
 			*node = (*node)->next;
 		if (!(*node))
 		{

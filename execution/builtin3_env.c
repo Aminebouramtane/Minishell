@@ -6,7 +6,7 @@
 /*   By: abouramt <abouramt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:44:08 by abouramt          #+#    #+#             */
-/*   Updated: 2024/09/17 08:15:57 by abouramt         ###   ########.fr       */
+/*   Updated: 2024/09/29 14:23:48 by abouramt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void	ft_env(char **env_vars)
 	{
 		print_env(temp);
 	}
-	g_envi->exit_status = 0;
+	if (g_envi)
+		g_envi->exit_status = 0;
 }

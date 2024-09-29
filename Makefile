@@ -40,4 +40,3 @@ re : fclean all
 
 .SECONDRY : $(OBJ)
 
-a="a                                          '       b'b"
